@@ -3,13 +3,11 @@ name: Package Application with Pyinstaller
 
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
-
+    name: launch PyInstaller
     runs-on: ubuntu-latest
 
     steps:
@@ -22,5 +20,5 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: name-of-artifact
-        path: dist/windows
+        name: cartes_cog_exe
+        path: dist
