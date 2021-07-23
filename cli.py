@@ -26,14 +26,14 @@ def get_parser():
         "-o",
         action="store",
         default=ONTOLOGIE_FILE_DEFAULT,
-        help=f"fichier csv de description de l'ontologie, au format (concept, mot énoncé), par défaut '{ONTOLOGIE_FILE_DEFAULT}'",
+        help=f"fichier csv de description de l'ontologie, au format (concept; mot énoncé), par défaut '{ONTOLOGIE_FILE_DEFAULT}'",
     )
     res.add_argument(
         "--cartes",
         "-c",
         action="store",
         default=CARTES_COG_FILE_DEFAULT,
-        help=f"fichier csv des cartes cognitives, au format (id, mot 1, mot 2, ...), par défaut '{CARTES_COG_FILE_DEFAULT}'",
+        help=f"fichier csv des cartes cognitives, au format (id; mot 1; mot 2, ...), par défaut '{CARTES_COG_FILE_DEFAULT}'",
     )
     res.add_argument(
         "--directory",
