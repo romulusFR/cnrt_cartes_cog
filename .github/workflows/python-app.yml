@@ -27,7 +27,7 @@ jobs:
         python -m pip install PyInstaller
     - name: Build with PyInstaller
       run: |
-        python -m pyinstaller --onefile --windowed .\gui.py
+        python -m PyInstaller --onefile --windowed .\gui.py
        
 
     - uses: actions/upload-artifact@v2
