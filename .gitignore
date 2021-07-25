@@ -7,3 +7,5 @@ __pycache__/
 .mypy_cache/
 .vscode/
 .pytest_cache/
+build/
+dist/
