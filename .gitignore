@@ -1,6 +1,9 @@
 output/
-__pycache__/
 tmp/
+drafts/
+sources/
+
+__pycache__/
 .mypy_cache/
 .vscode/
 .pytest_cache/
