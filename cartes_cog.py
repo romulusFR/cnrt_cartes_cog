@@ -36,7 +36,7 @@ def clean(string):
 def get_cog_maps(filename):
     """Charge les cartes depuis le fichier CSV"""
     logger.debug(f"get_cog_maps({filename})")
-    carte = {}
+    carte = {} # defaultdict(list)
 
     with open(filename, encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile, delimiter=";", quotechar='"')
@@ -50,6 +50,18 @@ def get_cog_maps(filename):
 
     logger.info(f"lecture de {len(carte)} cartes : {sum(len(l) for l in carte.values())} mots au total")
     return carte
+
+
+def pivot_cog_map(carte):
+    """Pivote carte : pour chaque mot, donne les id des cartes où il apparait"""
+    pivot = {} # defaultdict(list)
+    for identifier, words in carte.items():
+        for word in words:
+            if word in pivot:
+                pivot[word].append(identifier)
+            else:
+                pivot[word] = [identifier]
+    return pivot
 
 
 def write_carte(carte, filename):
@@ -142,6 +154,8 @@ def apply_ontology(carte, ontology, *, with_unknown=True):
     )
 
     return carte_mere, unknown_report
+
+
 
 
 def create_filename(outdir, base, suffix):
