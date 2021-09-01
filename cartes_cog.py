@@ -116,7 +116,9 @@ def get_ontology(filename):
 
 def apply_ontology(carte, ontology, *, with_unknown=True):
     """Remplace tous les mots énoncés d'une carte par leur concept mère de l'ontologie"""
-    logger.debug(f"apply_ontology({len(carte)} cartes, {len(ontology)} concepts thesaurus avec inconnus={with_unknown})")
+    logger.debug(
+        f"apply_ontology({len(carte)} cartes, {len(ontology)} concepts thesaurus avec inconnus={with_unknown})"
+    )
     carte_mere = {}
     for k, words in carte.items():
         carte_mere[k] = [ontology[w].strip().lower() for w in words if (ontology[w] != DEFAULT_CONCEPT or with_unknown)]
@@ -157,8 +159,6 @@ def generate_results(output_dir, cartes_filename, ontologie_filename, with_unkno
 
     write_histogram_bag(compute_histogram_bag(carte_mere), get_name("occurences_meres"))
     write_histogram_pos(compute_histogram_pos(carte_mere), get_name("positions_meres"))
-
-    return
 
 
 def test():

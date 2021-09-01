@@ -8,10 +8,10 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
 
 ## CHANGELOG
 
-- 2021-09-01
+- 2021-09-01 :
   - support des deux cartes "la mine" et "la mine dans le futur"
-  - valeurs par défaut des filedialog de la GUI
-- 2021-07-26
+  - valeurs par défaut des `filedialog` de la GUI
+- 2021-07-26 :
   - première release
 
 ## Formats d'entrée
