@@ -40,7 +40,7 @@ thesaurus_mine_futur = tk.StringVar(window, THESAURUS_MINE_FUTUR)
 
 output = tk.StringVar(window, OUTPUT_DIR)
 with_unknown = tk.BooleanVar(window, False)
-report_unknown = tk.BooleanVar(window, False)
+report_unknown = tk.BooleanVar(window, True)
 
 
 def uploader(variable, *, directory=False):

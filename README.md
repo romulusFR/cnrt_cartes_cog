@@ -30,6 +30,7 @@ Pour une base de mots énoncés dont le nom de fichier est `$BD.csv`, le program
 - `$BD_occurences.csv` : pour chaque mot énoncé, le nombre de fois où il apparait dans la base
 - `$BD_positions.csv` : pour chaque position, la liste des mots énoncés dans cette position et la liste de fois où ils y apparaissent
 - `$BD_meres.csv` : les cartes où les mots énoncés sont remplacés par leur mots mères associés, dites _cartes mères_. Un option permet de remplacer, ou pas, les mots énoncés qui n'ont pas de mot mère
+- `$BD_inconnus.csv` : les mots des cartes qui n'apparaissent pas dans le thésaurus. Pour chaque mot inconnu, on donne les identifiants de carte où il apparaissent
 - `$BD_occurences_meres.csv` : idem `$BD_occurences.csv` mais avec les cartes mères
 - `$BD_positions_meres.csv` : idem `$BD_positions.csv` mais avec les cartes mères
 

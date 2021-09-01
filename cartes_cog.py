@@ -28,6 +28,9 @@ DEFAULT_CONCEPT = "__inconnu__"
 # TODO : passer à une classe pour les cog maps
 
 
+def clean(str):
+    return str.strip().lower()
+
 def get_cog_maps(filename):
     """Charge les cartes depuis le fichier CSV"""
     logger.debug(f"get_cog_maps({filename})")
@@ -36,9 +39,12 @@ def get_cog_maps(filename):
     with open(filename, encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile, delimiter=";", quotechar='"')
         for row in reader:
+            # indice 0 : l'id de la carte
+            # indices 1 et suivants : les mots de la carte
             identifier = int(row[0])
             carte[identifier] = {}
-            carte[identifier] = [w.strip().lower() for w in row[1:] if w not in ("NULL", "")]
+            # on élimine les mots vides et NULL
+            carte[identifier] = [clean(w) for w in row[1:] if w not in ("NULL", "")]
 
     logger.info(f"lecture de {len(carte)} cartes : {sum(len(l) for l in carte.values())} mots au total")
     return carte
@@ -102,14 +108,14 @@ def write_histogram_pos(hist, filename):
 
 
 def get_ontology(filename):
-    """Charge l'ontologie (concept, mot énoncé)"""
+    """Charge l'ontologie (concept, mot énoncé) dans un dico énoncé -> mère"""
     logger.debug(f"get_ontology({filename})")
     ontology = defaultdict(lambda: DEFAULT_CONCEPT)
 
     with open(filename, encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile, delimiter=";", quotechar='"')
         for row in reader:
-            ontology[row[1].strip().lower()] = row[0].strip().lower()
+            ontology[clean(row[1])] = clean(row[0])
     logger.info(f"ontologie : {len(ontology.keys())} mots énoncés et {len(set(ontology.values()))} concepts")
     return ontology
 
@@ -120,12 +126,20 @@ def apply_ontology(carte, ontology, *, with_unknown=True):
         f"apply_ontology({len(carte)} cartes, {len(ontology)} concepts thesaurus avec inconnus={with_unknown})"
     )
     carte_mere = {}
+    unknown_report = defaultdict(list)
     for k, words in carte.items():
-        carte_mere[k] = [ontology[w].strip().lower() for w in words if (ontology[w] != DEFAULT_CONCEPT or with_unknown)]
+        carte_mere[k] = [clean(ontology[word]) for word in words if (ontology[word] != DEFAULT_CONCEPT or with_unknown)]
+        for word in words:
+            if ontology[word] == DEFAULT_CONCEPT:
+                unknown_report[clean(word)].append(k)
     logger.info(
         f"calcul de {len(carte_mere)} cartes mères : {sum(len(l) for l in carte_mere.values())} mots au total ({'avec' if with_unknown else 'sans'} mots inconnus)"
     )
-    return carte_mere
+    logger.info(
+        f"{len(unknown_report)} mots inconnus ({DEFAULT_CONCEPT}) présents dans au total {sum(len(l) for l in unknown_report.values())} cartes"
+    )
+    
+    return carte_mere, unknown_report
 
 
 def create_filename(outdir, base, suffix):
@@ -154,8 +168,9 @@ def generate_results(output_dir, cartes_filename, ontologie_filename, with_unkno
     write_histogram_pos(compute_histogram_pos(carte), get_name("positions"))
 
     # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
-    carte_mere = apply_ontology(carte, ontology, with_unknown=with_unknown)
+    carte_mere, inconnus = apply_ontology(carte, ontology, with_unknown=with_unknown)
     write_carte(carte_mere, get_name("meres"))
+    write_carte(inconnus, get_name("inconnus"))
 
     write_histogram_bag(compute_histogram_bag(carte_mere), get_name("occurences_meres"))
     write_histogram_pos(compute_histogram_pos(carte_mere), get_name("positions_meres"))
@@ -166,26 +181,26 @@ def test():
     carte_mine = get_cog_maps(CARTES_COG_LA_MINE)
     # pprint(carte_mine)
 
-    hist_bag = compute_histogram_bag(carte_mine)
-    hist_pos = compute_histogram_pos(carte_mine)
-    write_histogram_bag(hist_bag, "tmp/tmp_hist_bag.csv")
-    write_histogram_pos(hist_pos, "tmp/tmp_hist_pos.csv")
-    # pprint(hist_bag)
-    # pprint(hist_pos)
+    # hist_bag = compute_histogram_bag(carte_mine)
+    # hist_pos = compute_histogram_pos(carte_mine)
+    # write_histogram_bag(hist_bag, "tmp/tmp_hist_bag.csv")
+    # write_histogram_pos(hist_pos, "tmp/tmp_hist_pos.csv")
+    # # pprint(hist_bag)
+    # # pprint(hist_pos)
 
     ontology_mine = get_ontology(THESAURUS_LA_MINE)
-    carte_mine_mere = apply_ontology(carte_mine, ontology_mine, with_unknown=True)
+    carte_mine_mere = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
     # pprint(carte_mine_mere)
 
-    hist_bag_mere = compute_histogram_bag(carte_mine_mere)
-    hist_pos_mere = compute_histogram_pos(carte_mine_mere)
-    write_histogram_bag(hist_bag_mere, "tmp/tmp_hist_bag_mere.csv")
-    write_histogram_pos(hist_pos_mere, "tmp/tmp_hist_pos_mere.csv")
+    # hist_bag_mere = compute_histogram_bag(carte_mine_mere)
+    # hist_pos_mere = compute_histogram_pos(carte_mine_mere)
+    # write_histogram_bag(hist_bag_mere, "tmp/tmp_hist_bag_mere.csv")
+    # write_histogram_pos(hist_pos_mere, "tmp/tmp_hist_pos_mere.csv")
     # pprint(hist_bag)
     # pprint(hist_pos)
 
 
 if __name__ == "__main__":
     # test()
-    # generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
-    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)
+    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    # generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)
