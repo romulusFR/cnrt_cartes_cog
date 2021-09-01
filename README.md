@@ -11,6 +11,8 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
 - 2021-09-01 :
   - support des deux cartes "la mine" et "la mine dans le futur"
   - valeurs par défaut des `filedialog` de la GUI
+  - calcul du rapport des mots inconnus
+  - normalisation des noms de fichiers
 - 2021-07-26 :
   - première release
 

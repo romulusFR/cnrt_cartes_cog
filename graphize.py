@@ -7,16 +7,23 @@ __author__ = "Romuald Thion"
 from collections import defaultdict, Counter
 from pprint import pprint
 import logging
-from cartes_cog import CARTES_COG_FILE_DEFAULT, ONTOLOGIE_FILE_DEFAULT, apply_ontology, get_cog_maps, get_ontology
+from cartes_cog import (
+    generate_results,
+    CARTES_COG_LA_MINE,
+    THESAURUS_LA_MINE,
+    apply_ontology,
+    get_cog_maps,
+    get_ontology,
+)
 
 logger = logging.getLogger(f"COGNITIVE_MAP.{__name__}")
 if __name__ == "__main__":
     logging.basicConfig()
     logger.setLevel(logging.DEBUG)
 
-COG_MAP = get_cog_maps(CARTES_COG_FILE_DEFAULT)
-ONTOLOGY = get_ontology(ONTOLOGIE_FILE_DEFAULT)
-CONCEPT_MAP = apply_ontology(COG_MAP, ONTOLOGY, with_unknown=False)
+COG_MAP = get_cog_maps(CARTES_COG_LA_MINE)
+ONTOLOGY = get_ontology(THESAURUS_LA_MINE)
+CONCEPT_MAP, EERROR_MAP = apply_ontology(COG_MAP, ONTOLOGY, with_unknown=False)
 
 logger.debug(f"CONCEPT_MAP = {CONCEPT_MAP}")
 
@@ -32,7 +39,7 @@ logger.info(f"{len(CONCEPT_IDX)} concepts")
 logger.debug(f"CONCEPT_IDX = { {w:len(l) for w, l in CONCEPT_IDX.items()} }")
 
 # %%
-CONCEPT_COOC = defaultdict(lambda: defaultdict(lambda: defaultdict(int))) # type: ignore
+CONCEPT_COOC = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))  # type: ignore
 
 THRESHOLD = 2
 # matrix 49 x 49 = 2401
@@ -60,7 +67,7 @@ G = nx.Graph(CONCEPT_COOC)
 nx.set_node_attributes(G, {w: len(l) for w, l in CONCEPT_IDX.items()}, name="weight")
 
 logger.info(nx.info(G))
-nx.write_graphml(G, 'graphs/network.graphml')
+nx.write_graphml(G, "graphs/network.graphml")
 
 # %%
 
@@ -133,7 +140,7 @@ def draw_graphviz(
 
     # on fait une copie car on va modifier bcp d'attribut pour avoir le graphviz
     graph = a_graph.copy()
-    node_names = {w:w for w in graph}
+    node_names = {w: w for w in graph}
     colormap = plt.cm.get_cmap("inferno")  # plasma
 
     default_edge_size = 0.1
@@ -142,7 +149,9 @@ def draw_graphviz(
         edge_weights = nx.get_edge_attributes(graph, "weight")
         min_edge_weight = min(edge_weights.values())
         max_edge_weight = max(edge_weights.values())
-        edge_penwidths = {e: np.interp(v, [min_edge_weight, max_edge_weight], [0.2, 2]) for e, v in edge_weights.items()}
+        edge_penwidths = {
+            e: np.interp(v, [min_edge_weight, max_edge_weight], [0.2, 2]) for e, v in edge_weights.items()
+        }
     else:
         edge_penwidths = {k: default_edge_size for k in graph.edges}
 
@@ -177,7 +186,7 @@ def draw_graphviz(
     nx.set_node_attributes(graph, values="white", name="color")
     nx.set_node_attributes(graph, values=node_gwidths, name="width")
     nx.set_node_attributes(graph, values="Helvetica", name="fontname")
-    nx.set_node_attributes(graph, values="", name="label")    
+    nx.set_node_attributes(graph, values="", name="label")
     nx.set_node_attributes(graph, values=node_names, name="xlabel")
 
     if node_color is None:
@@ -202,4 +211,5 @@ def draw_graphviz(
     GV = nx.nx_agraph.to_agraph(graph)
     GV.draw(img_file, prog=algorithm, format=img_ext)
 
-draw_graphviz(G, sep_param=0.2 , node_color = "weight")
+
+draw_graphviz(G, sep_param=0.2, node_color="weight")
