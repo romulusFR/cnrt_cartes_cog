@@ -1,4 +1,4 @@
-# pylint: disable = logging-fstring-interpolation
+# pylint: disable = logging-fstring-interpolation, line-too-long
 """Outil de traitement des cartes cognitives"""
 
 __author__ = "Romuald Thion"
@@ -16,12 +16,14 @@ from pathlib import Path
 logger = logging.getLogger(f"COGNITIVE_MAP.{__name__}")
 if __name__ == "__main__":
     logging.basicConfig()
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
 
-CARTES_COG_FILE_DEFAULT = "input/cartes_cog_la_mine.csv"
-ONTOLOGIE_FILE_DEFAULT = "input/thesaurus_la_mine.csv"
+CARTES_COG_LA_MINE = "input/cartes_cog_la_mine.csv"
+THESAURUS_LA_MINE = "input/thesaurus_la_mine.csv"
+CARTES_COG_MINE_FUTUR = "input/cartes_cog_mine_futur.csv"
+THESAURUS_MINE_FUTUR = "input/thesaurus_mine_futur.csv"
 OUTPUT_DIR = "output"
-DEFAULT_CONCEPT = "concept inconnu"
+DEFAULT_CONCEPT = "__inconnu__"
 
 # TODO : passer à une classe pour les cog maps
 
@@ -87,7 +89,7 @@ def write_histogram_bag(hist, filename):
 
 
 def write_histogram_pos(hist, filename):
-    """Sauvegarde pour chaque position, la liste des mots énoncés et leur nombre d'occurences(le produit de compute_histogram_pos) au format csv"""
+    """Sauvegarde pour chaque position, la liste des mots énoncés et leur nombre d'occurences (le produit de compute_histogram_pos) au format csv"""
     logger.debug(f"write_histogram_pos({len(hist)}, {filename})")
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile, delimiter=";", quotechar='"')
@@ -114,7 +116,7 @@ def get_ontology(filename):
 
 def apply_ontology(carte, ontology, *, with_unknown=True):
     """Remplace tous les mots énoncés d'une carte par leur concept mère de l'ontologie"""
-    logger.debug(f"apply_ontology({len(carte)}, {len(ontology), with_unknown})")
+    logger.debug(f"apply_ontology({len(carte)} cartes, {len(ontology)} concepts thesaurus avec inconnus={with_unknown})")
     carte_mere = {}
     for k, words in carte.items():
         carte_mere[k] = [ontology[w].strip().lower() for w in words if (ontology[w] != DEFAULT_CONCEPT or with_unknown)]
@@ -138,23 +140,30 @@ def generate_results(output_dir, cartes_filename, ontologie_filename, with_unkno
     logger.debug(f"with_unknown = {with_unknown}")
 
     Path(output_dir).mkdir(parents=True, exist_ok=True)
+    # application partielle qui génère un préfixe de nom
     get_name = partial(create_filename, output_dir, cartes_filename)
 
+    # chargement des entrées
     carte = get_cog_maps(cartes_filename)
+    ontology = get_ontology(ontologie_filename)
+
+    # stats "sac de mot" et "position" de la carte
     write_histogram_bag(compute_histogram_bag(carte), get_name("occurences"))
     write_histogram_pos(compute_histogram_pos(carte), get_name("positions"))
 
-    ontology = get_ontology(ontologie_filename)
+    # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
     carte_mere = apply_ontology(carte, ontology, with_unknown=with_unknown)
-
     write_carte(carte_mere, get_name("meres"))
+
     write_histogram_bag(compute_histogram_bag(carte_mere), get_name("occurences_meres"))
     write_histogram_pos(compute_histogram_pos(carte_mere), get_name("positions_meres"))
+
+    return
 
 
 def test():
     """tests si hors module"""
-    carte_mine = get_cog_maps(CARTES_COG_FILE_DEFAULT)
+    carte_mine = get_cog_maps(CARTES_COG_LA_MINE)
     # pprint(carte_mine)
 
     hist_bag = compute_histogram_bag(carte_mine)
@@ -164,7 +173,7 @@ def test():
     # pprint(hist_bag)
     # pprint(hist_pos)
 
-    ontology_mine = get_ontology(ONTOLOGIE_FILE_DEFAULT)
+    ontology_mine = get_ontology(THESAURUS_LA_MINE)
     carte_mine_mere = apply_ontology(carte_mine, ontology_mine, with_unknown=True)
     # pprint(carte_mine_mere)
 
@@ -178,4 +187,5 @@ def test():
 
 if __name__ == "__main__":
     # test()
-    generate_results("tmp/", CARTES_COG_FILE_DEFAULT, ONTOLOGIE_FILE_DEFAULT)
+    # generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)

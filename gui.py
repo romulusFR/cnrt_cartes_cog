@@ -36,18 +36,18 @@ with_unknown = tk.BooleanVar(window, False)
 report_unknown = tk.BooleanVar(window, False)
 
 
-
-
 def uploader(variable, *, directory=False):
     """Générateur de handler"""
 
     def upload(_event=None):
         filename = ""
         if directory:
-            filename = filedialog.askdirectory()
+            filename = filedialog.askdirectory(initialdir=variable.get())
         else:
             filename = filedialog.askopenfilename(
-                title="Choisir un fichier de cartes", filetypes=(("csv files", "*.csv"), ("all files", "*.*"))
+                title="Choisir un fichier de cartes",
+                filetypes=(("csv files", "*.csv"), ("all files", "*.*")),
+                initialfile=variable.get(),
             )
         logger.info(f"Selected: {filename}")
         variable.set(filename)
@@ -92,17 +92,17 @@ text_log.pack(expand=True, fill=tk.BOTH)
 
 
 mid_frame = ttk.Frame(window)
-mid_frame.pack() #side=tk.BOTTOM
-generate_btn = ttk.Button(mid_frame, text="Calculer", command=compute)
+mid_frame.pack()  # side=tk.BOTTOM
+generate_btn = ttk.Button(mid_frame, text="Calculer les cartes", command=compute)
 generate_btn.pack(**pack_params, side=tk.LEFT)
-clear_btn = ttk.Button(mid_frame, text="Clear", command=lambda: text_log.delete("1.0", tk.END))
+clear_btn = ttk.Button(mid_frame, text="Vider la console", command=lambda: text_log.delete("1.0", tk.END))
 clear_btn.pack(**pack_params, side=tk.LEFT)
 
 sep_mid_bot = ttk.Separator(window, orient="horizontal")
 sep_mid_bot.pack(fill="x", pady=5)
 
 bot_frame = ttk.Frame(window)
-bot_frame.pack() #side=tk.BOTTOM
+bot_frame.pack()  # side=tk.BOTTOM
 output_btn = ttk.Button(bot_frame, text="Choisir le dossier de sortie")
 output_btn.configure(command=uploader(output, directory=True))
 output_btn.pack(**pack_params, side=tk.LEFT)
