@@ -59,8 +59,12 @@ THRESHOLD = 3
 #     logger.debug(f"CONCEPT_MAP[{i}] = {CONCEPT_MAP[i]}")
 # logger.debug(f"CONCEPT_COOC['nature'] = {CONCEPT_COOC['nature']}")
 
-# BUG perdu les poids des arcs
 def generate(pairs, min_threshold=2, max_threshold=5):
+    """Genère un ensemble de graphes
+    
+    Pour chaque paire (carte, thesaurus) de pairs, génère (carte_base, carte_mere)
+    puis pour chacune de ces paires, génère un graph pour chaque niveau de threshold entre min et max (inclus)
+    """
     for (carte_file, thesaurus_file) in pairs:
         logger.info(f"carte_file = {carte_file}")
         logger.info(f"thesaurus_file = {thesaurus_file}")
@@ -74,7 +78,7 @@ def generate(pairs, min_threshold=2, max_threshold=5):
 
         for (carte, name) in [(carte_cog, "bag"), (carte_mere, "bag_mere")]:
             for threshold in range(min_threshold, max_threshold + 1):
-                cooc_matrix = compute_cooc_matrix(carte, threshold)
+                cooc_matrix = compute_cooc_matrix(carte, min_cooc_threshold=threshold)
                 # pprint(cooc_matrix)
                 cooc_diagonal = {word: cooc_matrix[word][word] for word in cooc_matrix}
                 # version étdenu avec un niveau suppl de dict pour "weight"
