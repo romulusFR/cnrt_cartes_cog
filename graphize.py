@@ -75,12 +75,15 @@ def generate(pairs, min_threshold=2, max_threshold=5):
         for (carte, name) in [(carte_cog, "bag"), (carte_mere, "bag_mere")]:
             for threshold in range(min_threshold, max_threshold + 1):
                 cooc_matrix = compute_cooc_matrix(carte, threshold)
+                # pprint(cooc_matrix)
                 cooc_diagonal = {word: cooc_matrix[word][word] for word in cooc_matrix}
-
+                # version étdenu avec un niveau suppl de dict pour "weight"
+                cooc_matrix_ext = { row_word : { col_word: {"weight" : cooc_matrix[row_word][col_word] } for col_word in cooc_matrix[row_word] } for row_word in cooc_matrix }
                 # on charge dans networkx
-                cooc_graph = nx.Graph(cooc_matrix)
-                # virer les arcs boucles
+                cooc_graph = nx.Graph(cooc_matrix_ext)
+                # virer les arcs boucles et les isolés
                 cooc_graph.remove_edges_from(nx.selfloop_edges(cooc_graph))
+                cooc_graph.remove_nodes_from(list(nx.isolates(cooc_graph)))
                 # pour les noeuds, le poid c'est le nombre de cartes
                 # PAS fait par la diagonale de cooc_matrix
                 # nx.set_node_attributes(cooc_graph, {w: len(l) for w, l in idx_map.items()}, name="weight")
@@ -98,8 +101,8 @@ def generate(pairs, min_threshold=2, max_threshold=5):
                     sep=0.01,
                     fontsize="proportional",
                     node_color="weight",
-                    min_edge_penwidths=0.1,
-                    max_edge_penwidths=1,
+                    min_edge_penwidths=1,
+                    max_edge_penwidths=10,
                     min_node_size=0.02,
                     max_node_size=1,
                 )
