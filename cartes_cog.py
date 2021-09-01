@@ -12,6 +12,7 @@ from itertools import product, zip_longest
 from functools import partial
 from pprint import pprint  # pylint: disable=unused-import
 from pathlib import Path
+# import pandas as pd
 
 logger = logging.getLogger(f"COGNITIVE_MAP.{__name__}")
 if __name__ == "__main__":
@@ -36,7 +37,7 @@ def clean(string):
 def get_cog_maps(filename):
     """Charge les cartes depuis le fichier CSV"""
     logger.debug(f"get_cog_maps({filename})")
-    carte = {} # defaultdict(list)
+    carte = {}  # defaultdict(list)
 
     with open(filename, encoding="utf-8") as csvfile:
         reader = csv.reader(csvfile, delimiter=";", quotechar='"')
@@ -52,16 +53,33 @@ def get_cog_maps(filename):
     return carte
 
 
-def pivot_cog_map(carte):
-    """Pivote carte : pour chaque mot, donne les id des cartes où il apparait"""
-    pivot = {} # defaultdict(list)
+def pivot_cog_map(carte, with_pos = False):
+    """Pivote carte : pour chaque mot, donne les couples (id, pos) des cartes où il apparait, en gardant la position ou pas selon la valeur de with_pos"""
+    pivot = {}  # defaultdict(list)
     for identifier, words in carte.items():
-        for word in words:
+        for pos, word in enumerate(words):
+            value = (identifier, pos) if with_pos else identifier
             if word in pivot:
-                pivot[word].append(identifier)
+                pivot[word].append(value)
             else:
-                pivot[word] = [identifier]
+                pivot[word] = [value]
     return pivot
+
+def compute_cooc_matrix(cog_map, threshold=2):
+    """Calcule la matrice de co-occurrece à partir d'une carte pivotée"""
+    # dictionnaire des co-occurrences :
+    # qui à chaque mot ligne
+    #   -> un dictionnaire qui à chaque mot colonne
+    #       -> le nombre de cartes où on apparait en commun
+    # un dictionnaire de plus que nécessaire pour être compatible avec l'API networkx
+    cooc_map = defaultdict(lambda: defaultdict(int))  # type: ignore
+    cog_map_idx = pivot_cog_map(cog_map)
+    for word_row in cog_map_idx:
+        for word_col in cog_map_idx:
+            common_times = sum((Counter(cog_map_idx[word_row]) & Counter(cog_map_idx[word_col])).values())
+            if common_times >= threshold : # and word_row != word_col
+                cooc_map[word_row][word_col] = common_times
+    return cooc_map
 
 
 def write_carte(carte, filename):
@@ -156,8 +174,6 @@ def apply_ontology(carte, ontology, *, with_unknown=True):
     return carte_mere, unknown_report
 
 
-
-
 def create_filename(outdir, base, suffix):
     """Génère un nom de fichier standardisé pour les résultats de calcul"""
     res = Path(outdir) / Path(f"{Path(base).stem}_{suffix}.csv")
@@ -217,7 +233,19 @@ def test():
     # pprint(hist_pos)
 
 
+# %%
 if __name__ == "__main__":
     # test()
-    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    carte_mine = get_cog_maps(CARTES_COG_LA_MINE)
+
+    ontology_mine = get_ontology(THESAURUS_LA_MINE)
+    carte_mine_mere, report_inconnu = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
+    # pprint(carte_mine_mere)
+    pivot_bag = pivot_cog_map(carte_mine_mere, with_pos=False)
+    pivot_pos = pivot_cog_map(carte_mine_mere, with_pos=True)
+
+    compute_cooc_matrix(pivot_bag)
+    # pd.DataFrame.from_dict(compute_cooc_matrix(pivot_bag))
+
+    # generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
     # generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)
