@@ -18,8 +18,8 @@ if __name__ == "__main__":
     logging.basicConfig()
     logger.setLevel(logging.INFO)
 
-CARTES_COG_FILE_DEFAULT = "input/bd_mots_enonces.csv"
-ONTOLOGIE_FILE_DEFAULT = "input/thesaurus.csv"
+CARTES_COG_FILE_DEFAULT = "input/cartes_cog_la_mine.csv"
+ONTOLOGIE_FILE_DEFAULT = "input/thesaurus_la_mine.csv"
 OUTPUT_DIR = "output"
 DEFAULT_CONCEPT = "concept inconnu"
 
