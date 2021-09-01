@@ -112,6 +112,6 @@ DATASETS = [(CARTES_COG_LA_MINE, THESAURUS_LA_MINE), (CARTES_COG_MINE_FUTUR, THE
 
 # #
 if __name__ == "__main__":
-    generate(DATASETS, 5, 5)
+    generate(DATASETS, 2, 10)
     # nx.write_graphml(G, GRAPH_DIR / "network.graphml")
     # draw_graphviz(G, GRAPH_DIR / f"network.{IMG_FORMAT}", algorithm="sfdp", sep=0.01, fontsize = "proportional", node_color="weight", min_edge_penwidths=0.01, max_edge_penwidths=4, min_node_size=0.05, max_node_size=2)

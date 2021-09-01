@@ -12,6 +12,7 @@ from itertools import product, zip_longest
 from functools import partial
 from pprint import pprint  # pylint: disable=unused-import
 from pathlib import Path
+
 # import pandas as pd
 
 logger = logging.getLogger(f"COGNITIVE_MAP.{__name__}")
@@ -53,7 +54,17 @@ def get_cog_maps(filename):
     return carte
 
 
-def pivot_cog_map(carte, with_pos = False):
+def write_carte(carte, filename):
+    """Ecrit les cartes depuis la map python"""
+    logger.debug(f"write_carte({len(carte)}, {filename})")
+    with open(filename, "w", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile, delimiter=";", quotechar='"')
+        for i, words in carte.items():
+            writer.writerow([i] + words)
+    logger.info(f"cartes mères : {filename}")
+
+
+def pivot_cog_map(carte, with_pos=False):
     """Pivote carte : pour chaque mot, donne les couples (id, pos) des cartes où il apparait, en gardant la position ou pas selon la valeur de with_pos"""
     pivot = {}  # defaultdict(list)
     for identifier, words in carte.items():
@@ -64,6 +75,7 @@ def pivot_cog_map(carte, with_pos = False):
             else:
                 pivot[word] = [value]
     return pivot
+
 
 def compute_cooc_matrix(cog_map, threshold=2):
     """Calcule la matrice de co-occurrece à partir d'une carte pivotée"""
@@ -77,18 +89,20 @@ def compute_cooc_matrix(cog_map, threshold=2):
     for word_row in cog_map_idx:
         for word_col in cog_map_idx:
             common_times = sum((Counter(cog_map_idx[word_row]) & Counter(cog_map_idx[word_col])).values())
-            if common_times >= threshold : # and word_row != word_col
+            if common_times >= threshold:  # and word_row != word_col
                 cooc_map[word_row][word_col] = common_times
     return cooc_map
 
 
-def write_carte(carte, filename):
-    """Ecrit les cartes depuis la map python"""
-    logger.debug(f"write_carte({len(carte)}, {filename})")
+def write_cooc_matrix(matrix, filename):
+    """Ecrit les cartes depuis le dict/dic python"""
+    logger.debug(f"write_cooc_matrix({len(matrix)}, {filename})")
+    words = list(sorted(matrix.keys()))
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile, delimiter=";", quotechar='"')
-        for i, words in carte.items():
-            writer.writerow([i] + words)
+        writer.writerow(["/"] + words)
+        for row_word in words:
+            writer.writerow([row_word] + [matrix[row_word][col_word] for col_word in words])
     logger.info(f"cartes mères : {filename}")
 
 
@@ -197,16 +211,21 @@ def generate_results(output_dir, cartes_filename, ontologie_filename, with_unkno
     ontology = get_ontology(ontologie_filename)
 
     # stats "sac de mot" et "position" de la carte
-    write_histogram_bag(compute_histogram_bag(carte), get_name("occurences"))
-    write_histogram_pos(compute_histogram_pos(carte), get_name("positions"))
+    write_histogram_bag(compute_histogram_bag(carte), get_name("base_occurences"))
+    write_histogram_pos(compute_histogram_pos(carte), get_name("base_positions"))
 
     # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
     carte_mere, inconnus = apply_ontology(carte, ontology, with_unknown=with_unknown)
     write_carte(carte_mere, get_name("meres"))
+    # le report des mots qui n'ont pas de concepts
     write_carte(inconnus, get_name("inconnus"))
 
-    write_histogram_bag(compute_histogram_bag(carte_mere), get_name("occurences_meres"))
-    write_histogram_pos(compute_histogram_pos(carte_mere), get_name("positions_meres"))
+    write_histogram_bag(compute_histogram_bag(carte_mere), get_name("meres_occurences"))
+    write_histogram_pos(compute_histogram_pos(carte_mere), get_name("meres_positions"))
+
+    # les matrices de co-occurences
+    write_cooc_matrix(compute_cooc_matrix(carte), get_name("base_matrice_cooccurences"))
+    write_cooc_matrix(compute_cooc_matrix(carte_mere), get_name("meres_matrice_cooccurences"))
 
 
 def test():
@@ -223,7 +242,7 @@ def test():
 
     ontology_mine = get_ontology(THESAURUS_LA_MINE)
     carte_mine_mere = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
-    pprint(carte_mine_mere)
+    # pprint(carte_mine_mere)
 
     # hist_bag_mere = compute_histogram_bag(carte_mine_mere)
     # hist_pos_mere = compute_histogram_pos(carte_mine_mere)
@@ -235,17 +254,18 @@ def test():
 
 # %%
 if __name__ == "__main__":
-    # test()
-    carte_mine = get_cog_maps(CARTES_COG_LA_MINE)
+    # # test()
+    # carte_mine = get_cog_maps(CARTES_COG_LA_MINE)
 
-    ontology_mine = get_ontology(THESAURUS_LA_MINE)
-    carte_mine_mere, report_inconnu = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
-    # pprint(carte_mine_mere)
-    pivot_bag = pivot_cog_map(carte_mine_mere, with_pos=False)
-    pivot_pos = pivot_cog_map(carte_mine_mere, with_pos=True)
+    # ontology_mine = get_ontology(THESAURUS_LA_MINE)
+    # carte_mine_mere, report_inconnu = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
+    # # pprint(carte_mine_mere)
+    # pivot_bag = pivot_cog_map(carte_mine_mere, with_pos=False)
+    # pivot_pos = pivot_cog_map(carte_mine_mere, with_pos=True)
 
-    compute_cooc_matrix(pivot_bag)
-    # pd.DataFrame.from_dict(compute_cooc_matrix(pivot_bag))
+    # coocs = compute_cooc_matrix(carte_mine_mere)
+    # write_cooc_matrix(coocs, "output/matrix.csv")
+    # # pd.DataFrame.from_dict(compute_cooc_matrix(pivot_bag))
 
-    # generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
     # generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)

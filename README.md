@@ -13,6 +13,8 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
   - valeurs par défaut des `filedialog` de la GUI
   - calcul du rapport des mots inconnus
   - normalisation des noms de fichiers
+  - refator du calcul de co-occurences
+  - genération des graphes de co-occurences
 - 2021-07-26 :
   - première release
 
