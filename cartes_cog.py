@@ -28,8 +28,10 @@ DEFAULT_CONCEPT = "__inconnu__"
 # TODO : passer à une classe pour les cog maps
 
 
-def clean(str):
-    return str.strip().lower()
+def clean(string):
+    """Standarisation du nettoyage des chaines"""
+    return string.strip().lower()
+
 
 def get_cog_maps(filename):
     """Charge les cartes depuis le fichier CSV"""
@@ -138,7 +140,7 @@ def apply_ontology(carte, ontology, *, with_unknown=True):
     logger.info(
         f"{len(unknown_report)} mots inconnus ({DEFAULT_CONCEPT}) présents dans au total {sum(len(l) for l in unknown_report.values())} cartes"
     )
-    
+
     return carte_mere, unknown_report
 
 
@@ -155,6 +157,7 @@ def generate_results(output_dir, cartes_filename, ontologie_filename, with_unkno
     logger.debug(f"ontologie = {ontologie_filename}")
     logger.debug(f"with_unknown = {with_unknown}")
 
+    # crée le dossier de sortie si besoin
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     # application partielle qui génère un préfixe de nom
     get_name = partial(create_filename, output_dir, cartes_filename)
@@ -190,7 +193,7 @@ def test():
 
     ontology_mine = get_ontology(THESAURUS_LA_MINE)
     carte_mine_mere = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
-    # pprint(carte_mine_mere)
+    pprint(carte_mine_mere)
 
     # hist_bag_mere = compute_histogram_bag(carte_mine_mere)
     # hist_pos_mere = compute_histogram_pos(carte_mine_mere)
