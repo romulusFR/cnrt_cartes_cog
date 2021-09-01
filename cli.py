@@ -1,5 +1,5 @@
 # pylint: disable = logging-fstring-interpolation
-"""Interface ligne de commandes"""
+"""Interface ligne de commandes de gestion de cartes cognitives"""
 
 __author__ = "Romuald Thion"
 
@@ -8,8 +8,8 @@ from pathlib import Path
 import logging
 import sys
 from cartes_cog import (
-    CARTES_COG_FILE_DEFAULT,
-    ONTOLOGIE_FILE_DEFAULT,
+    CARTES_COG_LA_MINE,
+    THESAURUS_LA_MINE,
     OUTPUT_DIR,
     generate_results,
 )
@@ -25,15 +25,15 @@ def get_parser():
         "--ontology",
         "-o",
         action="store",
-        default=ONTOLOGIE_FILE_DEFAULT,
-        help=f"fichier csv de description de l'ontologie, au format (concept; mot énoncé), par défaut '{ONTOLOGIE_FILE_DEFAULT}'",
+        default=THESAURUS_LA_MINE,
+        help=f"fichier csv de description de l'ontologie, au format (concept; mot énoncé), par défaut '{THESAURUS_LA_MINE}'",
     )
     res.add_argument(
         "--cartes",
         "-c",
         action="store",
-        default=CARTES_COG_FILE_DEFAULT,
-        help=f"fichier csv des cartes cognitives, au format (id; mot 1; mot 2, ...), par défaut '{CARTES_COG_FILE_DEFAULT}'",
+        default=CARTES_COG_LA_MINE,
+        help=f"fichier csv des cartes cognitives, au format (id; mot 1; mot 2, ...), par défaut '{CARTES_COG_LA_MINE}'",
     )
     res.add_argument(
         "--directory",

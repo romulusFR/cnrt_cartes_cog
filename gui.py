@@ -8,7 +8,14 @@ import logging
 import tkinter as tk
 from io import StringIO
 from tkinter import filedialog, ttk
-from cartes_cog import generate_results
+from cartes_cog import (
+    generate_results,
+    CARTES_COG_LA_MINE,
+    THESAURUS_LA_MINE,
+    CARTES_COG_MINE_FUTUR,
+    THESAURUS_MINE_FUTUR,
+    OUTPUT_DIR,
+)
 
 log_stream = StringIO()
 logging.basicConfig(stream=log_stream)
@@ -26,12 +33,12 @@ window.pack(fill="both", expand=True)
 
 
 # variables globales
-cartes_cog_la_mine = tk.StringVar(window, "input/cartes_cog_la_mine.csv")
-thesaurus_la_mine = tk.StringVar(window, "input/thesaurus_la_mine.csv")
-cartes_cog_mine_futur = tk.StringVar(window, "input/cartes_cog_mine_futur.csv")
-thesaurus_mine_futur = tk.StringVar(window, "input/thesaurus_mine_futur.csv")
+cartes_cog_la_mine = tk.StringVar(window, CARTES_COG_LA_MINE)
+thesaurus_la_mine = tk.StringVar(window, THESAURUS_LA_MINE)
+cartes_cog_mine_futur = tk.StringVar(window, CARTES_COG_MINE_FUTUR)
+thesaurus_mine_futur = tk.StringVar(window, THESAURUS_MINE_FUTUR)
 
-output = tk.StringVar(window, "output")
+output = tk.StringVar(window, OUTPUT_DIR)
 with_unknown = tk.BooleanVar(window, False)
 report_unknown = tk.BooleanVar(window, False)
 

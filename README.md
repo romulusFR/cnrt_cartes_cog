@@ -1,18 +1,29 @@
 # Outil de calcul de cartes cognitives
 
-Le programme existe en deux versions avec les mêmes fonctionnalités :
+La bibliothèque de base est dans le fichier [`cartes_cog.py`](cartes_cog.py).
+Deux interfaces client existent avec les mêmes fonctionnalités :
 
-- CLI (Command Line Interface), `cli.py`
-- GUI (Graphic User Interface), `gui.py`
+- GUI (Graphic User Interface), [`gui.py`](gui.py) en TkInter
+- CLI (Command Line Interface), [`cli.py`](cli.py)
 
-Il prend deux entrées :
+## CHANGELOG
+
+- 2021-09-01
+  - support des deux cartes "la mine" et "la mine dans le futur"
+  - valeurs par défaut des filedialog de la GUI
+- 2021-07-26
+  - première release
+
+## Formats d'entrée
 
 - une _base de données des mots énoncés_, dite _cartes cognitives_, au format CSV (séparé par `;`) encodé en UTF-8 à la structure suivante :
   - `identifiant; mot 1; mot 2; ...`. Les cartes peuvent avoir des longueurs différentes
-  - le fichier par défaut est `input/bd_mots_enonces.csv`, voir l'exemple
-- un _thésaurus_, dit aussi _ontologie_, qui aux mots énoncés fait correspondre un mot mère, dit aussi _concept_,  au format CSV (séparé par `;`) encodé en UTF-8 à la structure suivante :
+  - **pas d'en-tête** dans la première ligne du fichier
+- un _thésaurus_, dit aussi _ontologie_, qui aux mots énoncés fait correspondre un mot mère, dit aussi _concept_, au format CSV (séparé par `;`) encodé en UTF-8 à la structure suivante :
   - `mot mère; mot énoncé`.
-  - le fichier par défaut est `input/thesaurus.csv`, voir l'exemple
+  - **pas d'en-tête** dans la première ligne du fichier
+
+## Calcul
 
 Pour une base de mots énoncés dont le nom de fichier est `$BD.csv`, le programme produit les fichiers résultats suivants :
 
@@ -22,23 +33,11 @@ Pour une base de mots énoncés dont le nom de fichier est `$BD.csv`, le program
 - `$BD_occurences_meres.csv` : idem `$BD_occurences.csv` mais avec les cartes mères
 - `$BD_positions_meres.csv` : idem `$BD_positions.csv` mais avec les cartes mères
 
- La CLI a l'interface suivante :
+## Entrées par défaut
 
-```raw
-python cli.py -h
-usage: cli.py [-h] [--ontology ONTOLOGY] [--cartes CARTES] [--directory DIRECTORY] [--unknown] [--verbose]
+Sans configuration, le calcul va être fait deux fois :
 
-Outil de traitement des cartes cognitives
+1. une fois sur les cartes _la mine_ avec comme entrées les cartes `input/cartes_cog_la_mine.csv` et le thésaurus `input/thesaurus_la_mine.csv`
+2. une fois sur les cartes _la mine dans le futur_ avec comme entrées les cartes `input/cartes_cog_mine_futur.csv` et le thésaurus `input/thesaurus_mine_futur.csv`
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --ontology ONTOLOGY, -o ONTOLOGY
-                        fichier csv de description de l'ontologie, au format (concept, mot énoncé), par défaut 'input/thesaurus.csv'
-  --cartes CARTES, -c CARTES
-                        fichier csv des cartes cognitives, au format (id, mot 1, mot 2, ...), par défaut 'input/bd_mots_enonces.csv'
-  --directory DIRECTORY, -d DIRECTORY
-                        dossier des fichiers de sortie, par défaut 'output'
-  --unknown, -u         calcule avec les mot énoncés qui n'ont pas de concept/mot mère, par défaut 'False'
-  --verbose, -v         niveau de verbosité de la sortie, utiliser -v pour le mode INFO -vv pour le mode DEBUG
-```
-La GUI fait la même chose mais avec une fenêtre.
+Les exemples sont donnés dans le dossier [`input`](input/)
