@@ -77,7 +77,7 @@ def pivot_cog_map(carte, with_pos=False):
     return pivot
 
 
-def compute_cooc_matrix(cog_map, threshold=2):
+def compute_cooc_matrix(cog_map, *, min_cooc_threshold=1, max_window_width=None):
     """Calcule la matrice de co-occurrece à partir d'une carte pivotée"""
     # dictionnaire des co-occurrences :
     # qui à chaque mot ligne
@@ -85,11 +85,36 @@ def compute_cooc_matrix(cog_map, threshold=2):
     #       -> le nombre de cartes où on apparait en commun
     # un dictionnaire de plus que nécessaire pour être compatible avec l'API networkx
     cooc_map = defaultdict(lambda: defaultdict(int))  # type: ignore
-    cog_map_idx = pivot_cog_map(cog_map)
+    cog_map_idx = pivot_cog_map(cog_map, with_pos=max_window_width is not None)
     for word_row in cog_map_idx:
         for word_col in cog_map_idx:
-            common_times = sum((Counter(cog_map_idx[word_row]) & Counter(cog_map_idx[word_col])).values())
-            if common_times >= threshold:  # and word_row != word_col
+            # on va calculer une forme d'intersection multiset avec le &
+            # c & d = forall x. min(c[x], d[x])
+            # https://docs.python.org/3/library/collections.html#collections.Counter
+            # on passe par les counter/multiset car après calcul de la carte mere
+            # on peut avoir plusieurs fois le même mot dans une carte
+            hist_row = Counter(cog_map_idx[word_row])
+            hist_col = Counter(cog_map_idx[word_col])
+            # dans le cas où on a oublié les positions, c'est vraiment le &
+            if max_window_width is None:
+                common_times = sum((hist_row & hist_col).values())
+            else:
+                common_times = 0
+                # logger.debug("%s %s", word_row, hist_row)
+                # logger.debug("%s %s", word_col, hist_col)
+                # les paires de paires (id_row, pos_row), (id_col, pos_col)
+                pos_prod = product(hist_row, hist_col)
+                # logger.debug("%s %s %s", word_col, word_col, list(pos_prod))
+                # on est ensemble si on est dans la même carte et
+                # à une distance de position <= à la taille de la fenetre
+                def common(row_pair, col_pair):
+                    same_map = row_pair[0] == col_pair[0]
+                    near = abs(row_pair[1] - col_pair[1]) <= max_window_width
+                    return same_map and near
+
+                filtered_prod = [min(hist_row[rp], hist_col[cp]) for (rp, cp) in pos_prod if common(rp, cp)]
+                common_times = sum(filtered_prod)
+            if common_times >= min_cooc_threshold:  # and word_row != word_col
                 cooc_map[word_row][word_col] = common_times
     return cooc_map
 
@@ -228,44 +253,19 @@ def generate_results(output_dir, cartes_filename, ontologie_filename, with_unkno
     write_cooc_matrix(compute_cooc_matrix(carte_mere), get_name("meres_matrice_cooccurences"))
 
 
-def test():
-    """tests si hors module"""
-    carte_mine = get_cog_maps(CARTES_COG_LA_MINE)
-    # pprint(carte_mine)
-
-    # hist_bag = compute_histogram_bag(carte_mine)
-    # hist_pos = compute_histogram_pos(carte_mine)
-    # write_histogram_bag(hist_bag, "tmp/tmp_hist_bag.csv")
-    # write_histogram_pos(hist_pos, "tmp/tmp_hist_pos.csv")
-    # # pprint(hist_bag)
-    # # pprint(hist_pos)
-
-    ontology_mine = get_ontology(THESAURUS_LA_MINE)
-    carte_mine_mere = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
-    # pprint(carte_mine_mere)
-
-    # hist_bag_mere = compute_histogram_bag(carte_mine_mere)
-    # hist_pos_mere = compute_histogram_pos(carte_mine_mere)
-    # write_histogram_bag(hist_bag_mere, "tmp/tmp_hist_bag_mere.csv")
-    # write_histogram_pos(hist_pos_mere, "tmp/tmp_hist_pos_mere.csv")
-    # pprint(hist_bag)
-    # pprint(hist_pos)
-
-
 # %%
 if __name__ == "__main__":
-    # # test()
-    # carte_mine = get_cog_maps(CARTES_COG_LA_MINE)
-
-    # ontology_mine = get_ontology(THESAURUS_LA_MINE)
-    # carte_mine_mere, report_inconnu = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
-    # # pprint(carte_mine_mere)
+    carte_mine = get_cog_maps("input/cartes_cog_small.csv")
+    ontology_mine = get_ontology(THESAURUS_LA_MINE)
+    carte_mine_mere, report_inconnu = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
+    # pprint(carte_mine_mere)
     # pivot_bag = pivot_cog_map(carte_mine_mere, with_pos=False)
     # pivot_pos = pivot_cog_map(carte_mine_mere, with_pos=True)
 
-    # coocs = compute_cooc_matrix(carte_mine_mere)
+    coocs = compute_cooc_matrix(carte_mine, min_cooc_threshold=2, max_window_width=1)
+    pprint(coocs)
     # write_cooc_matrix(coocs, "output/matrix.csv")
-    # # pd.DataFrame.from_dict(compute_cooc_matrix(pivot_bag))
+    # pd.DataFrame.from_dict(compute_cooc_matrix(pivot_bag))
 
-    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    # generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
     # generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)
