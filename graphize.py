@@ -31,37 +31,10 @@ if __name__ == "__main__":
     logging.basicConfig()
     logger.setLevel(logging.INFO)
 
-# cartes considérées
-# COG_MAP = get_cog_maps(CARTES_COG_LA_MINE)
-# ONTOLOGY = get_ontology(THESAURUS_LA_MINE)
-# COG_MAP = get_cog_maps(CARTES_COG_MINE_FUTUR)
-# ONTOLOGY = get_ontology(THESAURUS_MINE_FUTUR)
-
-
-# dossier et format de sortie
-IMG_FORMAT = "svg"
-GRAPH_DIR = Path("graphs/")
-Path(GRAPH_DIR).mkdir(parents=True, exist_ok=True)
-
-# nombre minimal de cooc
-THRESHOLD = 3
-
-# CONCEPT_MAP, ERROR_MAP = apply_ontology(COG_MAP, ONTOLOGY, with_unknown=False)
-# CONCEPT_IDX = pivot_cog_map_bag(CONCEPT_MAP)
-
-# logger.debug(f"CONCEPT_MAP = {CONCEPT_MAP}")
-# logger.debug(f"CONCEPT_IDX = { {w:len(l) for w, l in CONCEPT_IDX.items()} }")
-# logger.info(f"{len(CONCEPT_IDX)} concepts")
-
-
-# logger.debug(f"CONCEPT_IDX['nature'] = {CONCEPT_IDX['nature']}")
-# for i in CONCEPT_IDX["nature"]:
-#     logger.debug(f"CONCEPT_MAP[{i}] = {CONCEPT_MAP[i]}")
-# logger.debug(f"CONCEPT_COOC['nature'] = {CONCEPT_COOC['nature']}")
 
 def generate(pairs, min_threshold=2, max_threshold=5):
     """Genère un ensemble de graphes
-    
+
     Pour chaque paire (carte, thesaurus) de pairs, génère (carte_base, carte_mere)
     puis pour chacune de ces paires, génère un graph pour chaque niveau de threshold entre min et max (inclus)
     """
@@ -82,7 +55,12 @@ def generate(pairs, min_threshold=2, max_threshold=5):
                 # pprint(cooc_matrix)
                 cooc_diagonal = {word: cooc_matrix[word][word] for word in cooc_matrix}
                 # version étdenu avec un niveau suppl de dict pour "weight"
-                cooc_matrix_ext = { row_word : { col_word: {"weight" : cooc_matrix[row_word][col_word] } for col_word in cooc_matrix[row_word] } for row_word in cooc_matrix }
+                cooc_matrix_ext = {
+                    row_word: {
+                        col_word: {"weight": cooc_matrix[row_word][col_word]} for col_word in cooc_matrix[row_word]
+                    }
+                    for row_word in cooc_matrix
+                }
                 # on charge dans networkx
                 cooc_graph = nx.Graph(cooc_matrix_ext)
                 # virer les arcs boucles et les isolés
@@ -112,9 +90,15 @@ def generate(pairs, min_threshold=2, max_threshold=5):
                 )
 
 
+# dossier et format de sortie
+IMG_FORMAT = "svg"
+GRAPH_DIR = Path("graphs/")
+Path(GRAPH_DIR).mkdir(parents=True, exist_ok=True)
+# nombre minimal de cooc
+THRESHOLD = 3
+# les deux paire "la mine" et "la mine dans le futur"
 DATASETS = [(CARTES_COG_LA_MINE, THESAURUS_LA_MINE), (CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)]
 
-# #
 if __name__ == "__main__":
     generate(DATASETS, 2, 10)
     # nx.write_graphml(G, GRAPH_DIR / "network.graphml")
