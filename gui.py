@@ -66,7 +66,7 @@ def compute(_event=None):
     """Lance le calcul"""
     generate_results(output.get(), cartes_cog_la_mine.get(), thesaurus_la_mine.get(), with_unknown.get())
     generate_results(output.get(), cartes_cog_mine_futur.get(), thesaurus_mine_futur.get(), with_unknown.get())
-
+    # TODO : rendre stream/async
     text_log.insert("1.0", log_stream.getvalue())
     log_stream.truncate(0)
     log_stream.seek(0)

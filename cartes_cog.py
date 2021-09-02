@@ -24,15 +24,31 @@ CARTES_COG_LA_MINE = "input/cartes_cog_la_mine.csv"
 THESAURUS_LA_MINE = "input/thesaurus_la_mine.csv"
 CARTES_COG_MINE_FUTUR = "input/cartes_cog_mine_futur.csv"
 THESAURUS_MINE_FUTUR = "input/thesaurus_mine_futur.csv"
+WEIGHTS = "input/coefficients.csv"
 OUTPUT_DIR = "output"
 DEFAULT_CONCEPT = "__inconnu__"
 
 # TODO : passer à une classe pour les cog maps
 
 
+CSV_PARAMS = {"delimiter": ";", "quotechar": '"'}
+
+
 def clean(string):
     """Standarisation du nettoyage des chaines"""
     return string.strip().lower()
+
+
+def get_weigths(filename):
+    """Charge les poids depuis le fichier CSV"""
+    logger.debug(f"get_weigths({filename})")
+    weights = defaultdict(float)
+    with open(filename, encoding="utf-8") as csvfile:
+        reader = csv.reader(csvfile, **CSV_PARAMS)
+        _ = next(reader)
+        for row in reader:
+            weights[int(row[0])] = float(row[1])
+    return weights
 
 
 def get_cog_maps(filename):
@@ -41,7 +57,7 @@ def get_cog_maps(filename):
     carte = {}  # defaultdict(list)
 
     with open(filename, encoding="utf-8") as csvfile:
-        reader = csv.reader(csvfile, delimiter=";", quotechar='"')
+        reader = csv.reader(csvfile, **CSV_PARAMS)
         for row in reader:
             # indice 0 : l'id de la carte
             # indices 1 et suivants : les mots de la carte
@@ -58,7 +74,7 @@ def write_carte(carte, filename):
     """Ecrit les cartes depuis la map python"""
     logger.debug(f"write_carte({len(carte)}, {filename})")
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-        writer = csv.writer(csvfile, delimiter=";", quotechar='"')
+        writer = csv.writer(csvfile, **CSV_PARAMS)
         for i, words in carte.items():
             writer.writerow([i] + words)
     logger.info(f"cartes mères : {filename}")
@@ -124,7 +140,7 @@ def write_cooc_matrix(matrix, filename):
     logger.debug(f"write_cooc_matrix({len(matrix)}, {filename})")
     words = list(sorted(matrix.keys()))
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-        writer = csv.writer(csvfile, delimiter=";", quotechar='"')
+        writer = csv.writer(csvfile, **CSV_PARAMS)
         writer.writerow(["/"] + words)
         for row_word in words:
             writer.writerow([row_word] + [matrix[row_word][col_word] for col_word in words])
@@ -155,11 +171,40 @@ def compute_histogram_pos(carte):
     return hist
 
 
+def compute_weighted_histogram_bag(carte, weights=None):
+    """Pour chaque mot, donne son poids comme étant la somme pondérées des positions où il apparait, soit pi(mot) le nombre de fois où mot apparait en position i
+    p(mot) = a1*p1(mot) + a2*p2(mot) + ... + an*pn(mot)
+    """
+    logger.debug(f"compute_weighted_histogram_bag({len(carte)})")
+
+    # par défaut, des poids de 1 à toutes les positions
+    if weights is None:
+        weights = lambda _: 1
+    weighted_pos = defaultdict(float)
+
+    # on ne garde que la seconde composante et on fait +1
+    # pour commencer les index de position à 1 et pas 0
+    second = lambda x: x[1] + 1
+    cog_map_idx = {
+        word: list(map(second, positions)) for word, positions in pivot_cog_map(carte, with_pos=True).items()
+    }
+
+    for word, positions in cog_map_idx.items():
+        # logger.debug(f"{word} : {positions}")
+        weighted_pos[word] = sum(map(lambda pos: weights[pos], positions))
+
+    logger.info(
+        f"histogramme du sac de mots pondéré  par la position: {len(weighted_pos)} mots différents dans les cartes"
+    )
+    return weighted_pos
+
+
 def write_histogram_bag(hist, filename):
     """Sauvegarde la liste des mots énoncés et leur nombre d'occurences (le produit de compute_histogram_bag) au format csv"""
     logger.debug(f"write_histogram_bag({len(hist)}, {filename})")
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-        writer = csv.writer(csvfile, delimiter=";", quotechar='"')
+        writer = csv.writer(csvfile, **CSV_PARAMS)
+        writer.writerow(["mot", "nb_occurrences"])
         for row in hist:
             writer.writerow(row)
     logger.info(f"histogramme du sac de mots : {filename}")
@@ -169,7 +214,7 @@ def write_histogram_pos(hist, filename):
     """Sauvegarde pour chaque position, la liste des mots énoncés et leur nombre d'occurences (le produit de compute_histogram_pos) au format csv"""
     logger.debug(f"write_histogram_pos({len(hist)}, {filename})")
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-        writer = csv.writer(csvfile, delimiter=";", quotechar='"')
+        writer = csv.writer(csvfile, **CSV_PARAMS)
         header = [f"{k} {i}" for i, k in product(hist.keys(), ["mot", "nb"])]
         writer.writerow(header)
         content = zip_longest(*hist.values(), fillvalue=("", ""))
@@ -184,7 +229,7 @@ def get_ontology(filename):
     ontology = defaultdict(lambda: DEFAULT_CONCEPT)
 
     with open(filename, encoding="utf-8") as csvfile:
-        reader = csv.reader(csvfile, delimiter=";", quotechar='"')
+        reader = csv.reader(csvfile, **CSV_PARAMS)
         for row in reader:
             ontology[clean(row[1])] = clean(row[0])
     logger.info(f"ontologie : {len(ontology.keys())} mots énoncés et {len(set(ontology.values()))} concepts")
@@ -263,9 +308,14 @@ if __name__ == "__main__":
     # pivot_pos = pivot_cog_map(carte_mine_mere, with_pos=True)
 
     coocs = compute_cooc_matrix(carte_mine, min_cooc_threshold=2, max_window_width=1)
-    pprint(coocs)
+    # pprint(coocs)
+
     # write_cooc_matrix(coocs, "output/matrix.csv")
     # pd.DataFrame.from_dict(compute_cooc_matrix(pivot_bag))
+
+    given_weights = get_weigths(WEIGHTS)
+    weighted_hist_pos = compute_weighted_histogram_bag(carte_mine, given_weights)
+    pprint(weighted_hist_pos)
 
     # generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
     # generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)
