@@ -12,6 +12,7 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
   - calcul de co-occurence à fenêtre
   - génération de graphes co-occurence avec fenêtre
   - ajout header occurences
+  - ajout calcul des occurences pondérées par les positions
 - 2021-09-01 :
   - support des deux cartes "la mine" et "la mine dans le futur"
   - valeurs par défaut des `filedialog` de la GUI

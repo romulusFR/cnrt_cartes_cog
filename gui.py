@@ -14,6 +14,7 @@ from cartes_cog import (
     THESAURUS_LA_MINE,
     CARTES_COG_MINE_FUTUR,
     THESAURUS_MINE_FUTUR,
+    WEIGHTED_POSITIONS,
     OUTPUT_DIR,
 )
 
@@ -37,6 +38,7 @@ cartes_cog_la_mine = tk.StringVar(window, CARTES_COG_LA_MINE)
 thesaurus_la_mine = tk.StringVar(window, THESAURUS_LA_MINE)
 cartes_cog_mine_futur = tk.StringVar(window, CARTES_COG_MINE_FUTUR)
 thesaurus_mine_futur = tk.StringVar(window, THESAURUS_MINE_FUTUR)
+weigthed_positions = tk.StringVar(window, WEIGHTED_POSITIONS)
 
 output = tk.StringVar(window, OUTPUT_DIR)
 with_unknown = tk.BooleanVar(window, False)

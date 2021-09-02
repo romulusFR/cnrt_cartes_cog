@@ -24,7 +24,7 @@ CARTES_COG_LA_MINE = "input/cartes_cog_la_mine.csv"
 THESAURUS_LA_MINE = "input/thesaurus_la_mine.csv"
 CARTES_COG_MINE_FUTUR = "input/cartes_cog_mine_futur.csv"
 THESAURUS_MINE_FUTUR = "input/thesaurus_mine_futur.csv"
-WEIGHTS = "input/coefficients.csv"
+WEIGHTED_POSITIONS = "input/coefficients.csv"
 OUTPUT_DIR = "output"
 DEFAULT_CONCEPT = "__inconnu__"
 
@@ -39,7 +39,7 @@ def clean(string):
     return string.strip().lower()
 
 
-def get_weigths(filename):
+def get_weights(filename):
     """Charge les poids depuis le fichier CSV"""
     logger.debug(f"get_weigths({filename})")
     weights = defaultdict(float)
@@ -171,6 +171,7 @@ def compute_histogram_pos(carte):
     return hist
 
 
+# TODO : fusionner les deux méthodes
 def compute_weighted_histogram_bag(carte, weights=None):
     """Pour chaque mot, donne son poids comme étant la somme pondérées des positions où il apparait, soit pi(mot) le nombre de fois où mot apparait en position i
     p(mot) = a1*p1(mot) + a2*p2(mot) + ... + an*pn(mot)
@@ -178,9 +179,10 @@ def compute_weighted_histogram_bag(carte, weights=None):
     logger.debug(f"compute_weighted_histogram_bag({len(carte)})")
 
     # par défaut, des poids de 1 à toutes les positions
+    # fait alors exactement la me chose que compute_histogram_pos
     if weights is None:
-        weights = lambda _: 1
-    weighted_pos = defaultdict(float)
+        weights = defaultdict(lambda: 1)
+    weighted_hist = defaultdict(float)
 
     # on ne garde que la seconde composante et on fait +1
     # pour commencer les index de position à 1 et pas 0
@@ -191,22 +193,26 @@ def compute_weighted_histogram_bag(carte, weights=None):
 
     for word, positions in cog_map_idx.items():
         # logger.debug(f"{word} : {positions}")
-        weighted_pos[word] = sum(map(lambda pos: weights[pos], positions))
+        weighted_hist[word] = sum(map(lambda pos: weights[pos], positions))
 
-    logger.info(
-        f"histogramme du sac de mots pondéré  par la position: {len(weighted_pos)} mots différents dans les cartes"
-    )
-    return weighted_pos
+    logger.info(f"histogramme pondéré par la position: {len(weighted_hist)} mots différents dans les cartes")
+    return weighted_hist
 
 
-def write_histogram_bag(hist, filename):
+def write_histogram_bag(hist, filename, weighted_hist=None):
     """Sauvegarde la liste des mots énoncés et leur nombre d'occurences (le produit de compute_histogram_bag) au format csv"""
-    logger.debug(f"write_histogram_bag({len(hist)}, {filename})")
+    logger.debug(f"write_histogram_bag({len(hist)}, {filename}, {weighted_hist is None})")
+    header = ["mot", "nb_occurrences"]
+    if weighted_hist is not None:
+        header.append("occurences_ponderees")
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile, **CSV_PARAMS)
-        writer.writerow(["mot", "nb_occurrences"])
-        for row in hist:
-            writer.writerow(row)
+        writer.writerow(header)
+        for (word, nb_ooc) in hist:
+            if weighted_hist is None:
+                writer.writerow((word, nb_ooc))
+            else:
+                writer.writerow((word, nb_ooc, round(weighted_hist[word], 2)))
     logger.info(f"histogramme du sac de mots : {filename}")
 
 
@@ -279,9 +285,10 @@ def generate_results(output_dir, cartes_filename, ontologie_filename, with_unkno
     # chargement des entrées
     carte = get_cog_maps(cartes_filename)
     ontology = get_ontology(ontologie_filename)
-
+    weights = get_weights(WEIGHTED_POSITIONS)
+    weighted_bag = compute_weighted_histogram_bag(carte, weights)
     # stats "sac de mot" et "position" de la carte
-    write_histogram_bag(compute_histogram_bag(carte), get_name("base_occurences"))
+    write_histogram_bag(compute_histogram_bag(carte), get_name("base_occurences"), weighted_bag)
     write_histogram_pos(compute_histogram_pos(carte), get_name("base_positions"))
 
     # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
@@ -290,7 +297,8 @@ def generate_results(output_dir, cartes_filename, ontologie_filename, with_unkno
     # le report des mots qui n'ont pas de concepts
     write_carte(inconnus, get_name("inconnus"))
 
-    write_histogram_bag(compute_histogram_bag(carte_mere), get_name("meres_occurences"))
+    weighted_bag = compute_weighted_histogram_bag(carte_mere, weights)
+    write_histogram_bag(compute_histogram_bag(carte_mere), get_name("meres_occurences"), weighted_bag)
     write_histogram_pos(compute_histogram_pos(carte_mere), get_name("meres_positions"))
 
     # les matrices de co-occurences
@@ -313,9 +321,10 @@ if __name__ == "__main__":
     # write_cooc_matrix(coocs, "output/matrix.csv")
     # pd.DataFrame.from_dict(compute_cooc_matrix(pivot_bag))
 
-    given_weights = get_weigths(WEIGHTS)
+    given_weights = get_weights(WEIGHTED_POSITIONS)
     weighted_hist_pos = compute_weighted_histogram_bag(carte_mine, given_weights)
-    pprint(weighted_hist_pos)
+    # pprint(weighted_hist_pos)
+    write_histogram_bag(compute_histogram_bag(carte_mine), "test.csv", weighted_hist_pos)
 
-    # generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
     # generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)
