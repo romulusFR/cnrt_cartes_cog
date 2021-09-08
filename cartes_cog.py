@@ -46,19 +46,6 @@ class CogMaps:
         return string.strip().lower()
 
     @staticmethod
-    def load_weights(filename):
-        """Charge les poids depuis le fichier CSV"""
-        logger.debug(f"CogMap.load_weights({filename})")
-        weights = defaultdict(float)
-        with open(filename, encoding="utf-8") as csvfile:
-            reader = csv.reader(csvfile, **CSV_PARAMS)
-            # skip first line
-            _ = next(reader)
-            for row in reader:
-                weights[int(row[0])] = float(row[1])
-        return weights
-
-    @staticmethod
     def load_cog_maps(filename: Union[Path, str]):
         """Charge les cartes brutes depuis le fichier CSV"""
         logger.debug(f"CogMap.load_cog_maps({filename})")
@@ -76,6 +63,37 @@ class CogMaps:
         logger.info(f"CogMap.load: {len(cog_maps)} maps with {sum(len(l) for l in cog_maps.values())} total words")
         return cog_maps
 
+    @staticmethod
+    def load_weights(filename):
+        """Charge les poids depuis le fichier CSV"""
+        logger.debug(f"CogMap.load_weights({filename})")
+        weights = defaultdict(float)
+        with open(filename, encoding="utf-8") as csvfile:
+            reader = csv.reader(csvfile, **CSV_PARAMS)
+            # skip first line
+            _ = next(reader)
+            for row in reader:
+                weights[int(row[0])] = float(row[1])
+        return weights
+
+    @staticmethod
+    def load_thesaurus(filename):
+        """Charge l'ontologie (concept, mot énoncé) dans un dico "mot énoncé" -> "mot mère"
+
+        Assure l'application de CogMaps.clean_word"""
+        logger.debug(f"CogMaps.load_thesaurus({filename})")
+        thesaurus = defaultdict(lambda: DEFAULT_CONCEPT)
+
+        with open(filename, encoding=ENCODING) as csvfile:
+            reader = csv.reader(csvfile, **CSV_PARAMS)
+            for row in reader:
+                word = CogMaps.clean_word(row[1])
+                concept = CogMaps.clean_word(row[0])
+                if word not in CogMaps.EMPTY_WORDS and concept not in CogMaps.EMPTY_WORDS:
+                    thesaurus[word] = concept
+        logger.info(f"Thesaurus : {len(thesaurus.keys())} words and {len(set(thesaurus.values()))} concepts")
+        return thesaurus
+
     def __init__(self, cog_maps_filename=None, thesaurus_filename=None):
         # le fichier duquel lire les cartes cognitives
         self.__cog_maps_filename = None
@@ -83,6 +101,8 @@ class CogMaps:
         self.__thesaurus_filename = None
         # les cartes elles-mêmes : à un id, la liste des mots
         self.__cog_maps: dict[int, list[str]] = {}
+        # le thesaurus
+        self.__thesaurus: dict[str, str] = {}
         # l'index inverse : à un mot, la liste des positions (id_ligne, pos_dans_la ligne) où il apparait
         self.__index = None
         # les poids des positions par défaut : tout le monde à 1
@@ -93,6 +113,8 @@ class CogMaps:
         self.__occurrences_in_positions = None
         # pour une carte dérivée, sa carte parente
         self.__parent = None
+        #  pour une carte dérivée, les mots non-mappés
+        self.__unknowns = {}
 
         if cog_maps_filename is not None:
             self.__cog_maps_filename = cog_maps_filename
@@ -103,6 +125,7 @@ class CogMaps:
             self.__thesaurus = CogMaps.load_thesaurus(thesaurus_filename)
 
     def invalidate(self):
+        """Invalide les attributs privés qui dependent de cog_maps"""
         self.__index = None
         self.__occurrences = None
         self.__occurrences_in_positions = None
@@ -111,7 +134,7 @@ class CogMaps:
         return len(self.__cog_maps)
 
     def __repr__(self) -> str:
-        return f"<CogMaps at {hex(id(self))} of length {len(self)} from '{self.__cog_maps_filename}'>"
+        return f"<CogMaps at {hex(id(self))} of length {len(self)} from '{self.__cog_maps_filename}' with thesaurus '{self.__thesaurus_filename}'>"
 
     @property
     def cog_maps(self):
@@ -122,6 +145,16 @@ class CogMaps:
     def cog_maps(self, _):  # pylint: disable=no-self-use
         """On bloque l'affectation sur cog_maps"""
         raise TypeError("CogMap.cog_maps does not support direct assignment")
+
+    @property
+    def thesaurus(self):
+        """Les cartes elles mêmes"""
+        return self.__cog_maps
+
+    @thesaurus.setter
+    def thesaurus(self, _):  # pylint: disable=no-self-use
+        """On bloque l'affectation sur thesaurus"""
+        raise TypeError("CogMap.thesaurus does not support direct assignment")
 
     def dump(self, filename: Union[Path, str]):
         """Ecrit les cartes dans un fichier"""
@@ -188,6 +221,11 @@ class CogMaps:
 
         return self.__occurrences
 
+    @occurrences.setter
+    def occurrences(self, _):  # pylint: disable=no-self-use
+        """On bloque l'affectation sur occurrences"""
+        raise TypeError("CogMap.occurrences does not support direct assignment")
+
     def dump_occurrences(self, filename):
         """Sauvegarde la liste des mots énoncés et leur nombre d'occurrences (le produit de compute_histogram_bag) au format csv"""
         logger.debug(f"CogMap.dump_occurrences({len(self.cog_maps)}, {filename})")
@@ -232,24 +270,6 @@ class CogMaps:
                 writer.writerow([x for pair in row for x in pair])
         logger.info(f"histogramme des positions : {filename}")
 
-    @staticmethod
-    def load_thesaurus(filename):
-        """Charge l'ontologie (concept, mot énoncé) dans un dico "mot énoncé" -> "mot mère"
-
-        Assure l'application de CogMaps.clean_word"""
-        logger.debug(f"CogMaps.load_thesaurus({filename})")
-        thesaurus = defaultdict(lambda: DEFAULT_CONCEPT)
-
-        with open(filename, encoding=ENCODING) as csvfile:
-            reader = csv.reader(csvfile, **CSV_PARAMS)
-            for row in reader:
-                word = CogMaps.clean_word(row[1])
-                concept = CogMaps.clean_word(row[0])
-                if word not in CogMaps.EMPTY_WORDS and concept not in CogMaps.EMPTY_WORDS:
-                    thesaurus[word] = concept
-        logger.info(f"Thesaurus : {len(thesaurus.keys())} words and {len(set(thesaurus.values()))} concepts")
-        return thesaurus
-
     def apply(self, *, with_unknown=True):
         """Remplace tous les mots énoncés d'une carte par leur concept mère de l'ontologie"""
         logger.debug(
@@ -272,9 +292,10 @@ class CogMaps:
         )
 
         new_cog_maps = CogMaps()
-        new_cog_maps.__cog_maps = concept_maps # pylint: disable=protected-access
-        new_cog_maps.__parent = self # pylint: disable=protected-access
-        return new_cog_maps, unknown_report
+        new_cog_maps.__cog_maps = concept_maps  # pylint: disable=protected-access
+        new_cog_maps.__parent = self  # pylint: disable=protected-access
+        new_cog_maps.__unknowns = unknown_report  # pylint: disable=protected-access
+        return new_cog_maps
 
 
 def gen_filename(outdir, base, suffix):
@@ -291,8 +312,8 @@ if __name__ == "__main__":
     # mes_cartes.dump_occurrences("test2.csv")
     # mes_cartes.dump_occurrences_in_position("test3.csv")
 
-
     mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
+    mes_cartes_meres = mes_cartes.apply(with_unknown=False)
 
 # def get_weights(filename):
 
@@ -387,25 +408,3 @@ if __name__ == "__main__":
 #     write_cooc_matrix(compute_cooc_matrix(carte_mere), get_name("meres_matrice_cooccurences"))
 
 
-# # %%
-# if __name__ == "__main__":
-#     carte_mine = get_cog_maps("input/cartes_cog_small.csv")
-#     ontology_mine = get_ontology(THESAURUS_LA_MINE)
-#     carte_mine_mere, report_inconnu = apply_ontology(carte_mine, ontology_mine, with_unknown=False)
-#     # pprint(carte_mine_mere)
-#     # pivot_bag = pivot_cog_map(carte_mine_mere, with_pos=False)
-#     # pivot_pos = pivot_cog_map(carte_mine_mere, with_pos=True)
-
-#     coocs = compute_cooc_matrix(carte_mine, min_cooc_threshold=2, max_window_width=1)
-#     # pprint(coocs)
-
-#     # write_cooc_matrix(coocs, "output/matrix.csv")
-#     # pd.DataFrame.from_dict(compute_cooc_matrix(pivot_bag))
-
-#     given_weights = get_weights(WEIGHTED_POSITIONS)
-#     weighted_hist_pos = compute_weighted_histogram_bag(carte_mine, given_weights)
-#     # pprint(weighted_hist_pos)
-#     write_histogram_bag(compute_histogram_bag(carte_mine), "test.csv", weighted_hist_pos)
-
-#     generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
-#     # generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)
