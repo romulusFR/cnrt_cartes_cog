@@ -8,8 +8,12 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
 
 ## CHANGELOG
 
+- 2021-09-09 :
+  - ajout handler logger GUI
+  - correction des filedialog de la GUI
 - 2021-09-08 :
-  - refactor
+  - refactor complet POO
+  - utilisation des poids pour le calcul de la matrice de similarité
 - 2021-09-02 :
   - calcul de co-occurence à fenêtre
   - génération de graphes co-occurence avec fenêtre

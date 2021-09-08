@@ -21,11 +21,13 @@ if __name__ == "__main__":
     logging.basicConfig()
     logger.setLevel(logging.DEBUG)
 
-CARTES_COG_LA_MINE = "input/cartes_cog_la_mine.csv"
-THESAURUS_LA_MINE = "input/thesaurus_la_mine.csv"
-CARTES_COG_MINE_FUTUR = "input/cartes_cog_mine_futur.csv"
-THESAURUS_MINE_FUTUR = "input/thesaurus_mine_futur.csv"
-WEIGHTED_POSITIONS = "input/coefficients.csv"
+
+INPUT_DIR = Path("./input")
+CARTES_COG_LA_MINE = INPUT_DIR / "cartes_cog_la_mine.csv"
+THESAURUS_LA_MINE = INPUT_DIR / "thesaurus_la_mine.csv"
+CARTES_COG_MINE_FUTUR = INPUT_DIR / "cartes_cog_mine_futur.csv"
+THESAURUS_MINE_FUTUR = INPUT_DIR / "thesaurus_mine_futur.csv"
+WEIGHTED_POSITIONS = INPUT_DIR / "coefficients.csv"
 OUTPUT_DIR = "output"
 DEFAULT_CONCEPT = "__inconnu__"
 
