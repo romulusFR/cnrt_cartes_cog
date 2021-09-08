@@ -19,7 +19,7 @@ from pathlib import Path
 logger = logging.getLogger(f"COGNITIVE_MAP.{__name__}")
 if __name__ == "__main__":
     logging.basicConfig()
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
 
 CARTES_COG_LA_MINE = "input/cartes_cog_la_mine.csv"
 THESAURUS_LA_MINE = "input/thesaurus_la_mine.csv"
@@ -61,7 +61,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     @staticmethod
     def load_cog_maps(filename: StringOrPath) -> CogMapsType:
         """Charge les cartes brutes depuis le fichier CSV"""
-        logger.debug(f"CogMap.load_cog_maps({filename})")
+        logger.debug(f"CogMaps.load_cog_maps({filename})")
 
         cog_maps = {}
         with open(filename, encoding=ENCODING) as csvfile:
@@ -74,14 +74,14 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
                 cog_maps[identifier] = [CogMaps.clean_word(w) for w in row[1:] if w not in CogMaps.EMPTY_WORDS]
 
         logger.info(
-            f"CogMap.load_cog_maps: {len(cog_maps)} maps with {sum(len(l) for l in cog_maps.values())} words in total"
+            f"CogMaps.load_cog_maps: {len(cog_maps)} maps with {sum(len(l) for l in cog_maps.values())} words in total"
         )
         return cog_maps
 
     @staticmethod
     def load_weights(filename: StringOrPath) -> WeightsType:
         """Charge les poids depuis le fichier CSV"""
-        logger.debug(f"CogMap.load_weights({filename})")
+        logger.debug(f"CogMaps.load_weights({filename})")
         weights = defaultdict(float)
         with open(filename, encoding="utf-8") as csvfile:
             reader = csv.reader(csvfile, **CSV_PARAMS)
@@ -165,7 +165,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     def cog_maps(self, values: CogMapsType) -> None:
         """On bloque l'affectation sur cog_maps"""
         if not isinstance(values, dict):
-            raise TypeError(f"CogMap.cog_maps does not support direct assignment from {type(values)}")
+            raise TypeError(f"CogMaps.cog_maps does not support direct assignment from {type(values)}")
         self.__cog_maps = values
         self.invalidate()
 
@@ -177,22 +177,22 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     @thesaurus.setter
     def thesaurus(self, _) -> None:  # pylint: disable=no-self-use
         """On bloque l'affectation sur thesaurus"""
-        raise TypeError("CogMap.thesaurus does not support direct assignment")
+        raise TypeError("CogMaps.thesaurus does not support direct assignment")
 
     def dump(self, filename: StringOrPath) -> None:
         """Ecrit les cartes dans un fichier"""
-        logger.debug(f"CogMap.dump({len(self)}, {filename})")
+        logger.debug(f"CogMaps.dump({len(self)}, {filename})")
         with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
             writer = csv.writer(csvfile, **CSV_PARAMS)
             for i, words in self.__cog_maps.items():
                 writer.writerow([i] + words)  # type: ignore
-        logger.info(f"CogMap.dump to {filename}")
+        logger.info(f"CogMaps.dump to {filename}")
 
     @property
     def index(self) -> IndexType:
         """Index "pivot" des cartes : pour chaque mot, donne les couples (id, pos) des cartes où il apparait"""
         if self.__index is None:
-            logger.debug(f"CogMap.create_index({len(self)})")
+            logger.debug(f"CogMaps.create_index({len(self)})")
             self.__index = defaultdict(list)
             for identifier, words in self.__cog_maps.items():
                 for pos, word in enumerate(words):
@@ -204,7 +204,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     @index.setter
     def index(self, _) -> None:  # pylint: disable=no-self-use
         """On bloque l'affectation sur index"""
-        raise TypeError("CogMap.index does not support direct assignment")
+        raise TypeError("CogMaps.index does not support direct assignment")
 
     @property
     def words(self) -> Iterator[Word]:
@@ -233,7 +233,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         """
 
         if self.__occurrences is None:
-            logger.debug(f"CogMap.occurrences({len(self.__cog_maps)}, {self.__weights})")
+            logger.debug(f"CogMaps.occurrences({len(self.__cog_maps)}, {self.__weights})")
             self.__occurrences = defaultdict(float)
             # on ne garde que la seconde composante de l'index
             second = lambda x: x[1]
@@ -247,11 +247,11 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     @occurrences.setter
     def occurrences(self, _) -> None:  # pylint: disable=no-self-use
         """On bloque l'affectation sur occurrences"""
-        raise TypeError("CogMap.occurrences does not support direct assignment")
+        raise TypeError("CogMaps.occurrences does not support direct assignment")
 
     def dump_occurrences(self, filename: StringOrPath) -> None:
         """Sauvegarde la liste des mots énoncés et leur nombre d'occurrences (le produit de compute_histogram_bag) au format csv"""
-        logger.debug(f"CogMap.dump_occurrences({len(self.cog_maps)}, {filename})")
+        logger.debug(f"CogMaps.dump_occurrences({len(self.cog_maps)}, {filename})")
         header = ["mot", "nb_occurrences", "occurences_ponderees"]
 
         with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
@@ -259,7 +259,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
             writer.writerow(header)
             for word in sorted(self.words):
                 writer.writerow((word, len(self.index[word]), round(self.occurrences[word], 2)))
-        logger.info(f"CogMap.dump_occurrences to {filename}")
+        logger.info(f"CogMaps.dump_occurrences to {filename}")
 
     @property
     def occurrences_in_position(self) -> OccurrencesInPositionsType:
@@ -275,7 +275,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
             self.__occurrences_in_positions = {position: Counter(words) for (position, words) in words_in_pos.items()}
             logger.info(
-                f"CogMaps.occurrences_in_position: {len(self.__occurrences_in_positions)} positions (longuest map)"
+                f"CogMaps.occurrences_in_position: {len(self.__occurrences_in_positions)} positions (longest map)"
             )
         return self.__occurrences_in_positions
 
@@ -296,7 +296,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     def apply(self, *, with_unknown=True):
         """Remplace tous les mots énoncés d'une carte par leur concept mère de l'ontologie"""
         logger.debug(
-            f"CogMaps.apply({len(self)} cartes, {len(self.__thesaurus)} concepts thesaurus avec inconnus={with_unknown})"
+            f"CogMaps.apply({len(self)} maps, {len(self.__thesaurus)} concepts thesaurus with unknowns={with_unknown})"
         )
         concept_maps = {}
         unknown_report = defaultdict(list)
@@ -311,7 +311,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
             f"CogMaps.apply: {len(concept_maps)} concept maps with {sum(len(l) for l in concept_maps.values())} words ({'with' if with_unknown else 'without'} unknown words)"
         )
         logger.info(
-            f"CogMaps.apply:{len(unknown_report)} unknown words ({DEFAULT_CONCEPT}) in {sum(len(l) for l in unknown_report.values())} maps"
+            f"CogMaps.apply: {len(unknown_report)} unknown words ({DEFAULT_CONCEPT}) in {sum(len(l) for l in unknown_report.values())} maps"
         )
 
         new_cog_maps = CogMaps()
@@ -398,22 +398,20 @@ def generate_results(
     # chargement des entrées
     the_cog_maps = CogMaps(cog_maps_filename, thesaurus_filename)
     the_cog_maps.weights = CogMaps.load_weights(WEIGHTED_POSITIONS)
-    the_cog_maps.dump(get_name(""))
+    the_cog_maps.dump(get_name("base"))
     the_cog_maps.dump_occurrences(get_name("base_occurrences"))
     the_cog_maps.dump_occurrences_in_position(get_name("base_positions"))
+    the_cog_maps.dump_matrix(get_name("base_matrice"))
 
     # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
     the_concept_maps, the_unknowns_maps = the_cog_maps.apply(with_unknown=with_unknown)
     the_concept_maps.dump(get_name("meres"))
     the_concept_maps.dump_occurrences(get_name("meres_occurrences"))
     the_concept_maps.dump_occurrences_in_position(get_name("meres_positions"))
+    the_concept_maps.dump_matrix(get_name("meres_matrice"))
 
     # le rapport des mots qui n'ont pas de concepts
     the_unknowns_maps.dump(get_name("inconnus"))
-
-    # les matrices de co-occurences
-    the_cog_maps.dump_matrix(get_name("base_matrice_cooccurences"))
-    the_concept_maps.dump_matrix(get_name("meres_matrice_cooccurences"))
 
 
 if __name__ == "__main__":
