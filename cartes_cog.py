@@ -292,30 +292,14 @@ class CogMaps:
         )
 
         new_cog_maps = CogMaps()
+        # on définit les cartes
         new_cog_maps.__cog_maps = concept_maps  # pylint: disable=protected-access
+        # le parent
         new_cog_maps.__parent = self  # pylint: disable=protected-access
         new_cog_maps.__unknowns = unknown_report  # pylint: disable=protected-access
+        # on reprend la même carte de poids
+        new_cog_maps.__weights = self.__weights.copy()  # pylint: disable=protected-access
         return new_cog_maps
-
-
-def gen_filename(outdir, base, suffix):
-    """Génère un nom de fichier standardisé pour les résultats de calcul"""
-    return Path(outdir) / Path(f"{Path(base).stem}_{suffix}.csv")
-
-
-# %%
-
-if __name__ == "__main__":
-    # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
-    # mes_cartes.dump_occurrences("test1.csv")
-    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
-    # mes_cartes.dump_occurrences("test2.csv")
-    # mes_cartes.dump_occurrences_in_position("test3.csv")
-
-    mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
-    mes_cartes_meres = mes_cartes.apply(with_unknown=False)
-
-# def get_weights(filename):
 
 
 # def compute_cooc_matrix(cog_map, *, min_cooc_threshold=1, max_window_width=None):
@@ -371,40 +355,55 @@ if __name__ == "__main__":
 #             writer.writerow([row_word] + [matrix[row_word][col_word] for col_word in words])
 #     logger.info(f"cartes mères : {filename}")
 
-
-# def generate_results(output_dir, cartes_filename, ontologie_filename, with_unknown=False):
-#     """"programme principal utilisé par la CLI et la GUI"""
-#     logger.debug(f"output = {output_dir}")
-#     logger.debug(f"cartes_cognitives = {cartes_filename}")
-#     logger.debug(f"ontologie = {ontologie_filename}")
-#     logger.debug(f"with_unknown = {with_unknown}")
-
-#     # crée le dossier de sortie si besoin
-#     Path(output_dir).mkdir(parents=True, exist_ok=True)
-#     # application partielle qui génère un préfixe de nom
-#     get_name = partial(create_filename, output_dir, cartes_filename)
-
-#     # chargement des entrées
-#     carte = get_cog_maps(cartes_filename)
-#     ontology = get_ontology(ontologie_filename)
-#     weights = get_weights(WEIGHTED_POSITIONS)
-#     weighted_bag = compute_weighted_histogram_bag(carte, weights)
-#     # stats "sac de mot" et "position" de la carte
-#     write_histogram_bag(compute_histogram_bag(carte), get_name("base_occurences"), weighted_bag)
-#     write_histogram_pos(compute_histogram_pos(carte), get_name("base_positions"))
-
-#     # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
-#     carte_mere, inconnus = apply_ontology(carte, ontology, with_unknown=with_unknown)
-#     write_carte(carte_mere, get_name("meres"))
-#     # le report des mots qui n'ont pas de concepts
-#     write_carte(inconnus, get_name("inconnus"))
-
-#     weighted_bag = compute_weighted_histogram_bag(carte_mere, weights)
-#     write_histogram_bag(compute_histogram_bag(carte_mere), get_name("meres_occurences"), weighted_bag)
-#     write_histogram_pos(compute_histogram_pos(carte_mere), get_name("meres_positions"))
-
-#     # les matrices de co-occurences
-#     write_cooc_matrix(compute_cooc_matrix(carte), get_name("base_matrice_cooccurences"))
-#     write_cooc_matrix(compute_cooc_matrix(carte_mere), get_name("meres_matrice_cooccurences"))
+# %%
+def gen_filename(outdir, base, suffix):
+    """Outil : Génère un nom de fichier standardisé pour les résultats de calcul"""
+    return Path(outdir) / Path(f"{Path(base).stem}_{suffix}.csv")
 
 
+def generate_results(output_dir, cog_maps_filename, thesaurus_filename, with_unknown=False):
+    """"programme principal utilisé par la CLI et la GUI"""
+    logger.debug(f"output_dir = {output_dir}")
+    logger.debug(f"cog_maps__filename = {cog_maps_filename}")
+    logger.debug(f"thesaurus_filename = {thesaurus_filename}")
+    logger.debug(f"with_unknown = {with_unknown}")
+
+    # crée le dossier de sortie si besoin
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
+    # application partielle qui génère un préfixe de nom
+    get_name = partial(gen_filename, output_dir, cog_maps_filename)
+
+    # chargement des entrées
+    the_cog_maps = CogMaps(cog_maps_filename, thesaurus_filename)
+    the_cog_maps.weights = CogMaps.load_weights(WEIGHTED_POSITIONS)
+    the_cog_maps.dump(get_name(""))
+    the_cog_maps.dump_occurrences(get_name("base_occurrences"))
+    the_cog_maps.dump_occurrences_in_position(get_name("base_positions"))
+
+    # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
+    the_concept_maps = the_cog_maps.apply(with_unknown=with_unknown)
+    the_concept_maps.dump(get_name("meres"))
+    the_concept_maps.dump_occurrences(get_name("meres_occurrences"))
+    the_concept_maps.dump_occurrences_in_position(get_name("meres_positions"))
+
+    # le rapport des mots qui n'ont pas de concepts
+    # write_carte(inconnus, get_name("inconnus"))
+
+    # les matrices de co-occurences
+    # write_cooc_matrix(compute_cooc_matrix(carte), get_name("base_matrice_cooccurences"))
+    # write_cooc_matrix(compute_cooc_matrix(carte_mere), get_name("meres_matrice_cooccurences"))
+
+
+if __name__ == "__main__":
+    # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
+    # mes_cartes.dump_occurrences("test1.csv")
+    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
+    # mes_cartes.dump_occurrences("test2.csv")
+    # mes_cartes.dump_occurrences_in_position("test3.csv")
+
+    # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
+    # mes_cartes_meres = mes_cartes.apply(with_unknown=False)
+
+    WITH_UNKNOWNS = False
+    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
+    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
