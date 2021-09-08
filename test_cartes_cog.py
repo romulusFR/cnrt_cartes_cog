@@ -1,11 +1,15 @@
 # pylint: disable =  unused-import, missing-class-docstring, missing-function-docstring, too-few-public-methods, no-self-use
 """Tests"""
 
+# %%
+
+from collections import defaultdict, Counter
 from pathlib import Path
 import pytest
-from cartes_cog import CogMaps
+from cartes_cog import CogMaps, CSV_PARAMS
 
-TEST_FILENAME = Path("input/cartes_cog_small.csv")
+COGMAPS_FILENAME = Path("input/cartes_cog_small.csv")
+WEIGHTS_FILENAME = Path("input/coefficients.csv")
 DUMP_CONTENT = """1;pollution;inondation;boom;travail;retombée
 2;richesse;malédiction;travail;destruction;histoire;frein;blocage;coutumier
 4;travail;pollution;plainte
@@ -30,13 +34,13 @@ class TestCognitiveMap:
         assert len(test_maps.index) == 0
 
     def test_cog_init_filename(self):
-        test_maps = CogMaps(TEST_FILENAME)
+        test_maps = CogMaps(COGMAPS_FILENAME)
         assert len(test_maps) == 9
         assert len(test_maps.cog_maps) == 9
         assert test_maps.cog_maps[1] == ["pollution", "inondation", "boom", "travail", "retombée"]
 
     def test_dump(self, tmp_path):
-        test_maps = CogMaps(TEST_FILENAME)
+        test_maps = CogMaps(COGMAPS_FILENAME)
         filename = tmp_path / "dump.csv"
         test_maps.dump(filename)
         assert filename.read_text() == DUMP_CONTENT
@@ -47,7 +51,7 @@ class TestCognitiveMap:
             test_maps.cog_maps = {}
 
     def test_index(self):
-        test_maps = CogMaps(TEST_FILENAME)
+        test_maps = CogMaps(COGMAPS_FILENAME)
         assert len(test_maps.index) == 42
         words = {word for words in test_maps.cog_maps.values() for word in words}
         # on a bien indexé tous les mots
@@ -62,10 +66,59 @@ class TestCognitiveMap:
         with pytest.raises(TypeError, match=r".*assignment.*"):
             test_maps.index = {}
 
-    # def test_hist(self):
-    #     cog_map = CogMaps(TEST_FILENAME)
-    #     cog_map.hist()
-    #     assert len(cog_map.occurrences)  == 42
-    #     bag = [word for words in cog_map.cog_maps.values() for word in words]
-    #     assert sorted(cog_map.occurrences.elements()) == sorted(bag)
-    
+    def test_load_weights(self):
+        weights = CogMaps.load_weights(WEIGHTS_FILENAME)
+        ref_weights = defaultdict(float) | {1: 1.0, 2: 0.8, 3: 0.6, 4: 0.4, 5: 0.2}
+        for pos in weights:
+            assert weights[pos] == ref_weights[pos]
+
+    def test_weights(self):
+        test_maps = CogMaps(COGMAPS_FILENAME)
+        test_maps.weights = CogMaps.load_weights(WEIGHTS_FILENAME)
+        ref_weights = defaultdict(float) | {1: 1.0, 2: 0.8, 3: 0.6, 4: 0.4, 5: 0.2}
+        for pos in test_maps.weights:
+            assert test_maps.weights[pos] == ref_weights[pos]
+
+    def test_occurrences_default_weights(self):
+        test_maps = CogMaps(COGMAPS_FILENAME)
+        occurrences = test_maps.occurrences
+        assert len(occurrences) == 42
+        bag = [word for words in test_maps.cog_maps.values() for word in words]
+        assert sorted(Counter(occurrences).elements()) == sorted(bag)
+
+    def test_occurrences_custom_weights(self):
+        test_maps = CogMaps(COGMAPS_FILENAME)
+        test_maps.weights = CogMaps.load_weights(WEIGHTS_FILENAME)
+        occurrences = test_maps.occurrences
+        assert len(occurrences) == 42
+        assert occurrences["travail"] == 2.2
+
+    def test_occurrences_dump_occurrences(self, tmp_path):
+        test_maps = CogMaps(COGMAPS_FILENAME)
+        file_no_weights = tmp_path / "dump_no_weights.csv"
+        test_maps.dump_occurrences(file_no_weights)
+        test_maps.weights = CogMaps.load_weights(WEIGHTS_FILENAME)
+        file_weights = tmp_path / "dump_weights.csv"
+        test_maps.dump_occurrences(file_weights)
+
+        content_no_weights = {}
+        for line in file_no_weights.read_text().split("\n")[1:]:
+            cols = line.split(CSV_PARAMS["delimiter"])
+            if len(cols) == 3:
+                content_no_weights[cols[0]] = cols[1:]
+                assert int(cols[1]) == int(cols[2])
+        assert list(content_no_weights.keys()) == sorted(list(test_maps.words))
+
+        content_weights = {}
+        for line in file_weights.read_text().split("\n")[1:]:
+            cols = line.split(CSV_PARAMS["delimiter"])
+            if len(cols) == 3:
+                content_weights[cols[0]] = cols[1:]
+                assert float(cols[1]) >= float(cols[2])
+        assert list(content_no_weights.keys()) == sorted(list(test_maps.words))
+
+
+    def test_occurrences_dump_occurrences_in_position(self, tmp_path):
+        test_maps = CogMaps(COGMAPS_FILENAME)
+        filename = tmp_path / "dump_position.csv"
+        test_maps.dump_occurrences_in_position(filename)

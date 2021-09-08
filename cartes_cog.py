@@ -10,7 +10,7 @@ import logging
 from typing import Union, Tuple, Iterator
 from collections import Counter, defaultdict
 from itertools import product, zip_longest
-from functools import partial
+from functools import partial, singledispatchmethod
 from pprint import pprint  # pylint: disable=unused-import
 from pathlib import Path
 
@@ -39,38 +39,31 @@ class CogMaps:
 
     # listes des mots considérés comme vides et exlcus de la carte
     EMPTY_WORDS = ("NULL", "")
-    """Mots vides"""
-
-    def __init__(self, filename=None):
-        # le fichier duquel lire les cartes
-        self.__filename = None
-        # les cartes elles-mêmes : à un id, la liste des mots
-        self.__cog_maps: dict[int, list[str]] = {}
-        # l'index inverse : à un mot, la liste des positions (id_ligne, pos_dans_la ligne) où il apparait
-        self.__index = None
-        # self.occurrences = None
-        # les poids des positions
-        self.__weights = None
-
-        if filename is not None:
-            self.__load(filename)
 
     @staticmethod
     def clean_word(string: str):
         """Standarisation du nettoyage des chaines"""
         return string.strip().lower()
 
-    def __len__(self):
-        return len(self.__cog_maps)
+    @staticmethod
+    def load_weights(filename):
+        """Charge les poids depuis le fichier CSV"""
+        logger.debug(f"CogMap.load_weights({filename})")
+        weights = defaultdict(float)
+        with open(filename, encoding="utf-8") as csvfile:
+            reader = csv.reader(csvfile, **CSV_PARAMS)
+            # skip first line
+            _ = next(reader)
+            for row in reader:
+                weights[int(row[0])] = float(row[1])
+        return weights
 
-    def __repr__(self) -> str:
-        return f"<CogMaps at {hex(id(self))} of length {len(self)} from '{self.__filename}'>"
+    @staticmethod
+    def load_cog_maps(filename: Union[Path, str]):
+        """Charge les cartes brutes depuis le fichier CSV"""
+        logger.debug(f"CogMap.load_cog_maps({filename})")
 
-    def __load(self, filename: Union[Path, str]):
-        """Charge les cartes depuis le fichier CSV"""
-        logger.debug(f"CogMap.load({filename})")
-        self.__filename = Path(filename)
-
+        cog_maps = {}
         with open(filename, encoding=ENCODING) as csvfile:
             reader = csv.reader(csvfile, **CSV_PARAMS)
             for row in reader:
@@ -78,14 +71,47 @@ class CogMaps:
                 # indices 1 et suivants : les mots de la carte
                 identifier = int(row[0])
                 # on élimine les mots vides et NULL
-                self.__cog_maps[identifier] = [CogMaps.clean_word(w) for w in row[1:] if w not in CogMaps.EMPTY_WORDS]
+                cog_maps[identifier] = [CogMaps.clean_word(w) for w in row[1:] if w not in CogMaps.EMPTY_WORDS]
 
-        logger.info(
-            f"CogMap.load: {len(self.__cog_maps)} maps with {sum(len(l) for l in self.__cog_maps.values())} total words"
-        )
+        logger.info(f"CogMap.load: {len(cog_maps)} maps with {sum(len(l) for l in cog_maps.values())} total words")
+        return cog_maps
 
-        # ràz l'index s'il était déjà construit
+    def __init__(self, cog_maps_filename=None, thesaurus_filename=None):
+        # le fichier duquel lire les cartes cognitives
+        self.__cog_maps_filename = None
+        # le fichier duquel lire le thesauruse associé
+        self.__thesaurus_filename = None
+        # les cartes elles-mêmes : à un id, la liste des mots
+        self.__cog_maps: dict[int, list[str]] = {}
+        # l'index inverse : à un mot, la liste des positions (id_ligne, pos_dans_la ligne) où il apparait
         self.__index = None
+        # les poids des positions par défaut : tout le monde à 1
+        self.__weights = defaultdict(lambda: 1)
+        # le nombre d'occurences, pondérées par weights
+        self.__occurrences = None
+        # dans chaque positions, le nombre d'occurences de chaque mot
+        self.__occurrences_in_positions = None
+        # pour une carte dérivée, sa carte parente
+        self.__parent = None
+
+        if cog_maps_filename is not None:
+            self.__cog_maps_filename = cog_maps_filename
+            self.__cog_maps = CogMaps.load_cog_maps(cog_maps_filename)
+
+        if thesaurus_filename is not None:
+            self.__thesaurus_filename = thesaurus_filename
+            self.__thesaurus = CogMaps.load_thesaurus(thesaurus_filename)
+
+    def invalidate(self):
+        self.__index = None
+        self.__occurrences = None
+        self.__occurrences_in_positions = None
+
+    def __len__(self):
+        return len(self.__cog_maps)
+
+    def __repr__(self) -> str:
+        return f"<CogMaps at {hex(id(self))} of length {len(self)} from '{self.__cog_maps_filename}'>"
 
     @property
     def cog_maps(self):
@@ -102,7 +128,7 @@ class CogMaps:
         logger.debug(f"CogMap.dump({len(self)}, {filename})")
         with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
             writer = csv.writer(csvfile, **CSV_PARAMS)
-            for i, words in self.cog_maps.items():
+            for i, words in self.__cog_maps.items():
                 writer.writerow([i] + words)  # type: ignore
         logger.info(f"CogMap.dump to {filename}")
         return self
@@ -110,13 +136,14 @@ class CogMaps:
     @property
     def index(self) -> dict[str, list[Tuple[int, int]]]:
         """Index "pivot" des cartes : pour chaque mot, donne les couples (id, pos) des cartes où il apparait"""
-        logger.debug(f"CogMap.create_index({len(self)})")
         if self.__index is None:
+            logger.debug(f"CogMap.create_index({len(self)})")
             self.__index = defaultdict(list)
             for identifier, words in self.__cog_maps.items():
                 for pos, word in enumerate(words):
-                    value = (identifier, pos)
-                    self.index[word].append(value)
+                    # NOTE : on fait commencer les positions à 1
+                    value = (identifier, pos + 1)
+                    self.__index[word].append(value)
         return self.__index
 
     @index.setter
@@ -135,73 +162,137 @@ class CogMaps:
         return self.__weights
 
     @weights.setter
-    def weights(self, filename):
-        """Charge les poids depuis le fichier CSV"""
-        logger.debug(f"CogMap.weights.setter({filename})")
-        self.__weights = defaultdict(float)
-        with open(filename, encoding="utf-8") as csvfile:
-            reader = csv.reader(csvfile, **CSV_PARAMS)
-            _ = next(reader)
-            for row in reader:
-                self.__weights[int(row[0])] = float(row[1])
+    def weights(self, values):
+        # dispatch manuel
+        if not isinstance(values, dict):
+            raise NotImplementedError(f"CogMaps.weights cannot dispatch {type(values)}")
+        # ràz des occurences
+        self.__occurrences = None
+        self.__weights = values
 
-    # def hist(self) -> Counter[str]:
-    #     """Calcule l'histogramme : le nombre d'occurences de chaque mot dans toutes les cartes"""
-
-    #     logger.debug(f"CogMap.hist({len(self)})")
-    #     if self.occurrences is not None:
-    #         return self.occurrences
-
-    #     bag_of_words = [w for d in self.cog_maps.values() for w in d]
-    #     self.occurrences = Counter(bag_of_words)
-    #     logger.info(f"CogMap.hist: {len(self.occurrences)} different words")
-
-    # return self.occurrences
-
-    def histogram(self, weights=None):
+    @property
+    def occurrences(self):
         """Pour chaque mot, donne son poids comme étant la somme pondérées des positions où il apparait, soit pi(mot) le nombre de fois où mot apparait en position i
         p(mot) = a1*p1(mot) + a2*p2(mot) + ... + an*pn(mot)
         """
-        logger.debug(f"CogMap.histogram({len(self.cog_maps)}, {weights})")
 
-        # par défaut, des poids de 1 à toutes les positions
-        if weights is None:
-            weights = defaultdict(lambda: 1)
-        weighted_hist = defaultdict(float)
+        if self.__occurrences is None:
+            logger.debug(f"CogMap.occurrences({len(self.__cog_maps)}, {self.__weights})")
+            self.__occurrences = defaultdict(float)
+            # on ne garde que la seconde composante de l'index
+            second = lambda x: x[1]
+            position_index = {word: list(map(second, positions)) for word, positions in self.index.items()}
 
-        # on ne garde que la seconde composante de l'index et on fait +1
-        # pour commencer les index de position à 1 et pas 0
-        second = lambda x: x[1] + 1
-        position_index = {word: list(map(second, positions)) for word, positions in self.index.items()}
+            for word, positions in position_index.items():
+                self.__occurrences[word] = sum(map(lambda pos: self.weights[pos], positions))
 
-        for word, positions in position_index.items():
-            weighted_hist[word] = sum(map(lambda pos: weights[pos], positions))
+        return self.__occurrences
 
-        logger.info(f"histogramme pondéré par la position: {len(weighted_hist)} mots différents dans les cartes")
-        return weighted_hist
+    def dump_occurrences(self, filename):
+        """Sauvegarde la liste des mots énoncés et leur nombre d'occurrences (le produit de compute_histogram_bag) au format csv"""
+        logger.debug(f"CogMap.dump_occurrences({len(self.cog_maps)}, {filename})")
+        header = ["mot", "nb_occurrences", "occurences_ponderees"]
+
+        with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
+            writer = csv.writer(csvfile, **CSV_PARAMS)
+            writer.writerow(header)
+            for word in sorted(self.words):
+                writer.writerow((word, len(self.index[word]), round(self.occurrences[word], 2)))
+        logger.info(f"CogMap.dump_occurrences to {filename}")
+
+    @property
+    def occurrences_in_position(self):
+        """Pour chaque position, calcule le nombre d'occurence de chaque mot dans cette position"""
+
+        if self.__occurrences_in_positions is None:
+            logger.debug(f"CogMaps.occurrences_in_position({len(self)})")
+            words_in_pos = defaultdict(list)
+
+            for word, positions in self.index.items():
+                for (_, position) in positions:
+                    words_in_pos[position].append(word)
+
+            self.__occurrences_in_positions = {position: Counter(words) for (position, words) in words_in_pos.items()}
+            logger.info(
+                f"histogramme des positions : {len(self.__occurrences_in_positions)} positions (longueur de la plus longue carte)"
+            )
+        return self.__occurrences_in_positions
+
+    def dump_occurrences_in_position(self, filename):
+        """Sauvegarde pour chaque position, la liste des mots énoncés et leur nombre d'occurences (le produit de compute_histogram_pos) au format csv"""
+        logger.debug(f"CogMaps.dump_occurrences_in_position({len(self)}, {filename})")
+        positions = sorted(self.occurrences_in_position.keys())
+        hist = {position: self.occurrences_in_position[position].most_common() for position in positions}
+        with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
+            writer = csv.writer(csvfile, **CSV_PARAMS)
+            header = [f"{k} {i}" for i, k in product(hist.keys(), ["mot", "nb"])]
+            writer.writerow(header)
+            content = zip_longest(*hist.values(), fillvalue=("", ""))
+            for row in content:
+                writer.writerow([x for pair in row for x in pair])
+        logger.info(f"histogramme des positions : {filename}")
+
+    @staticmethod
+    def load_thesaurus(filename):
+        """Charge l'ontologie (concept, mot énoncé) dans un dico "mot énoncé" -> "mot mère"
+
+        Assure l'application de CogMaps.clean_word"""
+        logger.debug(f"CogMaps.load_thesaurus({filename})")
+        thesaurus = defaultdict(lambda: DEFAULT_CONCEPT)
+
+        with open(filename, encoding=ENCODING) as csvfile:
+            reader = csv.reader(csvfile, **CSV_PARAMS)
+            for row in reader:
+                word = CogMaps.clean_word(row[1])
+                concept = CogMaps.clean_word(row[0])
+                if word not in CogMaps.EMPTY_WORDS and concept not in CogMaps.EMPTY_WORDS:
+                    thesaurus[word] = concept
+        logger.info(f"Thesaurus : {len(thesaurus.keys())} words and {len(set(thesaurus.values()))} concepts")
+        return thesaurus
+
+    def apply(self, *, with_unknown=True):
+        """Remplace tous les mots énoncés d'une carte par leur concept mère de l'ontologie"""
+        logger.debug(
+            f"CogMaps.apply({len(self)} cartes, {len(self.__thesaurus)} concepts thesaurus avec inconnus={with_unknown})"
+        )
+        concept_maps = {}
+        unknown_report = defaultdict(list)
+        for k, words in self.__cog_maps.items():
+            concept_maps[k] = [
+                self.__thesaurus[word] for word in words if (self.__thesaurus[word] != DEFAULT_CONCEPT or with_unknown)
+            ]
+            for word in words:
+                if self.__thesaurus[word] == DEFAULT_CONCEPT:
+                    unknown_report[word].append(k)
+        logger.info(
+            f"calcul de {len(concept_maps)} cartes mères : {sum(len(l) for l in concept_maps.values())} mots au total ({'avec' if with_unknown else 'sans'} mots inconnus)"
+        )
+        logger.info(
+            f"{len(unknown_report)} mots inconnus ({DEFAULT_CONCEPT}) présents dans au total {sum(len(l) for l in unknown_report.values())} cartes"
+        )
+
+        new_cog_maps = CogMaps()
+        new_cog_maps.__cog_maps = concept_maps # pylint: disable=protected-access
+        new_cog_maps.__parent = self # pylint: disable=protected-access
+        return new_cog_maps, unknown_report
+
+
+def gen_filename(outdir, base, suffix):
+    """Génère un nom de fichier standardisé pour les résultats de calcul"""
+    return Path(outdir) / Path(f"{Path(base).stem}_{suffix}.csv")
 
 
 # %%
 
 if __name__ == "__main__":
-    mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
+    # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
+    # mes_cartes.dump_occurrences("test1.csv")
+    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
+    # mes_cartes.dump_occurrences("test2.csv")
+    # mes_cartes.dump_occurrences_in_position("test3.csv")
 
-    # def dump_hist(self, filename):
-    #     """Sauvegarde la liste des mots énoncés et leur nombre d'occurences (le produit de compute_histogram_bag) au format csv"""
-    #     logger.debug(f"write_histogram_bag({len(hist)}, {filename}, {weighted_hist is None})")
-    #     header = ["mot", "nb_occurrences"]
-    #     if weighted_hist is not None:
-    #         header.append("occurences_ponderees")
-    #     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-    #         writer = csv.writer(csvfile, **CSV_PARAMS)
-    #         writer.writerow(header)
-    #         for (word, nb_ooc) in hist:
-    #             if weighted_hist is None:
-    #                 writer.writerow((word, nb_ooc))
-    #             else:
-    #                 writer.writerow((word, nb_ooc, round(weighted_hist[word], 2)))
-    #     logger.info(f"histogramme du sac de mots : {filename}")
 
+    mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
 
 # def get_weights(filename):
 
@@ -258,75 +349,6 @@ if __name__ == "__main__":
 #         for row_word in words:
 #             writer.writerow([row_word] + [matrix[row_word][col_word] for col_word in words])
 #     logger.info(f"cartes mères : {filename}")
-
-
-# def compute_histogram_pos(carte):
-#     """Pour chaque position, calcule le nombre d'occurence de chaque mot dans cette position"""
-#     logger.debug(f"compute_histograms_position({len(carte)})")
-#     hist = defaultdict(list)
-#     for i, words in carte.items():
-#         for j, word in enumerate(words):
-#             hist[j + 1].append(word)
-
-#     for i, words in hist.items():
-#         hist[i] = Counter(words).most_common()
-
-#     logger.info(f"histogramme des positions : {len(hist)} positions (longueur de la plus longue carte)")
-#     return hist
-
-
-# def write_histogram_pos(hist, filename):
-#     """Sauvegarde pour chaque position, la liste des mots énoncés et leur nombre d'occurences (le produit de compute_histogram_pos) au format csv"""
-#     logger.debug(f"write_histogram_pos({len(hist)}, {filename})")
-#     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-#         writer = csv.writer(csvfile, **CSV_PARAMS)
-#         header = [f"{k} {i}" for i, k in product(hist.keys(), ["mot", "nb"])]
-#         writer.writerow(header)
-#         content = zip_longest(*hist.values(), fillvalue=("", ""))
-#         for row in content:
-#             writer.writerow([x for pair in row for x in pair])
-#     logger.info(f"histogramme des positions : {filename}")
-
-
-# def get_ontology(filename):
-#     """Charge l'ontologie (concept, mot énoncé) dans un dico énoncé -> mère"""
-#     logger.debug(f"get_ontology({filename})")
-#     ontology = defaultdict(lambda: DEFAULT_CONCEPT)
-
-#     with open(filename, encoding="utf-8") as csvfile:
-#         reader = csv.reader(csvfile, **CSV_PARAMS)
-#         for row in reader:
-#             ontology[clean(row[1])] = clean(row[0])
-#     logger.info(f"ontologie : {len(ontology.keys())} mots énoncés et {len(set(ontology.values()))} concepts")
-#     return ontology
-
-
-# def apply_ontology(carte, ontology, *, with_unknown=True):
-#     """Remplace tous les mots énoncés d'une carte par leur concept mère de l'ontologie"""
-#     logger.debug(
-#         f"apply_ontology({len(carte)} cartes, {len(ontology)} concepts thesaurus avec inconnus={with_unknown})"
-#     )
-#     carte_mere = {}
-#     unknown_report = defaultdict(list)
-#     for k, words in carte.items():
-#         carte_mere[k] = [clean(ontology[word]) for word in words if (ontology[word] != DEFAULT_CONCEPT or with_unknown)]
-#         for word in words:
-#             if ontology[word] == DEFAULT_CONCEPT:
-#                 unknown_report[clean(word)].append(k)
-#     logger.info(
-#         f"calcul de {len(carte_mere)} cartes mères : {sum(len(l) for l in carte_mere.values())} mots au total ({'avec' if with_unknown else 'sans'} mots inconnus)"
-#     )
-#     logger.info(
-#         f"{len(unknown_report)} mots inconnus ({DEFAULT_CONCEPT}) présents dans au total {sum(len(l) for l in unknown_report.values())} cartes"
-#     )
-
-#     return carte_mere, unknown_report
-
-
-# def create_filename(outdir, base, suffix):
-#     """Génère un nom de fichier standardisé pour les résultats de calcul"""
-#     res = Path(outdir) / Path(f"{Path(base).stem}_{suffix}.csv")
-#     return res
 
 
 # def generate_results(output_dir, cartes_filename, ontologie_filename, with_unknown=False):
