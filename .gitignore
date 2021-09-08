@@ -3,7 +3,7 @@ tmp/
 drafts/
 sources/
 
-graphs/
+graphs*/
 
 __pycache__/
 .mypy_cache/

@@ -48,7 +48,7 @@ class TestCognitiveMap:
     def test_cog_maps_assignment(self):
         test_maps = CogMaps()
         with pytest.raises(TypeError, match=r".*assignment.*"):
-            test_maps.cog_maps = {}
+            test_maps.cog_maps = []
 
     def test_index(self):
         test_maps = CogMaps(COGMAPS_FILENAME)

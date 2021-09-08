@@ -34,7 +34,7 @@ CSV_PARAMS = {"delimiter": ";", "quotechar": '"'}
 ENCODING = "utf-8"
 
 
-class CogMaps:
+class CogMaps:  # pylint: disable=too-many-instance-attributes
     """Conteneur pour un ensemble de cartes cognitives"""
 
     # listes des mots considérés comme vides et exlcus de la carte
@@ -111,10 +111,10 @@ class CogMaps:
         self.__occurrences = None
         # dans chaque positions, le nombre d'occurences de chaque mot
         self.__occurrences_in_positions = None
+        # la matrice de co-occurrences pondérée par weights
+        self.__matrix = None
         # pour une carte dérivée, sa carte parente
         self.__parent = None
-        #  pour une carte dérivée, les mots non-mappés
-        self.__unknowns = {}
 
         if cog_maps_filename is not None:
             self.__cog_maps_filename = cog_maps_filename
@@ -127,14 +127,19 @@ class CogMaps:
     def invalidate(self):
         """Invalide les attributs privés qui dependent de cog_maps"""
         self.__index = None
-        self.__occurrences = None
         self.__occurrences_in_positions = None
+        self.__occurrences = None
+        self.__matrix = None
 
     def __len__(self):
         return len(self.__cog_maps)
 
     def __repr__(self) -> str:
-        return f"<CogMaps at {hex(id(self))} of length {len(self)} from '{self.__cog_maps_filename}' with thesaurus '{self.__thesaurus_filename}'>"
+        if self.__parent:
+            msg = f"<CogMaps at {hex(id(self))} of length {len(self)} from parent {self.__parent}>"
+        else:
+            msg = f"<CogMaps at {hex(id(self))} of length {len(self)} from '{self.__cog_maps_filename}' with thesaurus '{self.__thesaurus_filename}'>"
+        return msg
 
     @property
     def cog_maps(self):
@@ -142,9 +147,12 @@ class CogMaps:
         return self.__cog_maps
 
     @cog_maps.setter
-    def cog_maps(self, _):  # pylint: disable=no-self-use
+    def cog_maps(self, values):  # pylint: disable=no-self-use
         """On bloque l'affectation sur cog_maps"""
-        raise TypeError("CogMap.cog_maps does not support direct assignment")
+        if not isinstance(values, dict):
+            raise TypeError(f"CogMap.cog_maps does not support direct assignment from {type(values)}")
+        self.__cog_maps = values
+        self.invalidate()
 
     @property
     def thesaurus(self):
@@ -199,8 +207,9 @@ class CogMaps:
         # dispatch manuel
         if not isinstance(values, dict):
             raise NotImplementedError(f"CogMaps.weights cannot dispatch {type(values)}")
-        # ràz des occurences
+        # ràz des occurences et de la matrice des co-occurences
         self.__occurrences = None
+        self.__matrix = None
         self.__weights = values
 
     @property
@@ -296,64 +305,58 @@ class CogMaps:
         new_cog_maps.__cog_maps = concept_maps  # pylint: disable=protected-access
         # le parent
         new_cog_maps.__parent = self  # pylint: disable=protected-access
-        new_cog_maps.__unknowns = unknown_report  # pylint: disable=protected-access
         # on reprend la même carte de poids
         new_cog_maps.__weights = self.__weights.copy()  # pylint: disable=protected-access
-        return new_cog_maps
 
+        # on utilise le fait que le rapport des unknnows est une cog_maps aussi
+        unknowns_maps = CogMaps()
+        unknowns_maps.cog_maps = unknown_report
+        unknowns_maps.__parent = self  # pylint: disable=protected-access
+        return new_cog_maps, unknowns_maps
 
-# def compute_cooc_matrix(cog_map, *, min_cooc_threshold=1, max_window_width=None):
-#     """Calcule la matrice de co-occurrece à partir d'une carte pivotée"""
-#     # dictionnaire des co-occurrences :
-#     # qui à chaque mot ligne
-#     #   -> un dictionnaire qui à chaque mot colonne
-#     #       -> le nombre de cartes où on apparait en commun
-#     # un dictionnaire de plus que nécessaire pour être compatible avec l'API networkx
-#     cooc_map = defaultdict(lambda: defaultdict(int))  # type: ignore
-#     cog_map_idx = pivot_cog_map(cog_map, with_pos=max_window_width is not None)
-#     for word_row in cog_map_idx:
-#         for word_col in cog_map_idx:
-#             # on va calculer une forme d'intersection multiset avec le &
-#             # c & d = forall x. min(c[x], d[x])
-#             # https://docs.python.org/3/library/collections.html#collections.Counter
-#             # on passe par les counter/multiset car après calcul de la carte mere
-#             # on peut avoir plusieurs fois le même mot dans une carte
-#             hist_row = Counter(cog_map_idx[word_row])
-#             hist_col = Counter(cog_map_idx[word_col])
-#             # dans le cas où on a oublié les positions, c'est vraiment le &
-#             if max_window_width is None:
-#                 common_times = sum((hist_row & hist_col).values())
-#             else:
-#                 common_times = 0
-#                 # logger.debug("%s %s", word_row, hist_row)
-#                 # logger.debug("%s %s", word_col, hist_col)
-#                 # les paires de paires (id_row, pos_row), (id_col, pos_col)
-#                 pos_prod = product(hist_row, hist_col)
-#                 # logger.debug("%s %s %s", word_col, word_col, list(pos_prod))
-#                 # on est ensemble si on est dans la même carte et
-#                 # à une distance de position <= à la taille de la fenetre
-#                 def common(row_pair, col_pair):
-#                     same_map = row_pair[0] == col_pair[0]
-#                     near = abs(row_pair[1] - col_pair[1]) <= max_window_width
-#                     return same_map and near
+    @property
+    def matrix(self):
+        """Calcule la matrice de co-occurrences des mots d'une carte
+        
+        produit un dictionnaire des co-occurrences :
+        qui à chaque mot ligne
+           -> un dictionnaire qui à chaque mot colonne
+               -> le nombre de cartes où on apparait en commun
 
-#                 filtered_prod = [min(hist_row[rp], hist_col[cp]) for (rp, cp) in pos_prod if common(rp, cp)]
-#                 common_times = sum(filtered_prod)
-#             if common_times >= min_cooc_threshold:  # and word_row != word_col
-#                 cooc_map[word_row][word_col] = common_times
-#     return cooc_map
+        en jouant avec l'attribut elf.weight, on peut obtenir différentes
+        pondération de la distance inter-mots
+        """
+        if self.__matrix is None:
+            self.__matrix = defaultdict(lambda: defaultdict(float))  # type: ignore
+            for word_row in self.index:
+                for word_col in self.index:
+                    # toutes les paires de paires (id_row, pos_row), (id_col, pos_col)
+                    pos_prod = product(self.index[word_row], self.index[word_col])
+                    # si on est ensemble dans la même carte
+                    # alors on calcule l'écart absolu des positions
+                    deltas = [
+                        abs(row_pair[1] - col_pair[1])
+                        for (row_pair, col_pair) in pos_prod
+                        if row_pair[0] == col_pair[0]
+                    ]
 
+                    # sur les écarts de positions au sein des mêmes cartes, on va
+                    # utiliser les poids positionnels, mais sur des écarts
+                    # si l'écart ets de 0, on mets un poids de 1.0
+                    self.__matrix[word_row][word_col] = sum(self.weights[delta] if delta else 1.0 for delta in deltas)
+        return self.__matrix
 
-# def write_cooc_matrix(matrix, filename):
-#     """Ecrit les cartes depuis le dict/dic python"""
-#     logger.debug(f"write_cooc_matrix({len(matrix)}, {filename})")
-#     words = list(sorted(matrix.keys()))
-#     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-#         writer = csv.writer(csvfile, **CSV_PARAMS)
-#         writer.writerow(["/"] + words)
-#         for row_word in words:
-#             writer.writerow([row_word] + [matrix[row_word][col_word] for col_word in words])
-#     logger.info(f"cartes mères : {filename}")
+    def dump_matrix(self, filename):
+        """Ecrit les cartes depuis le dict/dic python"""
+        logger.debug(f"CogMaps.dump_matrix({len(self.matrix)}, {filename})")
+        words = sorted(self.words)
+        with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
+            writer = csv.writer(csvfile, **CSV_PARAMS)
+            writer.writerow(["/"] + words)
+            for row_word in words:
+                writer.writerow([row_word] + [round(self.matrix[row_word][col_word], 2) for col_word in words])
+        logger.info(f"CogMaps.dump_matrix: {filename}")
+
 
 # %%
 def gen_filename(outdir, base, suffix):
@@ -381,20 +384,24 @@ def generate_results(output_dir, cog_maps_filename, thesaurus_filename, with_unk
     the_cog_maps.dump_occurrences_in_position(get_name("base_positions"))
 
     # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
-    the_concept_maps = the_cog_maps.apply(with_unknown=with_unknown)
+    the_concept_maps, the_unknowns_maps = the_cog_maps.apply(with_unknown=with_unknown)
     the_concept_maps.dump(get_name("meres"))
     the_concept_maps.dump_occurrences(get_name("meres_occurrences"))
     the_concept_maps.dump_occurrences_in_position(get_name("meres_positions"))
 
     # le rapport des mots qui n'ont pas de concepts
-    # write_carte(inconnus, get_name("inconnus"))
+    the_unknowns_maps.dump(get_name("inconnus"))
 
     # les matrices de co-occurences
-    # write_cooc_matrix(compute_cooc_matrix(carte), get_name("base_matrice_cooccurences"))
-    # write_cooc_matrix(compute_cooc_matrix(carte_mere), get_name("meres_matrice_cooccurences"))
+    the_cog_maps.dump_matrix(get_name("base_matrice_cooccurences"))
+    the_concept_maps.dump_matrix(get_name("meres_matrice_cooccurences"))
 
 
 if __name__ == "__main__":
+    WITH_UNKNOWNS = False
+    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
+    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
+
     # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
     # mes_cartes.dump_occurrences("test1.csv")
     # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
@@ -402,8 +409,7 @@ if __name__ == "__main__":
     # mes_cartes.dump_occurrences_in_position("test3.csv")
 
     # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
-    # mes_cartes_meres = mes_cartes.apply(with_unknown=False)
-
-    WITH_UNKNOWNS = False
-    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
-    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
+    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
+    # mes_cartes_meres, mes_inconnus = mes_cartes.apply(with_unknown=False)
+    # mes_cartes_meres.dump_matrix("test.csv")
+    # mes_cartes_meres.dump("meres.csv")
