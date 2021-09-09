@@ -359,7 +359,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
                     # sur les écarts de positions au sein des mêmes cartes, on va
                     # utiliser les poids positionnels, mais sur des écarts
                     # si l'écart ets de 0, on mets un poids de 1.0
-                    self.__matrix[word_row][word_col] = sum(self.weights[delta] if delta else 1.0 for delta in deltas)
+                    self.__matrix[word_row][word_col] = sum(self.weights.get(delta, 0.0) if delta else 1.0 for delta in deltas)
         return self.__matrix
 
     def dump_matrix(self, filename: StringOrPath) -> None:

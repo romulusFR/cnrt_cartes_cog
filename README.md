@@ -11,6 +11,8 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
 - 2021-09-09 :
   - ajout handler logger GUI
   - correction des filedialog de la GUI
+  - migration graphize vers refactor
+  - BUG : poids indéfinis
 - 2021-09-08 :
   - refactor complet POO
     - **attention** l'ordre de tris des résultats à changé
