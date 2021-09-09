@@ -39,7 +39,7 @@ def extend_matrix_to_nx(matrix, threshold=0.0):
             col_word: {"weight": matrix[row_word][col_word]}
             for col_word in matrix[row_word]
             # if not isclose(matrix[row_word][col_word], 0.0)
-            if matrix[row_word][col_word] > threshold
+            if matrix[row_word][col_word] >= threshold
         }
         for row_word in matrix
     }
@@ -84,6 +84,7 @@ def generate(pairs, /, thresholds=None, weights=None):
             for weights_name, weights_def in weights.items():
                 maps.weights = weights_def
                 matrix = maps.matrix
+                maps.dump_matrix(f"{GRAPH_DIR / Path(carte_file).stem}_{maps_name}_{weights_name}.csv")
 
                 for threshold in thresholds:
                     graph = nx.Graph(extend_matrix_to_nx(matrix, threshold))
@@ -136,6 +137,8 @@ WEIGHTS = {
 }
 
 if __name__ == "__main__":
-    results = generate(DATASETS[::], thresholds=[float(n) for n in range(1, 11)], weights=WEIGHTS)
-    pprint(results)
+    # results = generate(DATASETS[::], thresholds=[float(n) for n in range(1, 11)], weights=WEIGHTS)
+    # pprint(results)
+
+    generate(DATASETS[0:1:], thresholds=[float(n) for n in range(2, 4)], weights={"1_on_n_square": {i: 1 / (i ** 2) for i in range(1, 16)}})
     # generate([("input/cartes_cog_small.csv", THESAURUS_LA_MINE)])
