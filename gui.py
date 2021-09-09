@@ -5,10 +5,12 @@
 __author__ = "Romuald Thion"
 
 import logging
+from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, ttk, scrolledtext
 from cartes_cog import (
     generate_results,
+    INPUT_DIR,
     CARTES_COG_LA_MINE,
     THESAURUS_LA_MINE,
     CARTES_COG_MINE_FUTUR,
@@ -70,9 +72,10 @@ def uploader(variable, *, directory=False):
             filename = filedialog.askdirectory(initialdir=variable.get())
         else:
             filename = filedialog.askopenfilename(
+                initialdir= Path.cwd(),
                 title="Choisir un fichier de cartes",
                 filetypes=(("csv files", "*.csv"), ("all files", "*.*")),
-                initialfile=variable.get(),
+                initialfile=variable.get()
             )
         if filename:
             logger.info(f"{__name__}.upload({variable}): selected {filename}")

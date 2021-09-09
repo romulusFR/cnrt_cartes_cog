@@ -13,6 +13,7 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
   - correction des filedialog de la GUI
 - 2021-09-08 :
   - refactor complet POO
+    - **attention** l'ordre de tris des résultats à changé
   - utilisation des poids pour le calcul de la matrice de similarité
 - 2021-09-02 :
   - calcul de co-occurence à fenêtre
