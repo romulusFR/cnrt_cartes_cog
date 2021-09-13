@@ -4,7 +4,7 @@
 __author__ = "Romuald Thion"
 
 # %%
-
+import locale
 import csv
 import logging
 from math import exp
@@ -22,6 +22,7 @@ if __name__ == "__main__":
     logging.basicConfig()
     logger.setLevel(logging.DEBUG)
 
+locale.setlocale(locale.LC_ALL, '')
 
 INPUT_DIR = Path("./input")
 CARTES_COG_LA_MINE = INPUT_DIR / "cartes_cog_la_mine.csv"
@@ -348,6 +349,10 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         new_cog_maps.__parent = self  # pylint: disable=protected-access
         # on reprend la même carte de poids
         new_cog_maps.__weights = self.__weights.copy()  # pylint: disable=protected-access
+        # on utilise le même nom de fichier
+        path = Path(self.filename)
+        # pylint: disable=protected-access
+        new_cog_maps.__cog_maps_filename = f"concepts_of_{path.stem}{path.suffix}"
 
         # on utilise le fait que le rapport des unknnows est une cog_maps aussi
         unknowns_maps = CogMaps()
@@ -404,7 +409,8 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 # %%
 def gen_filename(outdir: StringOrPath, base: StringOrPath, suffix: str) -> Path:
     """Outil : Génère un nom de fichier standardisé pour les résultats de calcul"""
-    return Path(outdir) / Path(f"{Path(base).stem}_{suffix}.csv")
+    # return Path(outdir) / Path(f"{Path(base).stem}_{suffix}.csv")
+    return Path(outdir) / f"{Path(base).stem}_{suffix}.csv"
 
 
 def generate_results(
@@ -455,21 +461,23 @@ def generate_weighted_occurences(output_dir: StringOrPath, cog_maps: CogMaps) ->
         occurrences[name] = cog_maps.occurrences
 
     get_name = partial(gen_filename, output_dir, cog_maps.filename)  # pylint: disable=protected-access
-    filename = get_name("base_occurrences_ponderees")
+    filename = get_name("occurrences_ponderees")
 
     with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
         writer = csv.writer(csvfile, **CSV_PARAMS)
         writer.writerow(header)
         for word in sorted(cog_maps.words):
-            row = [round(occurrences[name][word], 2) for name in WEIGHTS]
+            # ici, affichage avec la locale
+            # https://stackoverflow.com/questions/1823058/how-to-print-number-with-commas-as-thousands-separators
+            row = [f"{round(occurrences[name][word], 2):n}"  for name in WEIGHTS]
             writer.writerow((word, len(cog_maps.index[word]), *row))
     logger.info(f"generate_weighted_occurences to {filename}")
 
 
 if __name__ == "__main__":
-    # WITH_UNKNOWNS = False
-    # generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
-    # generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
+    WITH_UNKNOWNS = False
+    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
+    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
 
     # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
     # mes_cartes.dump_occurrences("test1.csv")
@@ -483,4 +491,6 @@ if __name__ == "__main__":
     # mes_cartes_meres.dump_matrix("test.csv")
     # mes_cartes_meres.dump("meres.csv")
     la_mine = CogMaps(CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    la_mere, _ = la_mine.apply(with_unknown=False)
     generate_weighted_occurences(OUTPUT_DIR, la_mine)
+    generate_weighted_occurences(OUTPUT_DIR, la_mere)
