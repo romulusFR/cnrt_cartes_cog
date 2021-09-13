@@ -38,16 +38,27 @@ ENCODING = "utf-8"
 
 MAX_LEN = 16
 WEIGHTS = {
+    # toutes les positions ont un poids de 1.0
     "any_1": {i: 1.0 for i in range(1, MAX_LEN)},
+    # la première position à un poids de 1.0, les autres 0.0
     "first_1": {i: 1.0 for i in range(1, 2)},
+    # idem first_1 mais avec les 2 premières positions
     "first_2": {i: 1.0 for i in range(1, 3)},
+    # idem first_1 mais avec les 3 premières positions
     "first_3": {i: 1.0 for i in range(1, 4)},
+    # idem first_1 mais avec les 4 premières positions
     "first_4": {i: 1.0 for i in range(1, 5)},
+    # idem first_1 mais avec les 5 premières positions
     "first_5": {i: 1.0 for i in range(1, 6)},
+    # le poids est de 1/n : 1.0, 0.5, 0.333, 0.25 ...
     "1_on_n": {i: 1 / i for i in range(1, 16)},
+    # le poids est de 1/n*n : 1.0, 0.25, 0.111, 0.0625 ...
     "1_on_n_square": {i: 1 / (i ** 2) for i in range(1, MAX_LEN)},
+    # le poids est en exponentielle(1-i) : 1.0, 0.37, 0.14, 0.05 ...
     "exp_minus_n_plus_1": {i: exp(-i + 1) for i in range(1, MAX_LEN)},
+    # décroissance linéaire : 1.0, 0.9, 0.8, 0.7 ...
     "1_minus_0_1_times_n": {i: max(0.0, 1 - 0.1 * (i - 1)) for i in range(1, MAX_LEN)},
+    # décroissance linéaire : 1.0, 0.8, 0.6, 0.4 ...
     "1_minus_0_2_times_n": {i: max(0.0, 1 - 0.2 * (i - 1)) for i in range(1, MAX_LEN)},
 }
 
