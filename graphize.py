@@ -21,6 +21,7 @@ from cartes_cog import (
     THESAURUS_LA_MINE,
     THESAURUS_MINE_FUTUR,
     WEIGHTED_POSITIONS,
+    WEIGHTS,
     CogMaps,
 )
 from draw_graphviz import draw_graphviz
@@ -45,7 +46,7 @@ def extend_matrix_to_nx(matrix, threshold=0.0):
     }
 
 
-def generate(pairs, /, thresholds=None, weights=None):
+def generate_all_graphs(pairs, /, thresholds=None, weights=None):
     """Genère un ensemble de graphes
 
     Pour chaque paire (carte, thesaurus) de pairs, génère (carte_base, carte_mere)
@@ -122,23 +123,9 @@ THRESHOLD = 3
 DATASETS = [(CARTES_COG_LA_MINE, THESAURUS_LA_MINE), (CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)]
 
 
-WEIGHTS = {
-    "any_1": {i: 1.0 for i in range(1, 16)},
-    "first_1": {i: 1.0 for i in range(1, 2)},
-    "first_2": {i: 1.0 for i in range(1, 3)},
-    "first_3": {i: 1.0 for i in range(1, 4)},
-    "first_4": {i: 1.0 for i in range(1, 5)},
-    "first_5": {i: 1.0 for i in range(1, 6)},
-    "1_on_n": {i: 1 / i for i in range(1, 16)},
-    "1_on_n_square": {i: 1 / (i ** 2) for i in range(1, 16)},
-    "exp_minus_n_plus_1": {i: exp(-i + 1) for i in range(1, 16)},
-    "1_minus_0_1_times_n": {i: max(0.0, 1 - 0.1 * i) for i in range(1, 16)},
-    "1_minus_0_2_times_n": {i: max(0.0, 1 - 0.2 * i) for i in range(1, 16)},
-}
-
 if __name__ == "__main__":
-    # results = generate(DATASETS[::], thresholds=[float(n) for n in range(1, 11)], weights=WEIGHTS)
-    # pprint(results)
-
-    generate(DATASETS[0:1:], thresholds=[float(n) for n in range(2, 4)], weights={"1_on_n_square": {i: 1 / (i ** 2) for i in range(1, 16)}})
-    # generate([("input/cartes_cog_small.csv", THESAURUS_LA_MINE)])
+    generate_all_graphs(
+        DATASETS[0:1:],
+        thresholds=[float(n) for n in range(2, 4)],
+        weights={"1_on_n_square": {i: 1 / (i ** 2) for i in range(1, 16)}},
+    )

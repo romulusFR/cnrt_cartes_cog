@@ -7,6 +7,7 @@ __author__ = "Romuald Thion"
 
 import csv
 import logging
+from math import exp
 from typing import Union, Tuple, Iterator, Optional
 from collections import Counter, defaultdict
 from itertools import product, zip_longest
@@ -31,9 +32,24 @@ WEIGHTED_POSITIONS = INPUT_DIR / "coefficients.csv"
 OUTPUT_DIR = "output"
 DEFAULT_CONCEPT = "__inconnu__"
 
-
 CSV_PARAMS = {"delimiter": ";", "quotechar": '"'}
 ENCODING = "utf-8"
+
+MAX_LEN = 16
+WEIGHTS = {
+    "any_1": {i: 1.0 for i in range(1, MAX_LEN)},
+    "first_1": {i: 1.0 for i in range(1, 2)},
+    "first_2": {i: 1.0 for i in range(1, 3)},
+    "first_3": {i: 1.0 for i in range(1, 4)},
+    "first_4": {i: 1.0 for i in range(1, 5)},
+    "first_5": {i: 1.0 for i in range(1, 6)},
+    "1_on_n": {i: 1 / i for i in range(1, 16)},
+    "1_on_n_square": {i: 1 / (i ** 2) for i in range(1, MAX_LEN)},
+    "exp_minus_n_plus_1": {i: exp(-i + 1) for i in range(1, MAX_LEN)},
+    "1_minus_0_1_times_n": {i: max(0.0, 1 - 0.1 * (i - 1)) for i in range(1, MAX_LEN)},
+    "1_minus_0_2_times_n": {i: max(0.0, 1 - 0.2 * (i - 1)) for i in range(1, MAX_LEN)},
+}
+
 
 # typing
 StringOrPath = Union[Path, str]
@@ -159,6 +175,11 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         return msg
 
     @property
+    def filename(self) -> Optional[StringOrPath]:
+        """le nom du fichier utilisé pour la carte"""
+        return self.__cog_maps_filename
+
+    @property
     def cog_maps(self) -> CogMapsType:
         """Les cartes elles mêmes"""
         return self.__cog_maps
@@ -236,13 +257,17 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
         if self.__occurrences is None:
             logger.debug(f"CogMaps.occurrences({len(self.__cog_maps)}, {self.__weights})")
-            self.__occurrences = defaultdict(float)
+            self.__occurrences = {}
             # on ne garde que la seconde composante de l'index
             second = lambda x: x[1]
+            # à chaque mot la liste de ses positions (en oubliant l'id de carte)
             position_index = {word: list(map(second, positions)) for word, positions in self.index.items()}
-
+            # pour chaque mot et ses poitions
             for word, positions in position_index.items():
-                self.__occurrences[word] = sum(map(lambda pos: self.weights[pos], positions))
+                # on remplace la position par son poids et on somme
+                # on utilise dict.get pour donner un poids par défaut de 0.0
+                # aux positions dont le poids n'est pas défini
+                self.__occurrences[word] = sum(map(lambda pos: self.weights.get(pos, 0.0), positions))
 
         return self.__occurrences
 
@@ -358,8 +383,10 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
                     # sur les écarts de positions au sein des mêmes cartes, on va
                     # utiliser les poids positionnels, mais sur des écarts
-                    # si l'écart ets de 0, on mets un poids de 1.0
-                    self.__matrix[word_row][word_col] = sum(self.weights.get(delta, 0.0) if delta else 1.0 for delta in deltas)
+                    # si l'écart est de 0, on met un poids de 1.0
+                    self.__matrix[word_row][word_col] = sum(
+                        self.weights.get(delta, 0.0) if delta else 1.0 for delta in deltas
+                    )
         return self.__matrix
 
     def dump_matrix(self, filename: StringOrPath) -> None:
@@ -416,10 +443,33 @@ def generate_results(
     the_unknowns_maps.dump(get_name("inconnus"))
 
 
+# %%
+def generate_weighted_occurences(output_dir: StringOrPath, cog_maps: CogMaps) -> None:
+    """Genère les positions pondérées pour une famille de pondérations"""
+    header = ["mot", "nb_occurrences", *WEIGHTS.keys()]
+    logger.debug("generate_weighted_occurences: header %s", header)
+    occurrences = {}
+
+    for name, weights in WEIGHTS.items():
+        cog_maps.weights = weights
+        occurrences[name] = cog_maps.occurrences
+
+    get_name = partial(gen_filename, output_dir, cog_maps.filename)  # pylint: disable=protected-access
+    filename = get_name("base_occurrences_ponderees")
+
+    with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
+        writer = csv.writer(csvfile, **CSV_PARAMS)
+        writer.writerow(header)
+        for word in sorted(cog_maps.words):
+            row = [round(occurrences[name][word], 2) for name in WEIGHTS]
+            writer.writerow((word, len(cog_maps.index[word]), *row))
+    logger.info(f"generate_weighted_occurences to {filename}")
+
+
 if __name__ == "__main__":
-    WITH_UNKNOWNS = False
-    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
-    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
+    # WITH_UNKNOWNS = False
+    # generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
+    # generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
 
     # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
     # mes_cartes.dump_occurrences("test1.csv")
@@ -432,3 +482,5 @@ if __name__ == "__main__":
     # mes_cartes_meres, mes_inconnus = mes_cartes.apply(with_unknown=False)
     # mes_cartes_meres.dump_matrix("test.csv")
     # mes_cartes_meres.dump("meres.csv")
+    la_mine = CogMaps(CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    generate_weighted_occurences(OUTPUT_DIR, la_mine)
