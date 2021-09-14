@@ -1,0 +1,798 @@
+…/Rec-CNRT-cartes-cog [ main][🐍 v3.8.10]⏱ 6s❯ py graphize.py 
+INFO:COGNITIVE_MAP.__main__:carte_file = input/cartes_cog_la_mine.csv
+INFO:COGNITIVE_MAP.__main__:thesaurus_file = input/thesaurus_la_mine.csv
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:241 mots et 1522 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:133 mots et 745 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:90 mots et 475 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:66 mots et 339 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:55 mots et 268 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:46 mots et 212 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:41 mots et 180 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 153 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:30 mots et 127 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:113 mots et 303 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:51 mots et 129 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:35 mots et 82 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 57 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 38 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:19 mots et 35 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:17 mots et 29 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:13 mots et 17 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 13 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:159 mots et 563 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:71 mots et 260 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:44 mots et 171 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:37 mots et 121 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:32 mots et 94 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 72 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 55 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 49 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:20 mots et 40 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:182 mots et 788 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:90 mots et 374 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:54 mots et 232 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:43 mots et 171 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:37 mots et 140 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:29 mots et 104 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 88 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:25 mots et 66 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:23 mots et 57 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:210 mots et 983 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:113 mots et 483 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:67 mots et 302 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:50 mots et 208 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:43 mots et 172 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:32 mots et 132 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:28 mots et 101 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 89 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:25 mots et 72 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:215 mots et 1123 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:119 mots et 556 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:75 mots et 348 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:53 mots et 238 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:45 mots et 192 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 156 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:31 mots et 129 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 100 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 87 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:119 mots et 409 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:55 mots et 219 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:40 mots et 145 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:33 mots et 109 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 81 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 63 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:22 mots et 50 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 45 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:20 mots et 36 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:113 mots et 317 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:51 mots et 144 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:35 mots et 93 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 65 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:23 mots et 47 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:20 mots et 37 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:19 mots et 35 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:18 mots et 29 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:12 mots et 20 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:113 mots et 325 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:52 mots et 154 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:36 mots et 101 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:28 mots et 74 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 52 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 41 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:20 mots et 36 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:18 mots et 32 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:13 mots et 23 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:147 mots et 679 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:81 mots et 392 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:58 mots et 259 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:45 mots et 198 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:36 mots et 160 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:31 mots et 130 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 101 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:26 mots et 84 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:25 mots et 72 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_2.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:135 mots et 516 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_3.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:65 mots et 271 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_4.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:47 mots et 185 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_5.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:36 mots et 141 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_6.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:29 mots et 106 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_7.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 83 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_8.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 64 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_9.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 58 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_base_10.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 47 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 1233 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:72 mots et 935 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:72 mots et 740 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:69 mots et 615 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:63 mots et 497 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:56 mots et 422 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:53 mots et 377 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:51 mots et 318 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:48 mots et 295 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 420 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:51 mots et 246 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:41 mots et 166 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 130 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:30 mots et 97 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:25 mots et 76 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:23 mots et 62 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 48 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:20 mots et 39 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 700 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:68 mots et 460 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:56 mots et 315 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:47 mots et 248 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:43 mots et 196 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:36 mots et 158 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:31 mots et 138 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:29 mots et 116 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:26 mots et 102 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 866 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:71 mots et 601 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:64 mots et 431 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:54 mots et 329 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:50 mots et 282 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:45 mots et 240 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:42 mots et 202 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:36 mots et 179 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 156 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 989 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:71 mots et 703 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:65 mots et 526 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:60 mots et 405 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:52 mots et 332 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:49 mots et 297 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:46 mots et 254 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:41 mots et 224 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:39 mots et 196 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 1063 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:71 mots et 775 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:69 mots et 600 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:65 mots et 471 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:56 mots et 391 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:51 mots et 339 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:50 mots et 297 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:45 mots et 251 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:41 mots et 223 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 607 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:60 mots et 404 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:51 mots et 302 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:42 mots et 238 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:36 mots et 196 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:33 mots et 162 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:31 mots et 141 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:28 mots et 120 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:25 mots et 108 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 447 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:52 mots et 281 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:43 mots et 198 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 147 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:32 mots et 128 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:26 mots et 104 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:25 mots et 83 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:23 mots et 73 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:20 mots et 63 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 461 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:53 mots et 296 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:44 mots et 219 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:35 mots et 161 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:32 mots et 136 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 111 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:25 mots et 92 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 77 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:20 mots et 66 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 866 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:70 mots et 648 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:64 mots et 498 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:56 mots et 396 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:52 mots et 337 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:47 mots et 289 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:44 mots et 248 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:40 mots et 218 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:37 mots et 185 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_2.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:73 mots et 717 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_3.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:67 mots et 495 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_4.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:55 mots et 357 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_5.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:51 mots et 303 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_6.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:44 mots et 245 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_7.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:39 mots et 203 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_8.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 175 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_9.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:33 mots et 154 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_la_mine_concept_10.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:31 mots et 137 arcs
+INFO:COGNITIVE_MAP.__main__:carte_file = input/cartes_cog_mine_futur.csv
+INFO:COGNITIVE_MAP.__main__:thesaurus_file = input/thesaurus_mine_futur.csv
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:151 mots et 467 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:72 mots et 171 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:43 mots et 88 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:28 mots et 46 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:19 mots et 29 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:14 mots et 20 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 14 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:9 mots et 11 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:7 mots et 7 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:67 mots et 100 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 27 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 10 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 6 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:5 mots et 4 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:3 mots et 2 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:2 mots et 1 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:2 mots et 1 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:0 mots et 0 arcs
+WARNING:COGNITIVE_MAP.__main__:empty graph graphs/cartes_cog_mine_futur_base_10.0_first_1
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:101 mots et 201 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:40 mots et 65 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:20 mots et 29 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:15 mots et 16 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:9 mots et 9 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:8 mots et 7 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:7 mots et 6 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:4 mots et 3 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:116 mots et 271 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:52 mots et 95 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:29 mots et 45 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:17 mots et 22 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:13 mots et 16 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 12 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:8 mots et 8 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:131 mots et 336 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:58 mots et 119 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:31 mots et 60 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:20 mots et 28 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:13 mots et 18 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:11 mots et 13 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:9 mots et 10 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:8 mots et 8 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:141 mots et 377 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:65 mots et 142 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:35 mots et 68 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 37 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:16 mots et 23 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:13 mots et 16 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 12 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:8 mots et 9 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:67 mots et 116 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:29 mots et 44 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:15 mots et 17 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 11 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:7 mots et 7 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:4 mots et 3 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:4 mots et 3 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:67 mots et 100 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 28 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 10 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:7 mots et 7 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:5 mots et 4 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:2 mots et 1 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:2 mots et 1 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:2 mots et 1 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:67 mots et 102 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 31 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:12 mots et 12 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:7 mots et 7 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:5 mots et 4 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:5 mots et 4 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:2 mots et 1 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:2 mots et 1 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:84 mots et 186 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:40 mots et 76 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:23 mots et 36 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:16 mots et 23 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:12 mots et 15 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 12 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:8 mots et 7 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_2.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:79 mots et 149 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_3.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 57 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_4.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:18 mots et 26 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_5.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:13 mots et 16 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_6.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 12 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_7.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:7 mots et 6 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_8.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_9.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_base_10.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:81 mots et 873 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:76 mots et 528 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:65 mots et 363 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:56 mots et 265 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:52 mots et 193 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:41 mots et 145 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:33 mots et 111 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:29 mots et 88 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_any_1
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 76 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:70 mots et 249 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:45 mots et 119 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:33 mots et 72 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 43 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:16 mots et 27 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:11 mots et 18 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:8 mots et 12 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:7 mots et 8 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_first_1
+INFO:COGNITIVE_MAP.__main__:  G:6 mots et 5 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:76 mots et 438 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:63 mots et 258 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:47 mots et 158 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:38 mots et 105 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:26 mots et 74 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 57 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 45 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:16 mots et 30 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_first_2
+INFO:COGNITIVE_MAP.__main__:  G:11 mots et 21 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:80 mots et 587 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:69 mots et 343 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:53 mots et 212 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:43 mots et 156 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 109 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:28 mots et 86 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 69 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 56 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_first_3
+INFO:COGNITIVE_MAP.__main__:  G:16 mots et 36 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:81 mots et 691 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:72 mots et 400 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:59 mots et 259 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:46 mots et 175 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:36 mots et 132 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:31 mots et 110 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 81 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:23 mots et 65 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_first_4
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 55 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:81 mots et 755 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:72 mots et 438 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:59 mots et 304 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:49 mots et 198 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:42 mots et 155 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 117 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:28 mots et 92 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:26 mots et 72 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_first_5
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 62 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:71 mots et 336 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:51 mots et 183 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:39 mots et 117 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 82 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:23 mots et 60 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:19 mots et 45 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:13 mots et 31 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:12 mots et 23 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_1_on_n
+INFO:COGNITIVE_MAP.__main__:  G:10 mots et 16 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:70 mots et 259 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:45 mots et 125 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:33 mots et 83 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:22 mots et 53 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:17 mots et 34 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:12 mots et 21 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:9 mots et 16 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:8 mots et 12 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_1_on_n_square
+INFO:COGNITIVE_MAP.__main__:  G:7 mots et 10 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:70 mots et 272 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:46 mots et 134 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:33 mots et 87 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:24 mots et 59 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:17 mots et 39 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:14 mots et 28 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:9 mots et 16 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:9 mots et 14 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_exp_minus_n_plus_1
+INFO:COGNITIVE_MAP.__main__:  G:8 mots et 11 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:76 mots et 508 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:62 mots et 327 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:54 mots et 215 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:41 mots et 154 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 119 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:27 mots et 90 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:25 mots et 71 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 56 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_1_minus_0_1_times_n
+INFO:COGNITIVE_MAP.__main__:  G:16 mots et 44 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_2.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:74 mots et 419 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_3.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:59 mots et 247 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_4.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:44 mots et 159 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_5.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:34 mots et 112 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_6.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:28 mots et 84 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_7.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:23 mots et 63 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_8.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:21 mots et 52 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_9.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:15 mots et 35 arcs
+INFO:COGNITIVE_MAP.__main__:  drawing graphs/cartes_cog_mine_futur_concept_10.0_1_minus_0_2_times_n
+INFO:COGNITIVE_MAP.__main__:  G:12 mots et 27 arcs

@@ -1,0 +1,511 @@
+Description mine;Ciel ouvert
+Description mine;Étroit
+Description mine;Grand
+Description mine;Grotte
+Description mine;Mine
+Description mine;Noir
+Description mine;Obscure
+Description mine;Ombre
+Description mine;Profondeur
+Description mine;Sombre
+Description mine;Souterrain
+Description mine;Trou
+Description mine;Tunnel
+Foncier;Aménagement
+Foncier;Foncier
+Foncier;Privé
+Foncier;Propriété
+Foncier;Terre coutumière
+Localité;Houaïlou
+Localité;Koniambo
+Localité;Népoui
+Localité;Thio
+Localité;Tiébaghi
+Localité;Vavouto
+Localité;Province Nord
+Localité;VKP
+Localité;Yaté
+Site minier;Expansion
+Site minier;Lieu
+Site minier;Local
+Site minier;Schéma minier
+Site minier;Terre exploitée
+Site minier;Centre minier
+Site minier;Commune minière
+Site minier;Milieu
+Alternative;Décroissance
+Alternative;Développement durable
+Alternative;Activité
+Alternative;Agriculture
+Alternative;Tourisme
+Développement;Croissance
+Développement;Développement
+Développement;Développement d’activités
+Développement;Développement économique
+Développement;Développement territorial
+Développement;Évolution
+Développement;Frein
+Développement;Infrastructure
+Développement;Projet
+Développement;Projet Lucy
+Commerce;Commerce
+Commerce;Commerce international
+Commerce;Exportation
+Commerce;Flux
+Commerce;Importation
+Commerce;Marchandise
+Commerce;Marché
+Commerce;Vendre
+Commerce;Vente
+Entreprise;Colas
+Entreprise;Entreprise
+Entreprise;FTN
+Entreprise;Multinationale
+Entreprise;Tertiaire
+Exportation;Bateau
+Exportation;Minéralier
+Argent;Argent
+Argent;Monnaie
+Argent;Revenu
+Argent;Salaire
+Argent;Source
+Économie;Bénéfice
+Économie;Économie
+Économie;Instable
+Économie;PIB
+Économie;Retombées
+Économie;Économie fictive
+Économie;Économie positive
+Économie;Valeur économique
+Économie;Valeur
+Investissement;Finance
+Investissement;Financement
+Fiscalité;Avantage
+Fiscalité;Avantage fiscaux
+Fiscalité;Dette
+Fiscalité;Endettement
+Fiscalité;Profit
+Fiscalité;Exonération
+Investissement;Apport
+Investissement;Capitalisation
+Investissement;Dividende
+Amélioration environnementale;Avancement
+Amélioration environnementale;Écologie
+Amélioration environnementale;Protection
+Amélioration environnementale;Reboisement
+Amélioration environnementale;Réparation
+Amélioration environnementale;Revégétalisation
+Biodiversité;Mort
+Biodiversité;Arbre
+Biodiversité;Arbuste
+Biodiversité;Biodiversité
+Biodiversité;Corail
+Biodiversité;Diversité
+Biodiversité;Endémique
+Biodiversité;Endémisme
+Biodiversité;Espèce endémique
+Biodiversité;Faune
+Biodiversité;Flore
+Biodiversité;Plante endémique
+Biodiversité;Poisson
+Changement;Changement
+Changement;Déformation
+Changement;Transformation
+Changement climatique;Bouleversement
+Changement climatique;Climat
+Changement climatique;Effet de serre
+Changement climatique;Espèce en voie de disparition
+Changement climatique;Glissement de terrain
+Changement climatique;Problème écologique
+Changement climatique;Réchauffement climatique
+Changement climatique;Sécheresse
+Destruction;Catastrophe
+Destruction;Déforestation
+Destruction;Dégâts
+Destruction;Dégradation
+Destruction;Démolition
+Destruction;Destruction
+Destruction;Détruire
+Destruction;Disparition
+Destruction;Engravement
+Destruction;Érosion
+Environnement;Conséquence
+Environnement;Défrichement
+Environnement;Désastre
+Environnement;Eau salubre
+Environnement;Éboulement
+Environnement;Environnement
+Environnement;Impact
+Environnement;Inondation
+Environnement;Ruisellement
+Environnement;Extinction
+Montagne;Montagne
+Montagne;Paysage
+Nature;Écosystème
+Nature;Forêt sèche
+Nature;Lagon
+Nature;Maquis Minier
+Nature;Mer
+Nature;Nature
+Nature;Naturel
+Nature;Récif
+Nature;Ruisseau
+Nature;Verdure
+Terre;Rouge
+Terre;Sol
+Terre;Terre
+Terre;Terre rouge
+Engin;Camion
+Engin;Contracteur
+Engin;Convoyeur 
+Engin;Engin
+Engin;Roue
+Engin;Tractopelle
+Équipement;Badge
+Équipement;Casque
+Équipement;Chaussure de sécurité
+Équipement;EPI
+Équipement;Gilet
+Équipement;Gilet fluo
+Équipement;Lampe
+Équipement;Lunette
+Équipement;Tenue de travail
+Exploitation;Dynamite
+Exploitation;Exploitation
+Exploitation;Explosion
+Exploitation;Extraction
+Exploitation;Long
+Exploitation;Long-terme
+Exploitation;Modernisation
+Gisement;Charbon
+Gisement;Cuivre
+Gisement;Diamant
+Gisement;Granite
+Gisement;Jade
+Gisement;Or
+Gisement;Pétrole
+Machine;Machine
+Machine;Serpentine
+Machine;Tapis roulant
+Machine;Wagonnet
+Outil;Outil
+Outil;Pelle
+Outil;Pioche
+Travail;Atelier
+Travail;Bloc
+Travail;Chantier
+Travail;Creuser
+Travail;Équipe
+Travail;Polyvalent
+Travail;Roulement
+Culture Pop;7 nains
+Culture Pop;Gimli
+Culture Pop;Minecraft
+Hors sujet;Crayon
+Industrie;Délocalisation
+Industrie;Industrialisation
+Industrie;Industrie
+Métallurgie;Hydrométallurgie
+Métallurgie;Métallurgie
+Métallurgie;Résidu
+Métallurgie;Scorie
+Métallurgie;Sidérurgie
+Usine;Cheminée
+Usine;Doniambo
+Usine;Four
+Usine;Fumée
+Usine;Goro
+Usine;Usine
+Usine;Usine de Doniambo
+Usine;Usine du Sud
+Usine;Usine Nord
+Minerai;Caillou
+Minerai;Cobalt
+Minerai;Garniérite
+Minerai;Latérite
+Minerai;Minerai
+Minerai;Minéral
+Minerai;Pierre
+Minerai;Roche
+Minerai;Rocher
+Minerai;Vert
+Nickel;Matière
+Nickel;Matière première
+Nickel;Métaux rares
+Nickel;Nickel
+Nickel;Précieux
+Ressource;Consommation
+Ressource;Diminution
+Ressource;Malédiction
+Ressource;Mise en valeur
+Ressource;Non-renouvelable
+Ressource;Raréfaction
+Ressource;Ressource
+Ressource;Ressource économique
+Ressource;Ressource épuisable
+Ressource;Ressource fossile
+Ressource;Ressource naturelle
+Ressource;Stratégie
+Ressource;Stratégique
+Ressource;Surexploitation
+Richesse;Convertissement
+Richesse;Or vert
+Richesse;Répartition
+Richesse;Riche
+Richesse;Richesse
+Richesse;Trésor
+Richesse;Trésor souterrain
+Coutume;Ancêtre
+Coutume;Conseil tribal
+Coutume;Coutume
+Coutume;Coutumier
+Coutume;Reconnaissance
+Coutume;Sacré
+Coutume;Tradition
+Coutume;Tribus
+Coutume;Valeur culturelle
+Coutume;Village
+Indépendance;Autonomie
+Indépendance;Babylone
+Indépendance;Fausse dépendance
+Indépendance;Indépendance
+Indépendance;Militaire
+Indépendance;Porte d’entrée
+Indépendance;Rééquilibrage
+Nouvelle-Calédonie;Côte ouest
+Nouvelle-Calédonie;Nord
+Nouvelle-Calédonie;Nouvelle-Calédonie
+Nouvelle-Calédonie;Patrimoine
+Nouvelle-Calédonie;Pays
+Nouvelle-Calédonie;Province Sud
+Nouvelle-Calédonie;Puissance
+Nouvelle-Calédonie;Sud
+Nouvelle-Calédonie;Symbole
+Nouvelle-Calédonie;Territoire
+Passé;Ancien
+Passé;Boom
+Passé;Colonisation
+Passé;Garnier
+Passé;Histoire
+Passé;Jules Garnier
+Passé;Les Évènements
+Passé;Mine d’or
+Passé;Travail forcé
+Balance;Bien - Mal
+Balance;Bilan
+Balance;Compliquer
+Balance;Dilemme
+Balance;Nécessité
+Balance;Positif - négatif
+Balance;Prix à payer
+Conflit;Arme
+Conflit;Barrage
+Conflit;Blocage
+Conflit;Conflit
+Conflit;Contentieux
+Conflit;Désaccord
+Conflit;Division
+Conflit;Grève
+Conflit;Plainte
+Conflit;Problème
+Conflit;Revendication
+Conflit;Tension
+Dérive politique;Abus
+Dérive politique;Corruption
+Dérive politique;Fraude
+Dérive politique;Hypocrisie
+Dérive politique;Mafia
+Dérive politique;Magouille
+Dérive politique;Manipulation
+Énergie;Centrale
+Énergie;Centrale à charbon
+Énergie;Centrale hydraulique
+Énergie;Chaleur
+Énergie;Électricité
+Énergie;Enercal
+Énergie;Énergie
+Énergie;Énergie fossile
+Enjeu;Challenge écologique
+Enjeu;Enjeu
+Enjeu;Futur
+Enjeu;Promesse
+Enjeu;Questionnement
+Futur;Avenir
+Futur;Train
+Politique;Débat
+Politique;Entente
+Politique;Institution
+Politique;Intérêt commun
+Politique;Investigation
+Politique;Lobby
+Politique;Politique
+Politique;Politisé
+Politique;Pouvoir
+Politique;Respect
+Nuisance;Bruit
+Nuisance;Bruyant
+Nuisance;Dérangement
+Nuisance;Sale
+Nuisance;Saleté
+Nuisance;Poussière
+Pollution;Air
+Pollution;Boue
+Pollution;Eau
+Pollution;Polluant
+Pollution;Pollution
+Pollution;Rejets
+Santé;Maladie
+Santé;RUAMM
+Santé;Santé
+France;Aide
+France;Dépendance
+France;Empire
+France;France
+Relation internationale;Convoitise
+Relation internationale;Corée
+Relation internationale;Échange
+Relation internationale;Envié
+Relation internationale;Géopolitique
+Relation internationale;International
+Relation internationale;Investissement
+Relation internationale;Mondial
+Relation internationale;Mondialisation
+Relation internationale;Négociation
+Relation internationale;Ouverture
+Relation internationale;Rachat
+Relation internationale;Relation
+Relation internationale;Relation internationale
+Relation internationale;Sponsor
+Relation internationale;Vol
+Épuisement;Épuisable
+Épuisement;Épuisement
+Épuisement;Ressource limitée
+Fer;Fer
+Fer;Fer rubané
+Fer;Ferraille
+Prospection;Analyse
+Prospection;Découverte
+Prospection;Échantillon
+Prospection;Expérience scientifique
+Prospection;Forage
+Prospection;Géologie
+Prospection;Gisement
+Prospection;Laboratoire
+Prospection;Perle
+Prospection;Prospection
+Prospection;Recherche
+Prospection;Teneur
+Danger;Accident
+Danger;Danger
+Danger;Dangereux
+Danger;Feu
+Danger;Risque
+Sécurité;Sécurité
+Sécurité;Sécurité civile
+Formation;Bourse
+Formation;Cours
+Formation;École
+Formation;Formation
+Formation;Poro
+Opérateur;Ballande
+Opérateur;Compagnie
+Opérateur;Eramet
+Opérateur;Gestion
+Opérateur;KNS
+Opérateur;NMC
+Opérateur;Prony Ressources
+Opérateur;SLN
+Opérateur;SMSP
+Opérateur;Vale
+Procédé industriel;Acide
+Procédé industriel;Offshore
+Procédé industriel;Organisation
+Procédé industriel;Procédés
+Procédé industriel;Produit
+Procédé industriel;Produit chimique
+Procédé industriel;Technologie
+Procédé industriel;Traitement
+Procédé industriel;Valorisation
+Production;Inox
+Production;Lithium
+Production;Matériau
+Production;Métal
+Production;Pile
+Production;Production
+Production;Produit fini
+Secteur nickel;Activité minière
+Secteur nickel;Faillite
+Secteur nickel;Fermeture
+Secteur nickel;Important
+Secteur nickel;Indispensable
+Secteur nickel;Influence
+Secteur nickel;Monopole
+Secteur nickel;Non viable
+Secteur nickel;Partout
+Secteur nickel;Pillage
+Secteur nickel;Pôle attractif
+Secteur nickel;Poumon
+Secteur nickel;Profite
+Secteur nickel;Quantité
+Secteur nickel;Rentabilité
+Secteur nickel;Secteur
+Sous-traitance;Acheminement
+Sous-traitance;Intérimaire
+Sous-traitance;Sous-traitant
+Sous-traitance;Transport
+Calédoniens;Appartenance
+Calédoniens;Civilisation
+Calédoniens;Condition de vie
+Calédoniens;Éloignement
+Calédoniens;Identité
+Calédoniens;Opportunité
+Calédoniens;Peuple
+Calédoniens;Population
+Calédoniens;Racine
+Calédoniens;Ville
+Calédoniens;Vital
+Famille;Enfant
+Famille;Famille
+Famille;Père
+Inégalité;Appauvrissement
+Inégalité;Exaction
+Inégalité;Inégalité
+Inégalité;Pays exploité
+Inégalité;Pistonnage
+Sentiment;Délicatesse
+Sentiment;Désabusé
+Sentiment;Mauvais
+Sentiment;Tristesse
+Social;Alchimie
+Social;Amélioration
+Social;Intégration
+Social;Interaction
+Social;Liens
+Social;Syndicat
+Condition de travail;Différence
+Condition de travail;Difficile
+Condition de travail;Dur
+Condition de travail;Épuisant
+Condition de travail;Esclave
+Condition de travail;Flexible
+Condition de travail;Hiérarchie
+Condition de travail;Horaire
+Condition de travail;Mal payé
+Condition de travail;Ponctualité
+Condition de travail;Milieu dur
+Emploi;Carrière
+Emploi;Emploi
+Emploi;Emploi non-qualifié
+Emploi;Emploi qualifié
+Emploi;Métier
+Emploi;Promesse d’embauche
+Emploi;Travail
+Main d’oeuvre;Camionneur
+Main d’oeuvre;Employé
+Main d’oeuvre;Géologue
+Main d’oeuvre;Main d’oeuvre
+Main d’oeuvre;Mineur
+Main d’oeuvre;Ouvrier
+Main d’oeuvre;Salarié
+Main d’oeuvre;Travailleur
+;Total
