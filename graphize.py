@@ -127,5 +127,6 @@ if __name__ == "__main__":
     generate_all_graphs(
         DATASETS[0:1:],
         thresholds=[float(n) for n in range(2, 4)],
-        weights={"1_on_n_square": {i: 1 / (i ** 2) for i in range(1, 16)}},
+        weights={"1_on_n_square":WEIGHTS["1_on_n_square"]},
     )
+    # generate_all_graphs(DATASETS, thresholds=[float(n) for n in range(2, 11)], weights=WEIGHTS)
