@@ -22,9 +22,10 @@ if __name__ == "__main__":
     logging.basicConfig()
     logger.setLevel(logging.DEBUG)
 
-locale.setlocale(locale.LC_ALL, '')
+locale.setlocale(locale.LC_ALL, "")
 
 INPUT_DIR = Path("./input")
+CARTES_COG_SMALL = INPUT_DIR / "cartes_cog_small.csv"
 CARTES_COG_LA_MINE = INPUT_DIR / "cartes_cog_la_mine.csv"
 THESAURUS_LA_MINE = INPUT_DIR / "thesaurus_la_mine.csv"
 CARTES_COG_MINE_FUTUR = INPUT_DIR / "cartes_cog_mine_futur.csv"
@@ -81,7 +82,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     """Conteneur pour un ensemble de cartes cognitives"""
 
     # listes des mots considérés comme vides et exlcus de la carte
-    EMPTY_WORDS = ("NULL", "")
+    EMPTY_WORDS = ("null", "")
 
     @staticmethod
     def clean_word(string: str) -> str:
@@ -101,7 +102,9 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
                 # indices 1 et suivants : les mots de la carte
                 identifier = int(row[0])
                 # on élimine les mots vides et NULL
-                cog_maps[identifier] = [CogMaps.clean_word(w) for w in row[1:] if w not in CogMaps.EMPTY_WORDS]
+                cog_maps[identifier] = [
+                    CogMaps.clean_word(w) for w in row[1:] if CogMaps.clean_word(w) not in CogMaps.EMPTY_WORDS
+                ]
 
         logger.info(
             f"CogMaps.load_cog_maps: {len(cog_maps)} maps with {sum(len(l) for l in cog_maps.values())} words in total"
@@ -388,6 +391,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
             for word_row in self.index:
                 for word_col in self.index:
                     # toutes les paires de paires (id_row, pos_row), (id_col, pos_col)
+                    # TODO : faire ca plus efficace sans product, depuis les cartes, mais OSEF à ce stade
                     pos_prod = product(self.index[word_row], self.index[word_col])
                     # si on est ensemble dans la même carte
                     # alors on calcule l'écart absolu des positions
@@ -417,7 +421,6 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         logger.info(f"CogMaps.dump_matrix: {filename}")
 
 
-# %%
 def gen_filename(outdir: StringOrPath, base: StringOrPath, suffix: str) -> Path:
     """Outil : Génère un nom de fichier standardisé pour les résultats de calcul"""
     # return Path(outdir) / Path(f"{Path(base).stem}_{suffix}.csv")
@@ -460,7 +463,6 @@ def generate_results(
     the_unknowns_maps.dump(get_name("inconnus"))
 
 
-# %%
 def generate_weighted_occurences(output_dir: StringOrPath, cog_maps: CogMaps) -> None:
     """Genère les positions pondérées pour une famille de pondérations"""
     header = ["mot", "nb_occurrences", *WEIGHTS.keys()]
@@ -480,28 +482,44 @@ def generate_weighted_occurences(output_dir: StringOrPath, cog_maps: CogMaps) ->
         for word in sorted(cog_maps.words):
             # ici, affichage avec la locale
             # https://stackoverflow.com/questions/1823058/how-to-print-number-with-commas-as-thousands-separators
-            row = [f"{round(occurrences[name][word], 2):n}"  for name in WEIGHTS]
+            row = [f"{round(occurrences[name][word], 2):n}" for name in WEIGHTS]
             writer.writerow((word, len(cog_maps.index[word]), *row))
     logger.info(f"generate_weighted_occurences to {filename}")
 
 
+# %%
+DEMO = True
+WITH_UNKNOWNS = False
+
 if __name__ == "__main__":
-    WITH_UNKNOWNS = False
-    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
-    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
 
-    # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
-    # mes_cartes.dump_occurrences("test1.csv")
-    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
-    # mes_cartes.dump_occurrences("test2.csv")
-    # mes_cartes.dump_occurrences_in_position("test3.csv")
+    if DEMO:
+        small = CogMaps(CARTES_COG_SMALL, THESAURUS_LA_MINE)
 
-    # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
-    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
-    # mes_cartes_meres, mes_inconnus = mes_cartes.apply(with_unknown=False)
-    # mes_cartes_meres.dump_matrix("test.csv")
-    # mes_cartes_meres.dump("meres.csv")
-    la_mine = CogMaps(CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
-    la_mere, _ = la_mine.apply(with_unknown=False)
-    generate_weighted_occurences(OUTPUT_DIR, la_mine)
-    generate_weighted_occurences(OUTPUT_DIR, la_mere)
+        # pprint(small.cog_maps)
+        pprint(list(small.words))
+        # pprint(small.index)
+
+        concepts, _ = small.apply(with_unknown=False)
+
+        generate_results(OUTPUT_DIR, CARTES_COG_SMALL, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
+
+    else:
+        generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
+        generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
+
+        # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
+        # mes_cartes.dump_occurrences("test1.csv")
+        # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
+        # mes_cartes.dump_occurrences("test2.csv")
+        # mes_cartes.dump_occurrences_in_position("test3.csv")
+
+        # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
+        # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
+        # mes_cartes_meres, mes_inconnus = mes_cartes.apply(with_unknown=False)
+        # mes_cartes_meres.dump_matrix("test.csv")
+        # mes_cartes_meres.dump("meres.csv")
+        la_mine = CogMaps(CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+        la_mere, _ = la_mine.apply(with_unknown=False)
+        generate_weighted_occurences(OUTPUT_DIR, la_mine)
+        generate_weighted_occurences(OUTPUT_DIR, la_mere)

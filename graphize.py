@@ -20,7 +20,7 @@ from cartes_cog import (
     CARTES_COG_MINE_FUTUR,
     THESAURUS_LA_MINE,
     THESAURUS_MINE_FUTUR,
-    WEIGHTED_POSITIONS,
+    CARTES_COG_SMALL,
     WEIGHTS,
     CogMaps,
 )
@@ -122,11 +122,18 @@ THRESHOLD = 3
 # les deux paire "la mine" et "la mine dans le futur"
 DATASETS = [(CARTES_COG_LA_MINE, THESAURUS_LA_MINE), (CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)]
 
-
+DEMO = True
 if __name__ == "__main__":
-    generate_all_graphs(
-        DATASETS[0:1:],
-        thresholds=[float(n) for n in range(2, 4)],
-        weights={"1_on_n_square":WEIGHTS["1_on_n_square"]},
-    )
+    if DEMO:
+        generate_all_graphs(
+            [(CARTES_COG_SMALL, THESAURUS_LA_MINE)],
+            thresholds=[float(n) for n in range(1, 4)],
+            weights=WEIGHTS,
+        )
+    else:
+        generate_all_graphs(
+            DATASETS[0:1:],
+            thresholds=[float(n) for n in range(2, 4)],
+            weights={"1_on_n_square": WEIGHTS["1_on_n_square"]},
+        )
     # generate_all_graphs(DATASETS, thresholds=[float(n) for n in range(2, 11)], weights=WEIGHTS)
