@@ -52,7 +52,7 @@ WEIGHTS = {
     # idem first_1 mais avec les 5 premières positions
     "first_5": {i: 1.0 for i in range(1, 6)},
     # le poids est de 1/n : 1.0, 0.5, 0.333, 0.25 ...
-    "1_on_n": {i: 1 / i for i in range(1, 16)},
+    "1_on_n": {i: 1 / i for i in range(1, MAX_LEN)},
     # le poids est de 1/n*n : 1.0, 0.25, 0.111, 0.0625 ...
     "1_on_n_square": {i: 1 / (i ** 2) for i in range(1, MAX_LEN)},
     # le poids est en exponentielle(1-i) : 1.0, 0.37, 0.14, 0.05 ...
@@ -237,6 +237,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
                     # NOTE : on fait commencer les positions à 1
                     value = (identifier, pos + 1)
                     self.__index[word].append(value)
+            logger.info(f"CogMaps.create_index: {len(self.__index)} different words")
         return self.__index
 
     @index.setter
