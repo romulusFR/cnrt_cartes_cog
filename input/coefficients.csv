@@ -1,4 +1,4 @@
-Position;Arithmétique;Inverse;Position_n1;Position_n3;Position_n6;Position_i3;Position_i6
+position;arithmetique;inverse;pos_1;pos_3;pos_6;pos_3_arith;pos_6_arith
 1;1.00;1.00;1.00;1.00;1.00;1.00;1.00
 2;0.94;0.50;0.00;1.00;1.00;0.50;0.83
 3;0.88;0.33;0.00;1.00;1.00;0.33;0.67

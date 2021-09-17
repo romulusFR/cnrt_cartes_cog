@@ -8,7 +8,7 @@ import logging
 from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog, ttk, scrolledtext
-from cartes_cog import (
+from cog_maps import (
     generate_results,
     INPUT_DIR,
     CARTES_COG_LA_MINE,
