@@ -31,12 +31,12 @@ StringOrPath = Union[Path, str]
 Word = str
 Ident = int
 Position = int
-Level = int
+Level = str
 CogMapsType = dict[Ident, list[Word]]
 WeightsType = dict[Position, float]
 WeightsMapType = dict[str, WeightsType]
 ThesaurusType = dict[Word, Word]
-ThesaurusTypeMap = dict[Level, ThesaurusType]
+ThesaurusMapType = dict[Level, ThesaurusType]
 IndexType = dict[Word, list[Tuple[Ident, Position]]]
 OccurrencesType = dict[Word, float]
 OccurrencesInPositionsType = dict[Position, Counter[Word]]
@@ -62,11 +62,17 @@ CSV_PARAMS = {"delimiter": ";", "quotechar": '"'}
 ENCODING = "utf-8"
 
 # valeur par défaut
-DEFAULT_CONCEPT = "__inconnu__"
-DEFAULT_MAX_LEN = 15
+DEFAULT_CONCEPT: Word = "__inconnu__"
+DEFAULT_MAX_LEN: int = 15
 # BUG éviter ici defaultdict car collision avec le .get(key, 0.0)
 DEFAULT_WEIGHTS: WeightsType = {i: 1.0 for i in range(1, DEFAULT_MAX_LEN + 1)}
-DEFAULT_WEIGHTS_NAME = "arithmetique"
+DEFAULT_WEIGHTS_NAME: str = "arithmetique"
+
+# constante pour le thésaurus
+BASE_LVL: Level = "base"
+CONCEPT_LVL: Level = "concept"
+MOTHER_LVL: Level = "mother"
+GRAND_MOTHER_LVL: Level = "gd_mother"
 
 
 class CogMaps:  # pylint: disable=too-many-instance-attributes
@@ -118,33 +124,59 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         return weights
 
     @staticmethod
-    def load_thesaurus(filename: StringOrPath) -> ThesaurusType:
+    def load_thesaurus_map(filename: StringOrPath) -> ThesaurusMapType:
         """Charge l'ontologie (concept, mot énoncé) dans un dico "mot énoncé" -> "mot mère"
 
         Format attendu (sans en-tête):
         0 - Mots énoncés;
         1 - Code mots énoncés;
-        2 - Concepts énoncés;
-        3 - Concepts mères;
+        2 - Concepts énoncés;       -- clef 0
+        3 - Concepts mères;         -- clef 1
         4 - Code Mère;
-        5 - Concepts grands-mères;
+        5 - Concepts grands-mères;  -- clef 2
         6 - Code Grand-mère
 
         Assure l'application de CogMaps.clean_word"""
         logger.debug(f"CogMaps.load_thesaurus({filename})")
-        thesaurus = defaultdict(lambda: DEFAULT_CONCEPT)
+        # defaultdict(lambda: DEFAULT_CONCEPT)
+        thesaurus_map: ThesaurusMapType = {
+            CONCEPT_LVL: defaultdict(lambda: DEFAULT_CONCEPT),  # word -> concept
+            MOTHER_LVL: defaultdict(lambda: DEFAULT_CONCEPT),  # concept -> mother
+            GRAND_MOTHER_LVL: defaultdict(lambda: DEFAULT_CONCEPT),  # mother -> grand_mother
+        }
+
+        def check_and_add(level: Level, src: Word, dst: Word):
+            src = CogMaps.clean_word(src)
+            dst = CogMaps.clean_word(dst)
+            if src not in CogMaps.EMPTY_WORDS and dst not in CogMaps.EMPTY_WORDS:
+                if thesaurus_map[level].get(src, dst) != dst:
+                    logger.warning(
+                        "CogMaps.load_thesaurus at %s: %s -> %s overrided by %s",
+                        level,
+                        src,
+                        thesaurus_map[level][src],
+                        dst,
+                    )
+                thesaurus_map[level][src] = dst
+            else:
+                logger.warning("CogMaps.load_thesaurus empty mapping %s -> %s", src, dst)
 
         with open(filename, encoding=ENCODING) as csvfile:
             reader = csv.reader(csvfile, **CSV_PARAMS)
             for row in reader:
-                word = CogMaps.clean_word(row[0])
-                concept = CogMaps.clean_word(row[3])
-                if word not in CogMaps.EMPTY_WORDS and concept not in CogMaps.EMPTY_WORDS:
-                    thesaurus[word] = concept
-                else:
-                    logger.warning("CogMaps.load_thesaurus map %s -> %s", word, concept)
-        logger.info(f"CogMaps.load_thesaurus: {len(thesaurus.keys())} words to {len(set(thesaurus.values()))} concepts")
-        return thesaurus
+                # word = CogMaps.clean_word(row[0])
+                # concept = CogMaps.clean_word(row[3])
+                if len(row) != 7:
+                    logger.warning("CogMaps.load_thesaurus map cannot row %s of len %i", row, len(row))
+                [word, _, concept, mother, _, grand_mother, _] = row
+
+                check_and_add(CONCEPT_LVL, word, concept)
+                check_and_add(MOTHER_LVL, concept, mother)
+                check_and_add(GRAND_MOTHER_LVL, mother, grand_mother)
+
+        logger.info(f"CogMaps.load_thesaurus: {len(thesaurus_map)} levels")
+        # words to {len(set(thesaurus.values()))} concepts")
+        return thesaurus_map
 
     def __init__(self, cog_maps_filename=None):
         # le fichier duquel lire les cartes cognitives
@@ -270,7 +302,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         """
 
         if self.__occurrences is None:
-            logger.debug(f"CogMaps.occurrences({len(self.__cog_maps)}, {self.__weights})")
+            logger.debug(f"CogMaps.occurrences({len(self.__cog_maps)})") # {self.__weights}
             self.__occurrences = {}
             # on ne garde que la seconde composante de l'index
             second = lambda x: x[1]
@@ -360,15 +392,21 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         logger.debug(
             f"CogMaps.apply({len(self)} maps, {len(self.__thesaurus)} concepts thesaurus with unknowns={with_unknown})"
         )
+        # la carte après application du thesaurus
         concept_maps = {}
+        # les mots qui n'ont pas d'image
         unknown_report = defaultdict(list)
-        for k, words in self.__cog_maps.items():
-            concept_maps[k] = [
+        # pour chaque carte, on garde son identifiant
+        for identifier, words in self.__cog_maps.items():
+            # on remplace chacun de ses mots par son image dans le thesaurus
+            concept_maps[identifier] = [
                 self.__thesaurus[word] for word in words if (self.__thesaurus[word] != DEFAULT_CONCEPT or with_unknown)
             ]
+            # on ajoute les mots qui n'ont pas d'image
             for word in words:
                 if self.__thesaurus[word] == DEFAULT_CONCEPT:
-                    unknown_report[word].append(k)
+                    unknown_report[word].append(identifier)
+
         logger.info(
             f"CogMaps.apply: {len(concept_maps)} concept maps with {sum(len(l) for l in concept_maps.values())} words ({'with' if with_unknown else 'without'} unknown words)"
         )
@@ -378,14 +416,14 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
         new_cog_maps = CogMaps()
         # on définit les cartes
-        new_cog_maps.__cog_maps = concept_maps  # pylint: disable=protected-access
+        new_cog_maps.__cog_maps = concept_maps  # pylint: disable=protected-access, unused-private-member
         # le parent
-        new_cog_maps.__parent = self  # pylint: disable=protected-access
+        new_cog_maps.__parent = self  # pylint: disable=protected-access, unused-private-member
         # on reprend la même carte de poids
-        new_cog_maps.__weights = self.__weights.copy()  # pylint: disable=protected-access
+        new_cog_maps.__weights = self.__weights.copy()  # pylint: disable=protected-access, unused-private-member
         # on utilise le même nom de fichier
         path = Path(self.filename)
-        # pylint: disable=protected-access
+        # pylint: disable=protected-access, unused-private-member
         new_cog_maps.__cog_maps_filename = f"concepts_of_{path.stem}{path.suffix}"
 
         # on utilise le fait que le rapport des unknnows est une cog_maps aussi
@@ -447,13 +485,18 @@ def gen_filename(outdir: StringOrPath, base: StringOrPath, suffix: str) -> Path:
     return Path(outdir) / f"{Path(base).stem}_{suffix}.csv"
 
 
+def compose(src: dict, dst: dict):
+    """Composition de deux dictionnaires"""
+    return {k: dst.get(v, DEFAULT_CONCEPT) for k, v in src.items()}
+
+
 def generate_results(
     output_dir: StringOrPath,
     cog_maps_filename: StringOrPath,
     thesaurus_filename: StringOrPath,
     weights_filename: StringOrPath,
     with_unknown: bool = False,
-) -> None:
+) -> list[Tuple[Level, CogMaps]]:
     """ "Wrapper principal utilisé par la CLI et la GUI"""
     logger.debug(f"output_dir = {output_dir}")
     logger.debug(f"cog_maps__filename = {cog_maps_filename}")
@@ -465,30 +508,36 @@ def generate_results(
     Path(output_dir).mkdir(parents=True, exist_ok=True)
     # application partielle qui génère un préfixe de nom
     get_name = partial(gen_filename, output_dir, cog_maps_filename)
+    # constantes
+    occurrences_suffix = "occurrences"
+    positions_suffix = "positions"
+    matrix_suffix = "matrice"
+    unknown_suffix = "inconnus"
 
     # chargement des entrées
+    the_thesaurus = CogMaps.load_thesaurus_map(thesaurus_filename)
     the_weights = CogMaps.load_weights(weights_filename)
-    the_thesaurus = CogMaps.load_thesaurus(thesaurus_filename)
-    the_cog_maps = CogMaps(cog_maps_filename)
-    the_cog_maps.thesaurus = the_thesaurus
 
-    # génération de la carte de base et sorties
-    the_cog_maps.dump(get_name("base"))
-    the_cog_maps.dump_occurrences_many(get_name("base_occurrences"), the_weights)
-    the_cog_maps.dump_occurrences_in_position(get_name("base_positions"))
-    the_cog_maps.dump_matrix(get_name("base_matrice"))
+    # génération de 4 cartes : la base, + trois niveau de thesaurus
+    levels = [BASE_LVL, CONCEPT_LVL, MOTHER_LVL, GRAND_MOTHER_LVL]
+    the_maps = [CogMaps(cog_maps_filename)]
+    # le thesaurus a plusieurs niveau. On va appliquer chacun
+    for i, level in enumerate(levels[1::]):
+        the_maps[i].thesaurus = the_thesaurus[level]
+        the_new_maps, the_unknowns_maps = the_maps[i].apply(with_unknown=with_unknown)
+        the_maps.append(the_new_maps)
+        # le rapport des mots qui n'ont pas d'image, on le produit tout de suite
+        the_unknowns_maps.dump(get_name(f"{level}_{unknown_suffix}"))
 
-    # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
-    the_concept_maps, the_unknowns_maps = the_cog_maps.apply(with_unknown=with_unknown)
-    the_concept_maps.dump(get_name("meres"))
-    the_concept_maps.dump_occurrences_many(get_name("meres_occurrences"), the_weights)
-    the_concept_maps.dump_occurrences_in_position(get_name("meres_positions"))
-    the_concept_maps.dump_matrix(get_name("meres_matrice"))
+    # on produit tout les résultats
+    for a_lvl, a_map in zip(levels, the_maps):
+        a_map.dump(get_name(a_lvl))
+        a_map.dump_occurrences_many(get_name(f"{a_lvl}_{occurrences_suffix}"), the_weights)
+        a_map.dump_occurrences_in_position(get_name(f"{a_lvl}_{positions_suffix}"))
+        a_map.weights = the_weights[DEFAULT_WEIGHTS_NAME]
+        a_map.dump_matrix(get_name(f"{a_lvl}_{matrix_suffix}_{DEFAULT_WEIGHTS_NAME}"))
 
-    # le rapport des mots qui n'ont pas de concepts
-    the_unknowns_maps.dump(get_name("inconnus"))
-
-
+    return list(zip(levels, the_maps))
 # %%
 WITH_UNKNOWNS = False
 DEBUG = True
@@ -500,28 +549,17 @@ if __name__ == "__main__" and not DEBUG:
         OUTPUT_DIR, CM_FUTUR_FILENAME, THESAURUS_FILENAME, WEIGHTS_MAP_FILENAME, with_unknown=WITH_UNKNOWNS
     )
 
-    le_thesaurus = CogMaps.load_thesaurus(THESAURUS_FILENAME)
+    le_thesaurus = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
     la_mine = CogMaps(CM_LA_MINE_FILENAME)
-    la_mine.thesaurus = le_thesaurus
+    la_mine.thesaurus = le_thesaurus[CONCEPT_LVL]
     la_mere, _ = la_mine.apply(with_unknown=False)
     # generate_weighted_occurences(OUTPUT_DIR, la_mine)
     # generate_weighted_occurences(OUTPUT_DIR, la_mere)
 
 if __name__ == "__main__" and DEBUG:
-    test_thesaurus = CogMaps.load_thesaurus(THESAURUS_FILENAME)
+    test_thesaurus = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
     test_maps = CogMaps(CM_SMALL_FILENAME)
-    test_maps.thesaurus = test_thesaurus
-    test_weights = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
-    # test_maps.dump_occurrences(OUTPUT_DIR / "test_occurences.csv")
-
-    test_mother, _ = test_maps.apply(with_unknown=False)
-    # mes_cartes.dump_occurrences("test1.csv")
-    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
-    # mes_cartes.dump_occurrences("test2.csv")
-    # mes_cartes.dump_occurrences_in_position("test3.csv")
-
-    # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
-    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
-    # mes_cartes_meres, mes_inconnus = mes_cartes.apply(with_unknown=False)
-    # mes_cartes_meres.dump_matrix("test.csv")
-    # mes_cartes_meres.dump("meres.csv")
+    test_maps.thesaurus = test_thesaurus[CONCEPT_LVL]
+    # test_weights = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
+    test_mother, test_report = test_maps.apply(with_unknown=False)
+    pprint(test_report.cog_maps)
