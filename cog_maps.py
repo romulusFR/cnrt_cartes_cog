@@ -7,6 +7,7 @@ __author__ = "Romuald Thion"
 import locale
 import csv
 import logging
+import sys
 from math import exp
 from typing import Union, Tuple, Iterator, Optional
 from collections import Counter, defaultdict
@@ -24,20 +25,49 @@ if __name__ == "__main__":
 
 locale.setlocale(locale.LC_ALL, "")
 
+
+# typing
+StringOrPath = Union[Path, str]
+Word = str
+Ident = int
+Position = int
+CogMapsType = dict[Ident, list[Word]]
+WeightsType = dict[Position, float]
+WeightsMapType = dict[str, WeightsType]
+ThesaurusType = dict[Word, Word]
+IndexType = dict[Word, list[Tuple[Ident, Position]]]
+OccurrencesType = dict[Word, float]
+OccurrencesInPositionsType = dict[Position, Counter[Word]]
+MatrixType = dict[Word, dict[Word, float]]
+
+
 INPUT_DIR = Path("./input")
+
+if not INPUT_DIR.exists():
+    logger.error("input directory %s does not exist", INPUT_DIR)
+    raise FileNotFoundError(f"input directory {INPUT_DIR} does not exist")
+
+
 CARTES_COG_SMALL = INPUT_DIR / "cartes_cog_small.csv"
 CARTES_COG_LA_MINE = INPUT_DIR / "cartes_cog_la_mine.csv"
 THESAURUS_LA_MINE = INPUT_DIR / "thesaurus_la_mine.csv"
 CARTES_COG_MINE_FUTUR = INPUT_DIR / "cartes_cog_mine_futur.csv"
 THESAURUS_MINE_FUTUR = INPUT_DIR / "thesaurus_mine_futur.csv"
 WEIGHTED_POSITIONS = INPUT_DIR / "coefficients.csv"
-OUTPUT_DIR = "output"
+OUTPUT_DIR = Path("output")
+
+# assure sur le dossier de sortie existe
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
 DEFAULT_CONCEPT = "__inconnu__"
 
 CSV_PARAMS = {"delimiter": ";", "quotechar": '"'}
 ENCODING = "utf-8"
 
 MAX_LEN = 15
+# DEFAULT_WEIGHTS: WeightsType = defaultdict(lambda: 1)
+DEFAULT_WEIGHTS: WeightsType = {i: 1.0 for i in range(1, MAX_LEN + 1)}
+
 OLD_WEIGHTS = {
     # toutes les positions ont un poids de 1.0
     "any_1": {i: 1.0 for i in range(1, MAX_LEN + 1)},
@@ -82,23 +112,7 @@ WEIGHTS = {
     # avec poids arithmétiquement décroissant 6/6, 5/6, 4/6 ...
     "pos_6_arith": {i: (6 - i + 1) / 6 for i in range(1, 6 + 1)},
 }
-
-# %%
-
-
-# typing
-StringOrPath = Union[Path, str]
-Word = str
-Ident = int
-Position = int
-CogMapsType = dict[Ident, list[Word]]
-WeightsType = dict[Position, float]
-ThesaurusType = dict[Word, Word]
-IndexType = dict[Word, list[Tuple[Ident, Position]]]
-OccurrencesType = dict[Word, float]
-OccurrencesInPositionsType = dict[Position, Counter[Word]]
-MatrixType = dict[Word, dict[Word, float]]
-
+DEFAULT_WEIGHTS_NAME = "arithmetique"
 
 class CogMaps:  # pylint: disable=too-many-instance-attributes
     """Conteneur pour un ensemble de cartes cognitives"""
@@ -134,16 +148,18 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         return cog_maps
 
     @staticmethod
-    def load_weights(filename: StringOrPath) -> WeightsType:
+    def load_weights(filename: StringOrPath) -> WeightsMapType:
         """Charge les poids depuis le fichier CSV"""
         logger.debug(f"CogMaps.load_weights({filename})")
-        weights = defaultdict(float)
+        weights: WeightsMapType = defaultdict(dict)
         with open(filename, encoding="utf-8") as csvfile:
             reader = csv.reader(csvfile, **CSV_PARAMS)
-            # skip first line
-            _ = next(reader)
+            # remember first line for names
+            names = next(reader)
             for row in reader:
-                weights[int(row[0])] = float(row[1])
+                position = int(row[0])
+                for i, col in enumerate(row[1::], start=1):
+                    weights[names[i]][position] = float(col)
         return weights
 
     @staticmethod
@@ -166,9 +182,9 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
     def __init__(self, cog_maps_filename=None, thesaurus_filename=None):
         # le fichier duquel lire les cartes cognitives
-        self.__cog_maps_filename: Optional[StringOrPath] = None
+        self.__cog_maps_filename: Optional[StringOrPath] = cog_maps_filename
         # le fichier duquel lire le thesauruse associé
-        self.__thesaurus_filename: Optional[StringOrPath] = None
+        self.__thesaurus_filename: Optional[StringOrPath] = thesaurus_filename
         # les cartes elles-mêmes : à un id, la liste des mots
         self.__cog_maps: CogMapsType = {}
         # le thesaurus
@@ -176,7 +192,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         # l'index inverse : à un mot, la liste des positions (id_ligne, pos_dans_la ligne) où il apparait
         self.__index: Optional[IndexType] = None
         # les poids des positions par défaut : tout le monde à 1
-        self.__weights: WeightsType = defaultdict(lambda: 1)
+        self.__weights: WeightsType = DEFAULT_WEIGHTS
         # le nombre d'occurences, pondérées par weights
         self.__occurrences: Optional[OccurrencesType] = None
         # dans chaque positions, le nombre d'occurences de chaque mot
@@ -187,11 +203,9 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         self.__parent: Optional[CogMaps] = None
 
         if cog_maps_filename is not None:
-            self.__cog_maps_filename = cog_maps_filename
             self.__cog_maps = CogMaps.load_cog_maps(cog_maps_filename)
 
         if thesaurus_filename is not None:
-            self.__thesaurus_filename = thesaurus_filename
             self.__thesaurus = CogMaps.load_thesaurus(thesaurus_filename)
 
     def invalidate(self) -> None:
@@ -468,8 +482,9 @@ def generate_results(
     get_name = partial(gen_filename, output_dir, cog_maps_filename)
 
     # chargement des entrées
+    the_weights = CogMaps.load_weights(WEIGHTED_POSITIONS)
     the_cog_maps = CogMaps(cog_maps_filename, thesaurus_filename)
-    the_cog_maps.weights = CogMaps.load_weights(WEIGHTED_POSITIONS)
+    the_cog_maps.weights = the_weights[DEFAULT_WEIGHTS_NAME]
     the_cog_maps.dump(get_name("base"))
     the_cog_maps.dump_occurrences(get_name("base_occurrences"))
     the_cog_maps.dump_occurrences_in_position(get_name("base_positions"))
@@ -511,38 +526,27 @@ def generate_weighted_occurences(output_dir: StringOrPath, cog_maps: CogMaps) ->
 
 
 # %%
-DEMO = True
 WITH_UNKNOWNS = False
+DEBUG = True
+if __name__ == "__main__" and not DEBUG:
+    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
+    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
+    la_mine = CogMaps(CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    la_mere, _ = la_mine.apply(with_unknown=False)
+    generate_weighted_occurences(OUTPUT_DIR, la_mine)
+    generate_weighted_occurences(OUTPUT_DIR, la_mere)
 
-if __name__ == "__main__":
+if __name__ == "__main__" and DEBUG:
+    test_maps = CogMaps(Path("input/cartes_cog_small.csv"))
+    test_weights = CogMaps.load_weights(WEIGHTED_POSITIONS)
+    test_maps.dump_occurrences(OUTPUT_DIR / "test_occurences.csv")
+    # mes_cartes.dump_occurrences("test1.csv")
+    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
+    # mes_cartes.dump_occurrences("test2.csv")
+    # mes_cartes.dump_occurrences_in_position("test3.csv")
 
-    if DEMO:
-        small = CogMaps(CARTES_COG_SMALL, THESAURUS_LA_MINE)
-
-        # pprint(small.cog_maps)
-        pprint(list(small.words))
-        # pprint(small.index)
-
-        concepts, _ = small.apply(with_unknown=False)
-
-        generate_results(OUTPUT_DIR, CARTES_COG_SMALL, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
-
-    else:
-        generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
-        generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
-
-        # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"))
-        # mes_cartes.dump_occurrences("test1.csv")
-        # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
-        # mes_cartes.dump_occurrences("test2.csv")
-        # mes_cartes.dump_occurrences_in_position("test3.csv")
-
-        # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
-        # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
-        # mes_cartes_meres, mes_inconnus = mes_cartes.apply(with_unknown=False)
-        # mes_cartes_meres.dump_matrix("test.csv")
-        # mes_cartes_meres.dump("meres.csv")
-        la_mine = CogMaps(CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
-        la_mere, _ = la_mine.apply(with_unknown=False)
-        generate_weighted_occurences(OUTPUT_DIR, la_mine)
-        generate_weighted_occurences(OUTPUT_DIR, la_mere)
+    # mes_cartes = CogMaps(Path("input/cartes_cog_small.csv"), THESAURUS_LA_MINE)
+    # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
+    # mes_cartes_meres, mes_inconnus = mes_cartes.apply(with_unknown=False)
+    # mes_cartes_meres.dump_matrix("test.csv")
+    # mes_cartes_meres.dump("meres.csv")

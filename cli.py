@@ -7,7 +7,7 @@ import argparse
 from pathlib import Path
 import logging
 import sys
-from cartes_cog import (
+from cog_maps import (
     CARTES_COG_LA_MINE,
     THESAURUS_LA_MINE,
     OUTPUT_DIR,
