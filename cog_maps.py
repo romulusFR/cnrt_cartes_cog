@@ -290,17 +290,18 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         """On bloque l'affectation sur occurrences"""
         raise TypeError("CogMaps.occurrences does not support direct assignment")
 
-    def dump_occurrences(self, filename: StringOrPath) -> None:
-        """Sauvegarde la liste des mots énoncés et leur nombre d'occurrences (le produit de compute_histogram_bag) au format csv"""
-        logger.debug(f"CogMaps.dump_occurrences({len(self.cog_maps)}, {filename})")
-        header = ["mot", "nb_occurrences", "occurences_ponderees"]
+    # OBSOLETE
+    # def dump_occurrences(self, filename: StringOrPath) -> None:
+    #     """Sauvegarde la liste des mots énoncés et leur nombre d'occurrences (le produit de compute_histogram_bag) au format csv"""
+    #     logger.debug(f"CogMaps.dump_occurrences({len(self.cog_maps)}, {filename})")
+    #     header = ["mot", "nb_occurrences", "occurences_ponderees"]
 
-        with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
-            writer = csv.writer(csvfile, **CSV_PARAMS)
-            writer.writerow(header)
-            for word in sorted(self.words):
-                writer.writerow((word, len(self.index[word]), round(self.occurrences[word], 2)))
-        logger.info(f"CogMaps.dump_occurrences to {filename}")
+    #     with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
+    #         writer = csv.writer(csvfile, **CSV_PARAMS)
+    #         writer.writerow(header)
+    #         for word in sorted(self.words):
+    #             writer.writerow((word, len(self.index[word]), round(self.occurrences[word], 2)))
+    #     logger.info(f"CogMaps.dump_occurrences to {filename}")
 
     def dump_occurrences_many(self, filename: StringOrPath, weights_map: WeightsMapType) -> None:
         """Genère les positions pondérées pour une famille de pondérations"""
@@ -511,7 +512,7 @@ if __name__ == "__main__" and DEBUG:
     test_maps = CogMaps(CM_SMALL_FILENAME)
     test_maps.thesaurus = test_thesaurus
     test_weights = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
-    test_maps.dump_occurrences(OUTPUT_DIR / "test_occurences.csv")
+    # test_maps.dump_occurrences(OUTPUT_DIR / "test_occurences.csv")
 
     test_mother, _ = test_maps.apply(with_unknown=False)
     # mes_cartes.dump_occurrences("test1.csv")
