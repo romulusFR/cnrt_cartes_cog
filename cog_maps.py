@@ -31,10 +31,12 @@ StringOrPath = Union[Path, str]
 Word = str
 Ident = int
 Position = int
+Level = int
 CogMapsType = dict[Ident, list[Word]]
 WeightsType = dict[Position, float]
 WeightsMapType = dict[str, WeightsType]
 ThesaurusType = dict[Word, Word]
+ThesaurusTypeMap = dict[Level, ThesaurusType]
 IndexType = dict[Word, list[Tuple[Ident, Position]]]
 OccurrencesType = dict[Word, float]
 OccurrencesInPositionsType = dict[Position, Counter[Word]]
@@ -144,11 +146,9 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         logger.info(f"CogMaps.load_thesaurus: {len(thesaurus.keys())} words to {len(set(thesaurus.values()))} concepts")
         return thesaurus
 
-    def __init__(self, cog_maps_filename=None, thesaurus_filename=None):
+    def __init__(self, cog_maps_filename=None):
         # le fichier duquel lire les cartes cognitives
         self.__cog_maps_filename: Optional[StringOrPath] = cog_maps_filename
-        # le fichier duquel lire le thesauruse associé
-        self.__thesaurus_filename: Optional[StringOrPath] = thesaurus_filename
         # les cartes elles-mêmes : à un id, la liste des mots
         self.__cog_maps: CogMapsType = {}
         # le thesaurus
@@ -169,9 +169,6 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         if cog_maps_filename is not None:
             self.__cog_maps = CogMaps.load_cog_maps(cog_maps_filename)
 
-        if thesaurus_filename is not None:
-            self.__thesaurus = CogMaps.load_thesaurus(thesaurus_filename)
-
     def invalidate(self) -> None:
         """Invalide les attributs privés qui dependent de cog_maps"""
         self.__index = None
@@ -186,7 +183,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         if self.__parent:
             msg = f"<CogMaps at {hex(id(self))} of length {len(self)} from parent {self.__parent}>"
         else:
-            msg = f"<CogMaps at {hex(id(self))} of length {len(self)} from '{self.__cog_maps_filename}' with thesaurus '{self.__thesaurus_filename}'>"
+            msg = f"<CogMaps at {hex(id(self))} of length {len(self)} from '{self.__cog_maps_filename}'>"
         return msg
 
     @property
@@ -213,9 +210,10 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         return self.__thesaurus
 
     @thesaurus.setter
-    def thesaurus(self, _) -> None:  # pylint: disable=no-self-use
+    def thesaurus(self, data: ThesaurusType) -> None:  # pylint: disable=no-self-use
         """On bloque l'affectation sur thesaurus"""
-        raise TypeError("CogMaps.thesaurus does not support direct assignment")
+        # raise TypeError("CogMaps.thesaurus does not support direct assignment")
+        self.__thesaurus = data
 
     def dump(self, filename: StringOrPath) -> None:
         """Ecrit les cartes dans un fichier"""
@@ -469,7 +467,9 @@ def generate_results(
 
     # chargement des entrées
     the_weights = CogMaps.load_weights(weights_filename)
-    the_cog_maps = CogMaps(cog_maps_filename, thesaurus_filename)
+    the_thesaurus = CogMaps.load_thesaurus(thesaurus_filename)
+    the_cog_maps = CogMaps(cog_maps_filename)
+    the_cog_maps.thesaurus = the_thesaurus
 
     # génération de la carte de base et sorties
     the_cog_maps.dump(get_name("base"))
@@ -499,13 +499,17 @@ if __name__ == "__main__" and not DEBUG:
         OUTPUT_DIR, CM_FUTUR_FILENAME, THESAURUS_FILENAME, WEIGHTS_MAP_FILENAME, with_unknown=WITH_UNKNOWNS
     )
 
-    la_mine = CogMaps(CM_LA_MINE_FILENAME, THESAURUS_FILENAME)
+    le_thesaurus = CogMaps.load_thesaurus(THESAURUS_FILENAME)
+    la_mine = CogMaps(CM_LA_MINE_FILENAME)
+    la_mine.thesaurus = le_thesaurus
     la_mere, _ = la_mine.apply(with_unknown=False)
     # generate_weighted_occurences(OUTPUT_DIR, la_mine)
     # generate_weighted_occurences(OUTPUT_DIR, la_mere)
 
 if __name__ == "__main__" and DEBUG:
-    test_maps = CogMaps(CM_SMALL_FILENAME, THESAURUS_FILENAME)
+    test_thesaurus = CogMaps.load_thesaurus(THESAURUS_FILENAME)
+    test_maps = CogMaps(CM_SMALL_FILENAME)
+    test_maps.thesaurus = test_thesaurus
     test_weights = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
     test_maps.dump_occurrences(OUTPUT_DIR / "test_occurences.csv")
 

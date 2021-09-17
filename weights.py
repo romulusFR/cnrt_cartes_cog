@@ -1,4 +1,3 @@
-
 """Juste la définition des poids"""
 
 from math import exp
