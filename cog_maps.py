@@ -47,72 +47,28 @@ if not INPUT_DIR.exists():
     logger.error("input directory %s does not exist", INPUT_DIR)
     raise FileNotFoundError(f"input directory {INPUT_DIR} does not exist")
 
-
-CARTES_COG_SMALL = INPUT_DIR / "cartes_cog_small.csv"
-CARTES_COG_LA_MINE = INPUT_DIR / "cartes_cog_la_mine.csv"
-THESAURUS_LA_MINE = INPUT_DIR / "thesaurus_la_mine.csv"
-CARTES_COG_MINE_FUTUR = INPUT_DIR / "cartes_cog_mine_futur.csv"
-THESAURUS_MINE_FUTUR = INPUT_DIR / "thesaurus_mine_futur.csv"
-WEIGHTED_POSITIONS = INPUT_DIR / "coefficients.csv"
+# fichiers par défaut
+CM_SMALL_FILENAME = INPUT_DIR / "cartes_cog_small.csv"
+CM_LA_MINE_FILENAME = INPUT_DIR / "cartes_cog_la_mine.csv"
+CM_FUTUR_FILENAME = INPUT_DIR / "cartes_cog_mine_futur.csv"
+THESAURUS_FILENAME = INPUT_DIR / "thesaurus.csv"
+WEIGHTS_MAP_FILENAME = INPUT_DIR / "coefficients.csv"
 OUTPUT_DIR = Path("output")
 
 # assure sur le dossier de sortie existe
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-DEFAULT_CONCEPT = "__inconnu__"
-
+# pour les I/O
 CSV_PARAMS = {"delimiter": ";", "quotechar": '"'}
 ENCODING = "utf-8"
 
-MAX_LEN = 15
-# DEFAULT_WEIGHTS: WeightsType = defaultdict(lambda: 1)
-DEFAULT_WEIGHTS: WeightsType = {i: 1.0 for i in range(1, MAX_LEN + 1)}
-
-OLD_WEIGHTS = {
-    # toutes les positions ont un poids de 1.0
-    "any_1": {i: 1.0 for i in range(1, MAX_LEN + 1)},
-    # la première position à un poids de 1.0, les autres 0.0
-    "first_1": {i: 1.0 for i in range(1, 2)},
-    # idem first_1 mais avec les 2 premières positions
-    "first_2": {i: 1.0 for i in range(1, 3)},
-    # idem first_1 mais avec les 3 premières positions
-    "first_3": {i: 1.0 for i in range(1, 4)},
-    # idem first_1 mais avec les 4 premières positions
-    "first_4": {i: 1.0 for i in range(1, 5)},
-    # idem first_1 mais avec les 5 premières positions
-    "first_5": {i: 1.0 for i in range(1, 6)},
-    # le poids est de 1/n : 1.0, 0.5, 0.333, 0.25 ...
-    "1_on_n": {i: 1 / i for i in range(1, MAX_LEN + 1)},
-    # le poids est de 1/n*n : 1.0, 0.25, 0.111, 0.0625 ...
-    "1_on_n_square": {i: 1 / (i ** 2) for i in range(1, MAX_LEN + 1)},
-    # le poids est en exponentielle(1-i) : 1.0, 0.37, 0.14, 0.05 ...
-    "exp_minus_n_plus_1": {i: exp(-i + 1) for i in range(1, MAX_LEN + 1)},
-    # décroissance linéaire : 1.0, 0.9, 0.8, 0.7 ...
-    "1_minus_0_1_times_n": {i: max(0.0, 1 - 0.1 * (i - 1)) for i in range(1, MAX_LEN + 1)},
-    # décroissance linéaire : 1.0, 0.8, 0.6, 0.4 ...
-    "1_minus_0_2_times_n": {i: max(0.0, 1 - 0.2 * (i - 1)) for i in range(1, MAX_LEN + 1)},
-}
-
-WEIGHTS = {
-    # arithmétique sur base de longueur MAX_LEN = 15
-    # 16/16, 15/16, 14/16 ..., 1/16
-    "arithmetique": {i: (MAX_LEN + 1 - i) / MAX_LEN for i in range(1, MAX_LEN + 1)},
-    # inverse de la position
-    "inverse": {i: 1 / i for i in range(1, MAX_LEN + 1)},
-    # première position uniquement
-    "pos_1": {i: 1.0 for i in range(1, 1 + 1)},
-    # trois premières positions uniquement, toutes à 1.0
-    "pos_3": {i: 1.0 for i in range(1, 3 + 1)},
-    # six première position uniquement, toutes à 1.0
-    "pos_6": {i: 1.0 for i in range(1, 6 + 1)},
-    # trois premières positions uniquement,
-    # avec poids arithmétiquement décroissant 3/3, 2/3, 1/3, 0 ...
-    "pos_3_arith": {i: (3 - i + 1) / 3 for i in range(1, 3 + 1)},
-    # six premières positions uniquement,
-    # avec poids arithmétiquement décroissant 6/6, 5/6, 4/6 ...
-    "pos_6_arith": {i: (6 - i + 1) / 6 for i in range(1, 6 + 1)},
-}
+# valeur par défaut
+DEFAULT_CONCEPT = "__inconnu__"
+DEFAULT_MAX_LEN = 15
+# BUG éviter ici defaultdict car collision avec le .get(key, 0.0)
+DEFAULT_WEIGHTS: WeightsType = {i: 1.0 for i in range(1, DEFAULT_MAX_LEN + 1)}
 DEFAULT_WEIGHTS_NAME = "arithmetique"
+
 
 class CogMaps:  # pylint: disable=too-many-instance-attributes
     """Conteneur pour un ensemble de cartes cognitives"""
@@ -340,6 +296,26 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
                 writer.writerow((word, len(self.index[word]), round(self.occurrences[word], 2)))
         logger.info(f"CogMaps.dump_occurrences to {filename}")
 
+    def dump_occurrences_many(self, filename: StringOrPath, weights_map: WeightsMapType) -> None:
+        """Genère les positions pondérées pour une famille de pondérations"""
+        header = ["mot", "nb_occurrences", *weights_map.keys()]
+        logger.debug("CogMaps.dump_occurences_many: header %s", header)
+        occurrences = {}
+
+        for name, weights in weights_map.items():
+            self.weights = weights
+            occurrences[name] = self.occurrences
+
+        with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
+            writer = csv.writer(csvfile, **CSV_PARAMS)
+            writer.writerow(header)
+            for word in sorted(self.words):
+                # ici, affichage avec la locale
+                # https://stackoverflow.com/questions/1823058/how-to-print-number-with-commas-as-thousands-separators
+                row = [f"{round(occurrences[name][word], 2):n}" for name in weights_map]
+                writer.writerow((word, len(self.index[word]), *row))
+        logger.info("CogMaps.dump_occurences_many to %s", filename)
+
     @property
     def occurrences_in_position(self) -> OccurrencesInPositionsType:
         """Pour chaque position, calcule le nombre d'occurence de chaque mot dans cette position"""
@@ -468,6 +444,7 @@ def generate_results(
     output_dir: StringOrPath,
     cog_maps_filename: StringOrPath,
     thesaurus_filename: StringOrPath,
+    weights_filename: StringOrPath,
     with_unknown: bool = False,
 ) -> None:
     """ "Wrapper principal utilisé par la CLI et la GUI"""
@@ -482,18 +459,19 @@ def generate_results(
     get_name = partial(gen_filename, output_dir, cog_maps_filename)
 
     # chargement des entrées
-    the_weights = CogMaps.load_weights(WEIGHTED_POSITIONS)
+    the_weights = CogMaps.load_weights(weights_filename)
     the_cog_maps = CogMaps(cog_maps_filename, thesaurus_filename)
-    the_cog_maps.weights = the_weights[DEFAULT_WEIGHTS_NAME]
     the_cog_maps.dump(get_name("base"))
-    the_cog_maps.dump_occurrences(get_name("base_occurrences"))
+    # the_cog_maps.dump_occurrences(get_name("base_occurrences"))
+    the_cog_maps.dump_occurrences_many(get_name("base_occurrences"), the_weights)
     the_cog_maps.dump_occurrences_in_position(get_name("base_positions"))
     the_cog_maps.dump_matrix(get_name("base_matrice"))
 
     # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
     the_concept_maps, the_unknowns_maps = the_cog_maps.apply(with_unknown=with_unknown)
     the_concept_maps.dump(get_name("meres"))
-    the_concept_maps.dump_occurrences(get_name("meres_occurrences"))
+    # the_concept_maps.dump_occurrences(get_name("meres_occurrences"))
+    the_cog_maps.dump_occurrences_many(get_name("meres_occurrences"), the_weights)
     the_concept_maps.dump_occurrences_in_position(get_name("meres_positions"))
     the_concept_maps.dump_matrix(get_name("meres_matrice"))
 
@@ -501,44 +479,25 @@ def generate_results(
     the_unknowns_maps.dump(get_name("inconnus"))
 
 
-def generate_weighted_occurences(output_dir: StringOrPath, cog_maps: CogMaps) -> None:
-    """Genère les positions pondérées pour une famille de pondérations"""
-    header = ["mot", "nb_occurrences", *WEIGHTS.keys()]
-    logger.debug("generate_weighted_occurences: header %s", header)
-    occurrences = {}
-
-    for name, weights in WEIGHTS.items():
-        cog_maps.weights = weights
-        occurrences[name] = cog_maps.occurrences
-
-    get_name = partial(gen_filename, output_dir, cog_maps.filename)  # pylint: disable=protected-access
-    filename = get_name("occurrences_ponderees")
-
-    with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
-        writer = csv.writer(csvfile, **CSV_PARAMS)
-        writer.writerow(header)
-        for word in sorted(cog_maps.words):
-            # ici, affichage avec la locale
-            # https://stackoverflow.com/questions/1823058/how-to-print-number-with-commas-as-thousands-separators
-            row = [f"{round(occurrences[name][word], 2):n}" for name in WEIGHTS]
-            writer.writerow((word, len(cog_maps.index[word]), *row))
-    logger.info(f"generate_weighted_occurences to {filename}")
-
-
 # %%
 WITH_UNKNOWNS = False
 DEBUG = True
 if __name__ == "__main__" and not DEBUG:
-    generate_results(OUTPUT_DIR, CARTES_COG_LA_MINE, THESAURUS_LA_MINE, with_unknown=WITH_UNKNOWNS)
-    generate_results(OUTPUT_DIR, CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR, with_unknown=WITH_UNKNOWNS)
-    la_mine = CogMaps(CARTES_COG_LA_MINE, THESAURUS_LA_MINE)
+    generate_results(
+        OUTPUT_DIR, CM_LA_MINE_FILENAME, THESAURUS_FILENAME, WEIGHTS_MAP_FILENAME, with_unknown=WITH_UNKNOWNS
+    )
+    generate_results(
+        OUTPUT_DIR, CM_FUTUR_FILENAME, THESAURUS_FILENAME, WEIGHTS_MAP_FILENAME, with_unknown=WITH_UNKNOWNS
+    )
+
+    la_mine = CogMaps(CM_LA_MINE_FILENAME, THESAURUS_FILENAME)
     la_mere, _ = la_mine.apply(with_unknown=False)
-    generate_weighted_occurences(OUTPUT_DIR, la_mine)
-    generate_weighted_occurences(OUTPUT_DIR, la_mere)
+    # generate_weighted_occurences(OUTPUT_DIR, la_mine)
+    # generate_weighted_occurences(OUTPUT_DIR, la_mere)
 
 if __name__ == "__main__" and DEBUG:
     test_maps = CogMaps(Path("input/cartes_cog_small.csv"))
-    test_weights = CogMaps.load_weights(WEIGHTED_POSITIONS)
+    test_weights = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
     test_maps.dump_occurrences(OUTPUT_DIR / "test_occurences.csv")
     # mes_cartes.dump_occurrences("test1.csv")
     # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
