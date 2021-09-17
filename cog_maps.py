@@ -55,9 +55,6 @@ THESAURUS_FILENAME = INPUT_DIR / "thesaurus.csv"
 WEIGHTS_MAP_FILENAME = INPUT_DIR / "coefficients.csv"
 OUTPUT_DIR = Path("output")
 
-# assure sur le dossier de sortie existe
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
 # pour les I/O
 CSV_PARAMS = {"delimiter": ";", "quotechar": '"'}
 ENCODING = "utf-8"
@@ -122,6 +119,15 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     def load_thesaurus(filename: StringOrPath) -> ThesaurusType:
         """Charge l'ontologie (concept, mot énoncé) dans un dico "mot énoncé" -> "mot mère"
 
+        Format attendu (sans en-tête):
+        0 - Mots énoncés;
+        1 - Code mots énoncés;
+        2 - Concepts énoncés;
+        3 - Concepts mères;
+        4 - Code Mère;
+        5 - Concepts grands-mères;
+        6 - Code Grand-mère
+
         Assure l'application de CogMaps.clean_word"""
         logger.debug(f"CogMaps.load_thesaurus({filename})")
         thesaurus = defaultdict(lambda: DEFAULT_CONCEPT)
@@ -129,10 +135,12 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         with open(filename, encoding=ENCODING) as csvfile:
             reader = csv.reader(csvfile, **CSV_PARAMS)
             for row in reader:
-                word = CogMaps.clean_word(row[1])
-                concept = CogMaps.clean_word(row[0])
+                word = CogMaps.clean_word(row[0])
+                concept = CogMaps.clean_word(row[3])
                 if word not in CogMaps.EMPTY_WORDS and concept not in CogMaps.EMPTY_WORDS:
                     thesaurus[word] = concept
+                else:
+                    logger.warning("CogMaps.load_thesaurus map %s -> %s", word, concept)
         logger.info(f"CogMaps.load_thesaurus: {len(thesaurus.keys())} words to {len(set(thesaurus.values()))} concepts")
         return thesaurus
 
@@ -451,6 +459,7 @@ def generate_results(
     logger.debug(f"output_dir = {output_dir}")
     logger.debug(f"cog_maps__filename = {cog_maps_filename}")
     logger.debug(f"thesaurus_filename = {thesaurus_filename}")
+    logger.debug(f"weights_filename = {weights_filename}")
     logger.debug(f"with_unknown = {with_unknown}")
 
     # crée le dossier de sortie si besoin
@@ -461,8 +470,9 @@ def generate_results(
     # chargement des entrées
     the_weights = CogMaps.load_weights(weights_filename)
     the_cog_maps = CogMaps(cog_maps_filename, thesaurus_filename)
+
+    # génération de la carte de base et sorties
     the_cog_maps.dump(get_name("base"))
-    # the_cog_maps.dump_occurrences(get_name("base_occurrences"))
     the_cog_maps.dump_occurrences_many(get_name("base_occurrences"), the_weights)
     the_cog_maps.dump_occurrences_in_position(get_name("base_positions"))
     the_cog_maps.dump_matrix(get_name("base_matrice"))
@@ -470,8 +480,7 @@ def generate_results(
     # les cartes mères : les cartes dont on a remplacé les mots par les mots mères
     the_concept_maps, the_unknowns_maps = the_cog_maps.apply(with_unknown=with_unknown)
     the_concept_maps.dump(get_name("meres"))
-    # the_concept_maps.dump_occurrences(get_name("meres_occurrences"))
-    the_cog_maps.dump_occurrences_many(get_name("meres_occurrences"), the_weights)
+    the_concept_maps.dump_occurrences_many(get_name("meres_occurrences"), the_weights)
     the_concept_maps.dump_occurrences_in_position(get_name("meres_positions"))
     the_concept_maps.dump_matrix(get_name("meres_matrice"))
 
@@ -496,9 +505,11 @@ if __name__ == "__main__" and not DEBUG:
     # generate_weighted_occurences(OUTPUT_DIR, la_mere)
 
 if __name__ == "__main__" and DEBUG:
-    test_maps = CogMaps(Path("input/cartes_cog_small.csv"))
+    test_maps = CogMaps(CM_SMALL_FILENAME, THESAURUS_FILENAME)
     test_weights = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
     test_maps.dump_occurrences(OUTPUT_DIR / "test_occurences.csv")
+
+    test_mother, _ = test_maps.apply(with_unknown=False)
     # mes_cartes.dump_occurrences("test1.csv")
     # mes_cartes.weights = CogMaps.load_weights("input/coefficients.csv")
     # mes_cartes.dump_occurrences("test2.csv")

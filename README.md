@@ -10,7 +10,7 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
 
 - 2021-09-17 :
   - chargement thesaurus unique avec mots grand-mères
-    - ``Mots énoncés;Code mots énoncés;Concepts énoncés;Concepts mères;Code Mère;Concepts grands-mères;Code Grand-mère`
+    - `Mots énoncés;Code mots énoncés;Concepts énoncés;Concepts mères;Code Mère;Concepts grands-mères;Code Grand-mère`
   - coefficients de poids multiples
 - 2021-09-09 :
   - ajout handler logger GUI
