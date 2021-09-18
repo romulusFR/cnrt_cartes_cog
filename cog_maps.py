@@ -452,26 +452,16 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         """
         if self.__matrix is None:
             logger.debug(f"CogMaps.matrix({len(self)})")
+            start = time.perf_counter_ns()
             self.__matrix = defaultdict(lambda: defaultdict(float))  # type: ignore
-            for word_row in self.index:
-                for word_col in self.index:
-                    # toutes les paires de paires (id_row, pos_row), (id_col, pos_col)
-                    # TODO : faire ca plus efficace sans product, depuis les cartes, mais OSEF à ce stade
-                    pos_prod = product(self.index[word_row], self.index[word_col])
-                    # si on est ensemble dans la même carte
-                    # alors on calcule l'écart absolu des positions
-                    deltas = [
-                        abs(row_pair[1] - col_pair[1])
-                        for (row_pair, col_pair) in pos_prod
-                        if row_pair[0] == col_pair[0]
-                    ]
 
-                    # sur les écarts de positions au sein des mêmes cartes, on va
-                    # utiliser les poids positionnels, mais sur des écarts
-                    # si l'écart est de 0, on met un poids de 1.0
-                    self.__matrix[word_row][word_col] = sum(
-                        self.weights.get(delta, 0.0) if delta else 1.0 for delta in deltas
-                    )
+            for _, words in self.cog_maps.items():
+                pos_prod = product(enumerate(words), enumerate(words))
+                for (pos_row, word_row), (pos_col, word_col) in pos_prod:
+                    distance = abs(pos_row - pos_col)
+                    weigthed_distance = self.weights.get(distance, 0.0) if distance else 1.0
+                    self.__matrix[word_row][word_col] += weigthed_distance
+            logger.info("CogMaps.matrix: duration %fms", round((time.perf_counter_ns() - start) / 10 ** 6, 2))
         return self.__matrix
 
     def dump_matrix(self, filename: StringOrPath) -> None:
@@ -541,7 +531,6 @@ def generate_results(
     return all_maps
 
 
-# %%
 WITH_UNKNOWNS = False
 DEBUG = True
 if __name__ == "__main__" and not DEBUG:
@@ -556,7 +545,13 @@ if __name__ == "__main__" and not DEBUG:
 if __name__ == "__main__" and DEBUG:
     test_thesaurus = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
     test_maps = CogMaps(CM_SMALL_FILENAME)
-    test_maps.thesaurus = test_thesaurus[CONCEPT_LVL]
-    # test_weights = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
-    test_mother, test_report = test_maps.apply(with_unknown=False)
-    pprint(test_report.cog_maps)
+    test_weights = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
+
+    # test_maps.thesaurus = test_thesaurus[CONCEPT_LVL]
+    # # test_weights = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
+    # test_mother, test_report = test_maps.apply(with_unknown=False)
+    # pprint(test_report.cog_maps)
+
+    # pprint(test_maps.matrix)
+    test_maps.weights = test_weights[DEFAULT_WEIGHTS_NAME]
+    test_maps.dump_matrix("output/test_matrice.csv")

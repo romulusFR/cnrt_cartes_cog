@@ -10,6 +10,7 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
 
 - 2021-09-18 :
   - reprise GUI, CLI et générateur de graphe avec nouvelles structures
+  - simplification calcul matrice co-oc
 - 2021-09-17 :
   - chargement thesaurus unique à plusieurs niveaux
     - `Mots énoncés;Code mots énoncés;Concepts énoncés;Concepts mères;Code Mère;Concepts grands-mères;Code Grand-mère`
