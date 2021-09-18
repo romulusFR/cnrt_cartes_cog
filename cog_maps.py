@@ -8,7 +8,6 @@ import locale
 import csv
 import logging
 import time
-from functools import wraps
 from math import exp
 from typing import Union, Tuple, Iterator, Optional
 from collections import Counter, defaultdict
@@ -67,6 +66,7 @@ DEFAULT_CONCEPT: Word = "__inconnu__"
 DEFAULT_MAX_LEN: int = 15
 # BUG éviter ici defaultdict car collision avec le .get(key, 0.0)
 DEFAULT_WEIGHTS: WeightsType = {i: 1.0 for i in range(1, DEFAULT_MAX_LEN + 1)}
+# TODO corriger : pas clair si nom du précédent
 DEFAULT_WEIGHTS_NAME: str = "arithmetique"
 
 # constante pour le thésaurus

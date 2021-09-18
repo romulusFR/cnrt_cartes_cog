@@ -47,7 +47,7 @@ def extend_matrix_to_nx(matrix, threshold=0.0):
     }
 
 
-def generate_all_graphs(maps, thesaurus, weights, *, thresholds=None):
+def generate_all_graphs(cog_maps_filenames, thesaurus, weights_map, *, thresholds=None):
     """Genère un ensemble de graphes
 
     Pour chaque carte de MAPS
@@ -58,8 +58,8 @@ def generate_all_graphs(maps, thesaurus, weights, *, thresholds=None):
     # gère les arguments par défaut
     if thresholds is None:
         thresholds = list(range(2, 6))
-    if weights is None:
-        weights = [DEFAULT_WEIGHTS]
+    if weights_map is None:
+        weights = {"all_1": DEFAULT_WEIGHTS}
 
     # fonction pour dessiner
     draw = partial(
@@ -75,22 +75,23 @@ def generate_all_graphs(maps, thesaurus, weights, *, thresholds=None):
     )
 
     report = {}
-
-    for cog_maps_map_filename in maps:
-        logger.info(f"generate_all_graphs({cog_maps_map_filename})")
-        cog_maps = CogMaps(cog_maps_map_filename)
-        concept_maps, _ = cog_maps.apply(with_unknown=False)
-
-        for (maps, maps_name) in [(cog_maps, "base"), (concept_maps, "concept")]:
-            # cartes.weights = defaultdict(lambda : 1)
-            for weights_name, weights_def in weights.items():
-                maps.weights = weights_def
-                matrix = maps.matrix
-                maps.dump_matrix(f"{GRAPH_DIR / Path(carte_file).stem}_{maps_name}_{weights_name}.csv")
-
+    base_indent = 2
+    for filename in cog_maps_filenames:
+        logger.info(f"generate_all_graphs: processing{filename}")
+        cog_maps = CogMaps(filename)
+        all_maps, _ = cog_maps.apply_many(thesaurus)
+        for level_name, a_map in all_maps.items():
+            logger.debug(f"{' '*base_indent*1}->{level_name}")
+            for weights_name, weights in weights_map.items():
+                logger.debug(f"{' '*base_indent*2}->{weights_name}")
+                a_map.weights = weights
+                matrix = a_map.matrix
+                export_name = f"{GRAPH_DIR / Path(filename).stem}_{level_name}_{weights_name}"
+                # a_map.dump_matrix(f"{export_name}.csv")
                 for threshold in thresholds:
+                    logger.debug(f"{' '*base_indent*3}->{threshold}")
                     graph = nx.Graph(extend_matrix_to_nx(matrix, threshold))
-                    diagonal = {word: matrix[word][word] for word in maps.words}
+                    diagonal = {word: matrix[word][word] for word in a_map.words}
 
                     # virer les arcs boucles et les isolés
                     graph.remove_edges_from(nx.selfloop_edges(graph))
@@ -98,19 +99,15 @@ def generate_all_graphs(maps, thesaurus, weights, *, thresholds=None):
                     # pour les noeuds, le poid c'est le nombre de cartes
                     # PAS fait par la diagonale de cooc_matrix
                     nx.set_node_attributes(graph, diagonal, name="weight")
-
                     # on génère au format graphml et graphviz
-                    # filename = f"{GRAPH_DIR / Path(carte_file).stem}_{name}_{threshold}_{width}"
-                    filename = f"{GRAPH_DIR / Path(carte_file).stem}_{maps_name}_{threshold}_{weights_name}"
-                    report[(maps_name, threshold, weights_name)] = (graph.number_of_nodes(), graph.number_of_edges())
-                    logger.info(f"  drawing {filename}")
-                    logger.info(f"  G:{graph.number_of_nodes()} mots et {graph.number_of_edges()} arcs")
+                    report[(level_name, threshold, weights_name)] = (graph.number_of_nodes(), graph.number_of_edges())
                     if graph.number_of_nodes() == 0:
-                        logger.warning(f"empty graph {filename}")
+                        logger.warning(f"empty graph {export_name}_{threshold}")
                         continue
                     # else
                     # nx.write_graphml(graph, f"{filename}.graphml")
-                    draw(graph, f"{filename}.{IMG_FORMAT}")
+                    logger.info(f"{' '*base_indent*3}*{export_name}_{threshold}.{IMG_FORMAT}*")
+                    draw(graph, f"{export_name}_{threshold}.{IMG_FORMAT}")
     return report
 
 
@@ -126,19 +123,19 @@ DATASETS = [CM_LA_MINE_FILENAME, CM_FUTUR_FILENAME]
 THE_THESAURUS = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
 THE_WEIGHTS = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
 
-DEMO = True
+DEMO = False
 if __name__ == "__main__":
     if DEMO:
         generate_all_graphs(
-            maps=[CM_SMALL_FILENAME],
+            cog_maps_filenames=[CM_SMALL_FILENAME],
             thesaurus=THE_THESAURUS,
-            weights=THE_WEIGHTS,
+            weights_map=THE_WEIGHTS,
             thresholds=[float(n) for n in range(1, 4)],
         )
     else:
         generate_all_graphs(
-            maps=DATASETS,
+            cog_maps_filenames=DATASETS,
             thesaurus=THE_THESAURUS,
-            weights=THE_WEIGHTS,
-            thresholds=[float(n) for n in range(2, 4)],
+            weights_map=THE_WEIGHTS,
+            thresholds=[float(n) for n in range(1, 11)],
         )
