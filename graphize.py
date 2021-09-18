@@ -16,12 +16,13 @@ import networkx as nx
 
 
 from cog_maps import (
-    CARTES_COG_LA_MINE,
-    CARTES_COG_MINE_FUTUR,
-    THESAURUS_LA_MINE,
-    THESAURUS_MINE_FUTUR,
-    CARTES_COG_SMALL,
-    WEIGHTS,
+    CM_SMALL_FILENAME,
+    CM_LA_MINE_FILENAME,
+    CM_FUTUR_FILENAME,
+    THESAURUS_FILENAME,
+    WEIGHTS_MAP_FILENAME,
+    LEVELS,
+    DEFAULT_WEIGHTS,
     CogMaps,
 )
 from draw_graphviz import draw_graphviz
@@ -46,17 +47,19 @@ def extend_matrix_to_nx(matrix, threshold=0.0):
     }
 
 
-def generate_all_graphs(pairs, /, thresholds=None, weights=None):
+def generate_all_graphs(maps, thesaurus, weights, *, thresholds=None):
     """Genère un ensemble de graphes
 
-    Pour chaque paire (carte, thesaurus) de pairs, génère (carte_base, carte_mere)
-    puis pour chacune de ces paires, génère un graph pour chaque niveau de threshold entre min et max (inclus)
+    Pour chaque carte de MAPS
+        Pour chaque niveau du thesaurus de LEVELS
+            Pour chaque poids de WEIGHTS
+                    génère un graph pour chaque niveau de threshold entre min et max (inclus)
     """
     # gère les arguments par défaut
     if thresholds is None:
         thresholds = list(range(2, 6))
     if weights is None:
-        weights = [None]
+        weights = [DEFAULT_WEIGHTS]
 
     # fonction pour dessiner
     draw = partial(
@@ -73,11 +76,9 @@ def generate_all_graphs(pairs, /, thresholds=None, weights=None):
 
     report = {}
 
-    for (carte_file, thesaurus_file) in pairs:
-        logger.info(f"carte_file = {carte_file}")
-        logger.info(f"thesaurus_file = {thesaurus_file}")
-
-        cog_maps = CogMaps(carte_file, thesaurus_file)
+    for cog_maps_map_filename in maps:
+        logger.info(f"generate_all_graphs({cog_maps_map_filename})")
+        cog_maps = CogMaps(cog_maps_map_filename)
         concept_maps, _ = cog_maps.apply(with_unknown=False)
 
         for (maps, maps_name) in [(cog_maps, "base"), (concept_maps, "concept")]:
@@ -119,21 +120,25 @@ GRAPH_DIR = Path("graphs/")
 Path(GRAPH_DIR).mkdir(parents=True, exist_ok=True)
 # nombre minimal de cooc
 THRESHOLD = 3
-# les deux paire "la mine" et "la mine dans le futur"
-DATASETS = [(CARTES_COG_LA_MINE, THESAURUS_LA_MINE), (CARTES_COG_MINE_FUTUR, THESAURUS_MINE_FUTUR)]
+# les deux jeus de données
+DATASETS = [CM_LA_MINE_FILENAME, CM_FUTUR_FILENAME]
+
+THE_THESAURUS = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
+THE_WEIGHTS = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
 
 DEMO = True
 if __name__ == "__main__":
     if DEMO:
         generate_all_graphs(
-            [(CARTES_COG_SMALL, THESAURUS_LA_MINE)],
+            maps=[CM_SMALL_FILENAME],
+            thesaurus=THE_THESAURUS,
+            weights=THE_WEIGHTS,
             thresholds=[float(n) for n in range(1, 4)],
-            weights=WEIGHTS,
         )
     else:
         generate_all_graphs(
-            DATASETS[0:1:],
+            maps=DATASETS,
+            thesaurus=THE_THESAURUS,
+            weights=THE_WEIGHTS,
             thresholds=[float(n) for n in range(2, 4)],
-            weights={"1_on_n_square": WEIGHTS["1_on_n_square"]},
         )
-    # generate_all_graphs(DATASETS, thresholds=[float(n) for n in range(2, 11)], weights=WEIGHTS)

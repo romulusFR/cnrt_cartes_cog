@@ -7,7 +7,8 @@ __author__ = "Romuald Thion"
 import locale
 import csv
 import logging
-import sys
+import time
+from functools import wraps
 from math import exp
 from typing import Union, Tuple, Iterator, Optional
 from collections import Counter, defaultdict
@@ -73,6 +74,7 @@ BASE_LVL: Level = "base"
 CONCEPT_LVL: Level = "concept"
 MOTHER_LVL: Level = "mother"
 GRAND_MOTHER_LVL: Level = "gd_mother"
+LEVELS = [BASE_LVL, CONCEPT_LVL, MOTHER_LVL, GRAND_MOTHER_LVL]
 
 
 class CogMaps:  # pylint: disable=too-many-instance-attributes
@@ -302,7 +304,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         """
 
         if self.__occurrences is None:
-            logger.debug(f"CogMaps.occurrences({len(self.__cog_maps)})") # {self.__weights}
+            logger.debug(f"CogMaps.occurrences({len(self.__cog_maps)})")  # {self.__weights}
             self.__occurrences = {}
             # on ne garde que la seconde composante de l'index
             second = lambda x: x[1]
@@ -321,19 +323,6 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     def occurrences(self, _) -> None:  # pylint: disable=no-self-use
         """On bloque l'affectation sur occurrences"""
         raise TypeError("CogMaps.occurrences does not support direct assignment")
-
-    # OBSOLETE
-    # def dump_occurrences(self, filename: StringOrPath) -> None:
-    #     """Sauvegarde la liste des mots énoncés et leur nombre d'occurrences (le produit de compute_histogram_bag) au format csv"""
-    #     logger.debug(f"CogMaps.dump_occurrences({len(self.cog_maps)}, {filename})")
-    #     header = ["mot", "nb_occurrences", "occurences_ponderees"]
-
-    #     with open(filename, "w", newline="", encoding=ENCODING) as csvfile:
-    #         writer = csv.writer(csvfile, **CSV_PARAMS)
-    #         writer.writerow(header)
-    #         for word in sorted(self.words):
-    #             writer.writerow((word, len(self.index[word]), round(self.occurrences[word], 2)))
-    #     logger.info(f"CogMaps.dump_occurrences to {filename}")
 
     def dump_occurrences_many(self, filename: StringOrPath, weights_map: WeightsMapType) -> None:
         """Genère les positions pondérées pour une famille de pondérations"""
@@ -417,14 +406,14 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
         new_cog_maps = CogMaps()
         # on définit les cartes
-        new_cog_maps.__cog_maps = concept_maps  # pylint: disable=protected-access, unused-private-member
+        new_cog_maps.__cog_maps = concept_maps  # pylint: disable=protected-access
         # le parent
-        new_cog_maps.__parent = self  # pylint: disable=protected-access, unused-private-member
+        new_cog_maps.__parent = self  # pylint: disable=protected-access
         # on reprend la même carte de poids
-        new_cog_maps.__weights = self.__weights.copy()  # pylint: disable=protected-access, unused-private-member
+        new_cog_maps.__weights = self.__weights.copy()  # pylint: disable=protected-access
         # on utilise le même nom de fichier
         path = Path(self.filename)
-        # pylint: disable=protected-access, unused-private-member
+        # pylint: disable=protected-access
         new_cog_maps.__cog_maps_filename = f"concepts_of_{path.stem}{path.suffix}"
 
         # on utilise le fait que le rapport des unknnows est une cog_maps aussi
@@ -432,6 +421,22 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         unknowns_maps.cog_maps = unknown_report
         unknowns_maps.__parent = self  # pylint: disable=protected-access
         return new_cog_maps, unknowns_maps
+
+    def apply_many(self, thesaurus_maps, *, with_unknown=True):
+        logger.debug(f"CogMaps.apply_many({len(self)}, {len(thesaurus_maps)})")
+        # génération de 4 cartes : la base, + trois niveau de thesaurus
+        the_maps = {BASE_LVL: self}
+        the_reports = {}
+        # le thesaurus a plusieurs niveau. On va appliquer chacun
+        for i, level in enumerate(LEVELS[1::]):
+            previous_level = LEVELS[i]
+            the_maps[previous_level].thesaurus = thesaurus_maps[level]
+            the_new_maps, the_unknowns_maps = the_maps[previous_level].apply(with_unknown=with_unknown)
+            the_maps[level] = the_new_maps
+            the_reports[level] = the_unknowns_maps
+            # le rapport des mots qui n'ont pas d'image, on le produit tout de suite
+
+        return the_maps, the_reports
 
     @property
     def matrix(self) -> MatrixType:
@@ -446,6 +451,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         pondération de la distance inter-mots
         """
         if self.__matrix is None:
+            logger.debug(f"CogMaps.matrix({len(self)})")
             self.__matrix = defaultdict(lambda: defaultdict(float))  # type: ignore
             for word_row in self.index:
                 for word_col in self.index:
@@ -500,7 +506,7 @@ def generate_results(
 ) -> list[Tuple[Level, CogMaps]]:
     """ "Wrapper principal utilisé par la CLI et la GUI"""
     logger.debug(f"output_dir = {output_dir}")
-    logger.debug(f"cog_maps__filename = {cog_maps_filename}")
+    logger.debug(f"cog_maps_filename = {cog_maps_filename}")
     logger.debug(f"thesaurus_filename = {thesaurus_filename}")
     logger.debug(f"weights_filename = {weights_filename}")
     logger.debug(f"with_unknown = {with_unknown}")
@@ -518,27 +524,23 @@ def generate_results(
     # chargement des entrées
     the_thesaurus = CogMaps.load_thesaurus_map(thesaurus_filename)
     the_weights = CogMaps.load_weights(weights_filename)
-
-    # génération de 4 cartes : la base, + trois niveau de thesaurus
-    levels = [BASE_LVL, CONCEPT_LVL, MOTHER_LVL, GRAND_MOTHER_LVL]
-    the_maps = [CogMaps(cog_maps_filename)]
-    # le thesaurus a plusieurs niveau. On va appliquer chacun
-    for i, level in enumerate(levels[1::]):
-        the_maps[i].thesaurus = the_thesaurus[level]
-        the_new_maps, the_unknowns_maps = the_maps[i].apply(with_unknown=with_unknown)
-        the_maps.append(the_new_maps)
-        # le rapport des mots qui n'ont pas d'image, on le produit tout de suite
-        the_unknowns_maps.dump(get_name(f"{level}_{unknown_suffix}"))
+    the_cog_maps = CogMaps(cog_maps_filename)
+    all_maps, all_reports = the_cog_maps.apply_many(the_thesaurus, with_unknown=with_unknown)
 
     # on produit tout les résultats
-    for a_lvl, a_map in zip(levels, the_maps):
+    for a_lvl, a_map in all_maps.items():
         a_map.dump(get_name(a_lvl))
         a_map.dump_occurrences_many(get_name(f"{a_lvl}_{occurrences_suffix}"), the_weights)
         a_map.dump_occurrences_in_position(get_name(f"{a_lvl}_{positions_suffix}"))
         a_map.weights = the_weights[DEFAULT_WEIGHTS_NAME]
         a_map.dump_matrix(get_name(f"{a_lvl}_{matrix_suffix}_{DEFAULT_WEIGHTS_NAME}"))
 
-    return list(zip(levels, the_maps))
+    for a_lvl, a_report in all_reports.items():
+        a_report.dump(get_name(f"{a_lvl}_{unknown_suffix}"))
+
+    return all_maps
+
+
 # %%
 WITH_UNKNOWNS = False
 DEBUG = True
