@@ -153,7 +153,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
             if src not in CogMaps.EMPTY_WORDS and dst not in CogMaps.EMPTY_WORDS:
                 if thesaurus_map[level].get(src, dst) != dst:
                     logger.warning(
-                        "CogMaps.load_thesaurus at %s: %s -> %s overrided by %s",
+                        "CogMaps.load_thesaurus at %s: %s -> %s overridden by %s",
                         level,
                         src,
                         thesaurus_map[level][src],
