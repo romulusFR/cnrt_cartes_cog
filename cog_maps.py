@@ -351,7 +351,8 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
             for word in sorted(self.words):
                 # ici, affichage avec la locale
                 # https://stackoverflow.com/questions/1823058/how-to-print-number-with-commas-as-thousands-separators
-                row = [f"{round(occurrences[name][word], 2):n}" for name in weights_map]
+                # row = [f"{round(occurrences[name][word], 2):n}" for name in weights_map]
+                row = [f"{round(occurrences[name][word], 2)}" for name in weights_map]
                 writer.writerow((word, len(self.index[word]), *row))
         logger.info("CogMaps.dump_occurences_many to %s", filename)
 
@@ -549,12 +550,6 @@ if __name__ == "__main__" and not DEBUG:
         OUTPUT_DIR, CM_FUTUR_FILENAME, THESAURUS_FILENAME, WEIGHTS_MAP_FILENAME, with_unknown=WITH_UNKNOWNS
     )
 
-    le_thesaurus = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
-    la_mine = CogMaps(CM_LA_MINE_FILENAME)
-    la_mine.thesaurus = le_thesaurus[CONCEPT_LVL]
-    la_mere, _ = la_mine.apply(with_unknown=False)
-    # generate_weighted_occurences(OUTPUT_DIR, la_mine)
-    # generate_weighted_occurences(OUTPUT_DIR, la_mere)
 
 if __name__ == "__main__" and DEBUG:
     test_thesaurus = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)

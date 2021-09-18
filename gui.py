@@ -11,11 +11,10 @@ from tkinter import filedialog, ttk, scrolledtext
 from cog_maps import (
     generate_results,
     INPUT_DIR,
-    CARTES_COG_LA_MINE,
-    THESAURUS_LA_MINE,
-    CARTES_COG_MINE_FUTUR,
-    THESAURUS_MINE_FUTUR,
-    WEIGHTED_POSITIONS,
+    CM_LA_MINE_FILENAME,
+    CM_FUTUR_FILENAME,
+    THESAURUS_FILENAME,
+    WEIGHTS_MAP_FILENAME,
     OUTPUT_DIR,
 )
 
@@ -43,6 +42,7 @@ class TextHandler(logging.Handler):
         self.text.after(0, append)
 
 
+# fenetre générale
 root = tk.Tk()
 root.title("Calculateur de cartes cognitives")
 s = ttk.Style()
@@ -50,13 +50,11 @@ s.theme_use("alt")
 window = ttk.Frame(root)
 window.pack(fill="both", expand=True)
 
-
 # variables globales
-cartes_cog_la_mine = tk.StringVar(window, CARTES_COG_LA_MINE, "cartes_cog_la_mine")
-thesaurus_la_mine = tk.StringVar(window, THESAURUS_LA_MINE, "thesaurus_la_mine")
-cartes_cog_mine_futur = tk.StringVar(window, CARTES_COG_MINE_FUTUR, "cartes_cog_mine_futur")
-thesaurus_mine_futur = tk.StringVar(window, THESAURUS_MINE_FUTUR, "thesaurus_mine_futur")
-weigthed_positions = tk.StringVar(window, WEIGHTED_POSITIONS, "weigthed_positions")
+cm_la_mine = tk.StringVar(window, CM_LA_MINE_FILENAME, "cm_la_mine")
+cm_mine_futur = tk.StringVar(window, CM_FUTUR_FILENAME, "cm_mine_futur")
+thesaurus = tk.StringVar(window, THESAURUS_FILENAME, "thesaurus")
+weights = tk.StringVar(window, WEIGHTS_MAP_FILENAME, "weights")
 
 output_dir = tk.StringVar(window, OUTPUT_DIR, "output_dir")
 with_unknown = tk.BooleanVar(window, False)
@@ -72,10 +70,10 @@ def uploader(variable, *, directory=False):
             filename = filedialog.askdirectory(initialdir=variable.get())
         else:
             filename = filedialog.askopenfilename(
-                initialdir= Path.cwd(),
-                title="Choisir un fichier de cartes",
+                initialdir=INPUT_DIR,  # Path.cwd(),
+                title="Choisir un fichier",
                 filetypes=(("csv files", "*.csv"), ("all files", "*.*")),
-                initialfile=variable.get()
+                # initialfile=variable.get(),
             )
         if filename:
             logger.info(f"{__name__}.upload({variable}): selected {filename}")
@@ -88,34 +86,32 @@ def uploader(variable, *, directory=False):
 
 def compute(_event=None):
     """Lance le calcul"""
-    generate_results(output_dir.get(), cartes_cog_la_mine.get(), thesaurus_la_mine.get(), with_unknown.get())
-    generate_results(output_dir.get(), cartes_cog_mine_futur.get(), thesaurus_mine_futur.get(), with_unknown.get())
+    generate_results(output_dir.get(), cm_la_mine.get(), thesaurus.get(), weights.get(), with_unknown.get())
+    generate_results(output_dir.get(), cm_mine_futur.get(), thesaurus.get(), weights.get(), with_unknown.get())
 
 
+# découpage en 3 panneaux
 pack_params = {"fill": tk.X, "padx": 10}
-
 top_frame = ttk.Frame(window)
 top_frame.pack(side=tk.TOP)
-left_frame = ttk.Frame(top_frame)
-left_frame.pack(side=tk.LEFT)
-right_frame = ttk.Frame(top_frame)
-right_frame.pack(side=tk.RIGHT)
-cartes_btn = ttk.Button(left_frame, text="Cartes cognitives la mine")
-cartes_btn.configure(command=uploader(cartes_cog_la_mine))
-cartes_btn.pack(**pack_params, side=tk.TOP)
-ontologie_btn = ttk.Button(left_frame, text="Thesaurus la mine")
-ontologie_btn.configure(command=uploader(thesaurus_la_mine))
-ontologie_btn.pack(**pack_params, side=tk.BOTTOM)
-cartes_btn = ttk.Button(right_frame, text="Cartes cognitives la mine dans le futur")
-cartes_btn.configure(command=uploader(cartes_cog_mine_futur))
-cartes_btn.pack(**pack_params, side=tk.TOP)
-ontologie_btn = ttk.Button(right_frame, text="Thesaurus la mine dans  futur")
-ontologie_btn.configure(command=uploader(thesaurus_mine_futur))
-ontologie_btn.pack(**pack_params, side=tk.BOTTOM)
 
 
-# text_log = tk.Text(window, background="lightgrey", relief="sunken", width=120, height=12)
-# text_log.pack(expand=True, fill=tk.BOTH)
+cm_la_mine_btn = ttk.Button(top_frame, text="Cartes cog. 'la mine'")
+cm_la_mine_btn.configure(command=uploader(cm_la_mine))
+cm_la_mine_btn.pack(**pack_params, side=tk.LEFT)
+
+cm_mine_futur_btn = ttk.Button(top_frame, text="Cartes cog. 'la mine futur'")
+cm_mine_futur_btn.configure(command=uploader(cm_mine_futur))
+cm_mine_futur_btn.pack(**pack_params, side=tk.LEFT)
+
+thesaurus_btn = ttk.Button(top_frame, text="Thesaurus")
+thesaurus_btn.configure(command=uploader(thesaurus))
+thesaurus_btn.pack(**pack_params, side=tk.LEFT)
+
+thesaurus_btn = ttk.Button(top_frame, text="Coefficients")
+thesaurus_btn.configure(command=uploader(thesaurus))
+thesaurus_btn.pack(**pack_params, side=tk.LEFT)
+
 
 text_log = scrolledtext.ScrolledText(
     window, background="lightgrey", relief="sunken", width=120, height=12, state="disabled"
@@ -125,18 +121,17 @@ text_log.pack(expand=True, fill=tk.BOTH)
 text_handler = TextHandler(text_log)
 
 
-# Add the handler to logger
-# log_stream = StringIO()
-# logging.basicConfig(stream=log_stream)
 logger = logging.getLogger("COGNITIVE_MAP")
 logger.addHandler(text_handler)
 logger.setLevel(logging.INFO)
 
 
 def clear_log():
+    """mepty the log"""
     text_log.configure(state="normal")
     text_log.delete("1.0", tk.END)
     text_log.configure(state="disabled")
+
 
 mid_frame = ttk.Frame(window)
 mid_frame.pack()  # side=tk.BOTTOM

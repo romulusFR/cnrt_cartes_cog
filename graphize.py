@@ -15,7 +15,7 @@ from pprint import pprint
 import networkx as nx
 
 
-from cartes_cog import (
+from cog_maps import (
     CARTES_COG_LA_MINE,
     CARTES_COG_MINE_FUTUR,
     THESAURUS_LA_MINE,

@@ -8,8 +8,10 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
 
 ## CHANGELOG
 
+- 2021-09-18 :
+  - reprise GUI, CLI et générateur de graphe avec nouvelles structures
 - 2021-09-17 :
-  - chargement thesaurus unique avec mots grand-mères
+  - chargement thesaurus unique à plusieurs niveaux
     - `Mots énoncés;Code mots énoncés;Concepts énoncés;Concepts mères;Code Mère;Concepts grands-mères;Code Grand-mère`
   - coefficients de poids multiples
 - 2021-09-09 :
