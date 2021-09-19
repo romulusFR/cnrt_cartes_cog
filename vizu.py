@@ -3,7 +3,7 @@
 
 import locale
 from typing import Callable
-from unicodedata import normalize
+import unicodedata
 from functools import cmp_to_key
 from collections import defaultdict
 from pprint import pprint
@@ -43,7 +43,7 @@ cog_maps, _ = base_cog_maps.apply_many(thesaurus)
 def cog_maps_to_df(cog_maps):
     df = pd.DataFrame(cog_maps.matrix).fillna(0.0)
     # on trie en gérant les accents
-    alpha_words = sorted(cog_maps.words, key=lambda x: normalize("NFD", x))
+    alpha_words = sorted(cog_maps.words, key=lambda x: unicodedata.normalize("NFD", x))
     # on réorganise lignes et colonnes
     df = df.reindex(columns=alpha_words, copy=False).reindex(index=alpha_words, copy=False)
 
@@ -53,10 +53,9 @@ def cog_maps_to_df(cog_maps):
 
 def heatmap(df: pd.DataFrame, limits=None):
     sns.despine()
-    fig, ax = plt.subplots(figsize=(16, 16))
+    fig, ax = plt.subplots(figsize=(18, 16))
 
     # https://stackoverflow.com/questions/50754471/seaborn-heatmap-not-displaying-all-xticks-and-yticks
-    # mask = np.triu(np.ones_like(dfn)),
     sns.heatmap(df, xticklabels=True, yticklabels=True, cmap="RdYlGn_r")
     if limits:
         ax.hlines(limits[:-1:], *ax.get_xlim(), colors="white")
@@ -64,10 +63,15 @@ def heatmap(df: pd.DataFrame, limits=None):
     plt.show()
 
 
-#     normalizer: Callable = lambda m: m,
+def normalize_sym(m):
+    """normalisation symétrique : divise chaque valeur (i,j) par la valeur de sqrt(i,i) et sqrt(j,j), autrement dit (i,j) devient (i,j)/sqrt((i,i) * (j,j)).
+
+    Utilisé pour obtenir le Symmetric Normalized Laplacian"""
+    dsqrt = np.diag(np.power(m.diagonal(), -0.5))
+    return dsqrt @ m @ dsqrt
 
 
-def clusterize(df: pd.DataFrame, n_clusters=5):
+def clusterize(df: pd.DataFrame, n_clusters=5, normalize=False, threshold = 0.05):
     # https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster
 
     # choix d'un algo de clustering
@@ -77,15 +81,26 @@ def clusterize(df: pd.DataFrame, n_clusters=5):
     # clustering = sk.DBSCAN(metric="precomputed")
     clustering = sk.KMeans(n_clusters)
 
-    clusters = clustering.fit_predict(df)
+    # choix de la variante qu'on va clusteriser
+    #  - distance/affinité
+    #  - seuillage
+    #  - normalisation
+
+    data = df.values.copy()
+
+    if normalize:
+        data = normalize_sym(data)
+    data[data<threshold] = 0.0
+    # data = np.exp(1-data)
+    # np.fill_diagonal(tdata, 0)
+
+    clusters = clustering.fit_predict(data)
     # à chaque index de clustering, la liste des mots
     clusters_idx = defaultdict(list)
     for i, cluster in enumerate(clusters):
         clusters_idx[cluster].append(df.index[i])
     return clusters_idx
-    # positions = np.argsort(clusters)
-    # clustered_words = [sorted_words[i] for i in positions]
-    # df_c = df.reindex(index=clustered_words, columns=clustered_words)
+
 
 
 def test():
@@ -104,29 +119,18 @@ def test():
 
 if __name__ == "__main__":
     # mise en place
-    level_name = "gd_mother"
-    weights_name = "inverse"
+    level_name = "mother"
+    weights_name = "pos_6_arith"
     the_cog_maps = cog_maps[level_name]
     the_cog_maps.weights = weights[weights_name]
     the_df = cog_maps_to_df(the_cog_maps)
     # the_df = cog_maps_to_df(CogMaps("input/cartes_cog_small_cooc.csv"))
-
-    # choix de la variante qu'on va clusteriser
-    #  - distance/affinité
-    #  - seuillage
-    #  - normalisation
-
     # heatmap(the_df_to_cluster)
-    # https://stackoverflow.com/questions/18594469/normalizing-a-pandas-dataframe-by-row
 
-    # the_df_to_cluster =  np.exp(1 - the_df)
-    # the_df_to_cluster = the_df
     the_df_to_cluster = the_df.copy()
-    the_df_to_cluster = the_df_to_cluster.div(the_df_to_cluster.max(axis=1), axis=0)  # np.exp(1 - the_df)
-    # np.fill_diagonal(the_df_to_cluster.values, 0)
 
     # le résultat du clustering
-    the_clusters_idx = clusterize(the_df_to_cluster, n_clusters=3)
+    the_clusters_idx = clusterize(the_df_to_cluster, n_clusters=5, normalize=True)
     # on va réidenxer selont l'ordre donné par les clusters
     sorted_index = [word for _, words in sorted(the_clusters_idx.items()) for word in words]
     the_df_clustered = the_df_to_cluster.reindex(index=sorted_index, columns=sorted_index)
