@@ -123,11 +123,11 @@ DATASETS = [CM_LA_MINE_FILENAME, CM_FUTUR_FILENAME]
 THE_THESAURUS = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
 THE_WEIGHTS = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
 
-DEMO = False
+DEMO = True
 if __name__ == "__main__":
     if DEMO:
         generate_all_graphs(
-            cog_maps_filenames=[CM_SMALL_FILENAME],
+            cog_maps_filenames=["input/cartes_cog_small_cooc.csv"],
             thesaurus=THE_THESAURUS,
             weights_map=THE_WEIGHTS,
             thresholds=[float(n) for n in range(1, 4)],
