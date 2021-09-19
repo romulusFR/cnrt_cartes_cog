@@ -72,10 +72,10 @@ def clusterize(df: pd.DataFrame, n_clusters=5):
 
     # choix d'un algo de clustering
     # clustering = sk.SpectralClustering(n_clusters, affinity="precomputed")
-    clustering = sk.AffinityPropagation(random_state=None, damping = 0.5, affinity="precomputed")
+    # clustering = sk.AffinityPropagation(random_state=None, damping = 0.5, affinity="precomputed")
     # clustering = sk.AgglomerativeClustering(n_clusters=n_clusters)
     # clustering = sk.DBSCAN(metric="precomputed")
-    # clustering = sk.KMeans(n_clusters)
+    clustering = sk.KMeans(n_clusters)
 
     clusters = clustering.fit_predict(df)
     # à chaque index de clustering, la liste des mots
@@ -105,10 +105,11 @@ def test():
 if __name__ == "__main__":
     # mise en place
     level_name = "gd_mother"
-    weights_name = "pos_1"
+    weights_name = "inverse"
     the_cog_maps = cog_maps[level_name]
     the_cog_maps.weights = weights[weights_name]
     the_df = cog_maps_to_df(the_cog_maps)
+    # the_df = cog_maps_to_df(CogMaps("input/cartes_cog_small_cooc.csv"))
 
     # choix de la variante qu'on va clusteriser
     #  - distance/affinité
@@ -117,19 +118,15 @@ if __name__ == "__main__":
 
     # heatmap(the_df_to_cluster)
     # https://stackoverflow.com/questions/18594469/normalizing-a-pandas-dataframe-by-row
-    
-
 
     # the_df_to_cluster =  np.exp(1 - the_df)
     # the_df_to_cluster = the_df
     the_df_to_cluster = the_df.copy()
-    
     the_df_to_cluster = the_df_to_cluster.div(the_df_to_cluster.max(axis=1), axis=0)  # np.exp(1 - the_df)
     # np.fill_diagonal(the_df_to_cluster.values, 0)
 
-
     # le résultat du clustering
-    the_clusters_idx = clusterize(the_df_to_cluster)
+    the_clusters_idx = clusterize(the_df_to_cluster, n_clusters=3)
     # on va réidenxer selont l'ordre donné par les clusters
     sorted_index = [word for _, words in sorted(the_clusters_idx.items()) for word in words]
     the_df_clustered = the_df_to_cluster.reindex(index=sorted_index, columns=sorted_index)
