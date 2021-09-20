@@ -94,3 +94,13 @@ optional arguments:
   --unknown, -u         calcule avec les mot énoncés qui n'ont pas de concept/mot mère, par défaut 'False'
   --verbose, -v         niveau de verbosité de la sortie, utiliser -v pour le mode INFO -vv pour le mode DEBUG
 ```
+
+## Misc
+
+Installation de Graphviz sous Windows. Après avoir installé <https://graphviz.org/download/> et <https://visualstudio.microsoft.com/visual-cpp-build-tools/>
+
+```bash
+pip install --global-option=build_ext --global-option="-IC:\Program Files\Graphviz\include"  --global-option="-LC:\Program Files\Graphviz\lib" pygraphviz --user
+```
+
+Merci le thread paumé <https://github.com/pygraphviz/pygraphviz/issues/11#issuecomment-172573720>
