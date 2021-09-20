@@ -1,8 +1,8 @@
-Développé;1;Développer;Développement;AA;Alternative au développement;A
 Développement;2;Développement;Développement;AA;Alternative au développement;A
 Développement d’activités;3;Développement économique;Développement;AA;Alternative au développement;A
 Développement économique;4;Développement économique;Développement;AA;Alternative au développement;A
 Développement territorial;5;Développement territorial;Développement;AA;Alternative au développement;A
+Développé;1;Développer;Développement;AA;Alternative au développement;A
 Développer;6;Développer;Développement;AA;Alternative au développement;A
 Évoluer;7;Évolution;Développement;AA;Alternative au développement;A
 Évolution;8;Évolution;Développement;AA;Alternative au développement;A
@@ -12,6 +12,7 @@ Réaménagement;11;Réaménagement;Développement;AA;Alternative au développeme
 Réorganiser;12;Réaménagement;Développement;AA;Alternative au développement;A
 Adaptation;13;Adaptation;Développement alternatif;AB;Alternative au développement;A
 Agriculture;14;Agriculture;Développement alternatif;AB;Alternative au développement;A
+Plantation;23;Agriculture;Développement alternatif;AB;Alternative au développement;A
 Alternative;15;Alternative;Développement alternatif;AB;Alternative au développement;A
 Alternative écologique;16;Alternative écologique;Développement alternatif;AB;Alternative au développement;A
 Alternative énergétique;17;Alternative énergétique;Développement alternatif;AB;Alternative au développement;A
@@ -19,10 +20,9 @@ Décroissance;18;Décroissance;Développement alternatif;AB;Alternative au déve
 Diversification;19;Diversification;Développement alternatif;AB;Alternative au développement;A
 Nouveau métier;20;Diversification;Développement alternatif;AB;Alternative au développement;A
 Nouveau secteur;21;Diversification;Développement alternatif;AB;Alternative au développement;A
-Pépinière;22;Pépinière;Développement alternatif;AB;Alternative au développement;A
-Plantation;23;Agriculture;Développement alternatif;AB;Alternative au développement;A
-Réorientation;24;Réorientation;Développement alternatif;AB;Alternative au développement;A
 Secteur à développer;25;Diversification;Développement alternatif;AB;Alternative au développement;A
+Pépinière;22;Pépinière;Développement alternatif;AB;Alternative au développement;A
+Réorientation;24;Réorientation;Développement alternatif;AB;Alternative au développement;A
 Culture;26;Culture;Développement culturel;AC;Alternative au développement;A
 Multiculturel;27;Multiculturel;Développement culturel;AC;Alternative au développement;A
 Musée;28;Musée;Développement culturel;AC;Alternative au développement;A
@@ -32,6 +32,7 @@ Tourisme;31;Tourisme;Développement culturel;AC;Alternative au développement;A
 Voyage;32;Voyage;Développement culturel;AC;Alternative au développement;A
 Autosuffisant;33;Autosuffisant;Développement durable;AD;Alternative au développement;A
 Conscience;34;Conscience;Développement durable;AD;Alternative au développement;A
+Prise de conscience;46;Conscience;Développement durable;AD;Alternative au développement;A
 Conscience environnementale;35;Conscience environnementale;Développement durable;AD;Alternative au développement;A
 Consommation écologique;36;Consommation écologique;Développement durable;AD;Alternative au développement;A
 Développement durable;37;Développement durable;Développement durable;AD;Alternative au développement;A
@@ -43,7 +44,6 @@ Développement durable;37;Développement durable;Développement durable;AD;Alter
 Énergie renouvelable;43;Énergie renouvelable;Développement durable;AD;Alternative au développement;A
 Énergie verte;44;Énergie renouvelable;Développement durable;AD;Alternative au développement;A
 Évolution écologique;45;Évolution écologique;Développement durable;AD;Alternative au développement;A
-Prise de conscience;46;Conscience;Développement durable;AD;Alternative au développement;A
 Recyclage;47;Recyclage;Développement durable;AD;Alternative au développement;A
 Résilience;48;Résilience;Développement durable;AD;Alternative au développement;A
 Respect de l’environnement;49;Respect environnemental;Développement durable;AD;Alternative au développement;A
@@ -57,39 +57,39 @@ Mine énergétique;56;Mine énergétique;Développement minier alternatif;AE;Alt
 Nouveau minerai;57;Nouveau minerai;Développement minier alternatif;AE;Alternative au développement;A
 Amélioration;58;Amélioration;Amélioration environnementale;BA;Amélioration environnementale;B
 Avancement;59;Amélioration;Amélioration environnementale;BA;Amélioration environnementale;B
-Conservation;60;Préservation;Amélioration environnementale;BA;Amélioration environnementale;B
 Eau salubre;61;Eau salubre;Amélioration environnementale;BA;Amélioration environnementale;B
 Eau traitée;62;Eau salubre;Amélioration environnementale;BA;Amélioration environnementale;B
 Écologie;63;Écologie;Amélioration environnementale;BA;Amélioration environnementale;B
 Écologique;64;Écologie;Amélioration environnementale;BA;Amélioration environnementale;B
-Forestation;65;Végétalisation;Amélioration environnementale;BA;Amélioration environnementale;B
 Gestion des déchets;66;Gestion des déchets;Amélioration environnementale;BA;Amélioration environnementale;B
 Interdiction;67;Interdiction;Amélioration environnementale;BA;Amélioration environnementale;B
-Planter;68;Végétalisation;Amélioration environnementale;BA;Amélioration environnementale;B
+Conservation;60;Préservation;Amélioration environnementale;BA;Amélioration environnementale;B
 Préservation;69;Préservation;Amélioration environnementale;BA;Amélioration environnementale;B
-Propre;70;Propre;Amélioration environnementale;BA;Amélioration environnementale;B
 Protection;71;Préservation;Amélioration environnementale;BA;Amélioration environnementale;B
-Reboisement;72;Végétalisation;Amélioration environnementale;BA;Amélioration environnementale;B
-Reforestation;73;Végétalisation;Amélioration environnementale;BA;Amélioration environnementale;B
-Réhabilitation;74;Restauration écologique;Amélioration environnementale;BA;Amélioration environnementale;B
+Sauvegarder;81;Préservation;Amélioration environnementale;BA;Amélioration environnementale;B
+Propre;70;Propre;Amélioration environnementale;BA;Amélioration environnementale;B
 Renforcement;75;Renforcement;Amélioration environnementale;BA;Amélioration environnementale;B
+Réhabilitation;74;Restauration écologique;Amélioration environnementale;BA;Amélioration environnementale;B
 Rénovation;76;Restauration écologique;Amélioration environnementale;BA;Amélioration environnementale;B
 Réparation;77;Restauration écologique;Amélioration environnementale;BA;Amélioration environnementale;B
 Restauration;78;Restauration écologique;Amélioration environnementale;BA;Amélioration environnementale;B
 Restauration écologique;79;Restauration écologique;Amélioration environnementale;BA;Amélioration environnementale;B
+Forestation;65;Végétalisation;Amélioration environnementale;BA;Amélioration environnementale;B
+Planter;68;Végétalisation;Amélioration environnementale;BA;Amélioration environnementale;B
+Reboisement;72;Végétalisation;Amélioration environnementale;BA;Amélioration environnementale;B
+Reforestation;73;Végétalisation;Amélioration environnementale;BA;Amélioration environnementale;B
 Revégétalisation;80;Végétalisation;Amélioration environnementale;BA;Amélioration environnementale;B
-Sauvegarder;81;Préservation;Amélioration environnementale;BA;Amélioration environnementale;B
 Abondance;82;Abondance;Croissance minière;CA;Avenir avec nickel;C
-Accroissement;83;Accroissement;Croissance minière;CA;Avenir avec nickel;C
 Âge d’or;84;Abondance;Croissance minière;CA;Avenir avec nickel;C
+Accroissement;83;Accroissement;Croissance minière;CA;Avenir avec nickel;C
 Agrandissement;85;Accroissement;Croissance minière;CA;Avenir avec nickel;C
 Augmentation;86;Accroissement;Croissance minière;CA;Avenir avec nickel;C
-Création;87;Création;Croissance minière;CA;Avenir avec nickel;C
 Croissance;88;Accroissement;Croissance minière;CA;Avenir avec nickel;C
-Croissance économique;89;Croissance économique;Croissance minière;CA;Avenir avec nickel;C
 Essor;90;Accroissement;Croissance minière;CA;Avenir avec nickel;C
 Expansion;91;Accroissement;Croissance minière;CA;Avenir avec nickel;C
 Grandir;92;Accroissement;Croissance minière;CA;Avenir avec nickel;C
+Création;87;Création;Croissance minière;CA;Avenir avec nickel;C
+Croissance économique;89;Croissance économique;Croissance minière;CA;Avenir avec nickel;C
 Nouvelle ressource;93;Nouvelle ressource;Croissance minière;CA;Avenir avec nickel;C
 Performance;94;Performance;Croissance minière;CA;Avenir avec nickel;C
 Performant;95;Performance;Croissance minière;CA;Avenir avec nickel;C
@@ -97,12 +97,12 @@ Prospérité;96;Prospérité;Croissance minière;CA;Avenir avec nickel;C
 Rapide;97;Rapidité;Croissance minière;CA;Avenir avec nickel;C
 Rapidité;98;Rapidité;Croissance minière;CA;Avenir avec nickel;C
 Rendement;99;Rendement;Croissance minière;CA;Avenir avec nickel;C
-Économiser la ressource;100;Quota;Exploitation raisonnée;CB;Avenir avec nickel;C
 Exploitation durable;101;Exploitation durable;Exploitation raisonnée;CB;Avenir avec nickel;C
 Exploitation raisonnée;102;Exploitation raisonnée;Exploitation raisonnée;CB;Avenir avec nickel;C
 Limité;103;Limité;Exploitation raisonnée;CB;Avenir avec nickel;C
 Meilleure exploitation;104;Meilleure exploitation;Exploitation raisonnée;CB;Avenir avec nickel;C
 Mine locale;105;Mine locale;Exploitation raisonnée;CB;Avenir avec nickel;C
+Économiser la ressource;100;Quota;Exploitation raisonnée;CB;Avenir avec nickel;C
 Quota;106;Quota;Exploitation raisonnée;CB;Avenir avec nickel;C
 Raisonnable;107;Raisonnable;Exploitation raisonnée;CB;Avenir avec nickel;C
 Ralentissement;108;Ralentissement;Exploitation raisonnée;CB;Avenir avec nickel;C
@@ -110,18 +110,18 @@ Rationnalisation;109;Régulation;Exploitation raisonnée;CB;Avenir avec nickel;C
 Réglementation;110;Régulation;Exploitation raisonnée;CB;Avenir avec nickel;C
 Régulation;111;Régulation;Exploitation raisonnée;CB;Avenir avec nickel;C
 Actif;112;Actif;Maintien de l’exploitation;CC;Avenir avec nickel;C
-Continuation;113;Pérenne;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Durabilité;114;Durable;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Durable;115;Durable;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Immobile;116;Immobile;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Inchangé;117;Immobile;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Long;118;Long-terme;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Long-terme;119;Long-terme;Maintien de l’exploitation;CC;Avenir avec nickel;C
-Pareil;120;Similaire;Maintien de l’exploitation;CC;Avenir avec nickel;C
+Continuation;113;Pérenne;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Pérenne;121;Pérenne;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Persiste;122;Pérenne;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Présence;123;Présent;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Présente;124;Présent;Maintien de l’exploitation;CC;Avenir avec nickel;C
+Pareil;120;Similaire;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Similitude;125;Similaire;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Stabilité;126;Stable;Maintien de l’exploitation;CC;Avenir avec nickel;C
 Stable;127;Stable;Maintien de l’exploitation;CC;Avenir avec nickel;C
@@ -143,91 +143,91 @@ Vision;142;Vision;Avenir;DB;Avenir sans nickel;D
 Visionnaire;143;Visionnaire;Avenir;DB;Avenir sans nickel;D
 Abandon;144;Abandon;Déclin;DC;Avenir sans nickel;D
 Abîmé;145;Abîmé;Déclin;DC;Avenir sans nickel;D
+Usure;163;Abîmé;Déclin;DC;Avenir sans nickel;D
 Affaiblissement;146;Affaiblissement;Déclin;DC;Avenir sans nickel;D
 Assèchement;147;Assèchement;Déclin;DC;Avenir sans nickel;D
-Baisse;148;Réduction;Déclin;DC;Avenir sans nickel;D
+Plus assez;159;Assèchement;Déclin;DC;Avenir sans nickel;D
 Chute;149;Déclin;Déclin;DC;Avenir sans nickel;D
 Déclin;150;Déclin;Déclin;DC;Avenir sans nickel;D
 Diminution;151;Déclin;Déclin;DC;Avenir sans nickel;D
-Dispensable;152;Dispensable;Déclin;DC;Avenir sans nickel;D
 Estompage;153;Déclin;Déclin;DC;Avenir sans nickel;D
-Moins;154;Réduction;Déclin;DC;Avenir sans nickel;D
+Dispensable;152;Dispensable;Déclin;DC;Avenir sans nickel;D
+Secondaire;162;Dispensable;Déclin;DC;Avenir sans nickel;D
 Partiel;155;Partiel;Déclin;DC;Avenir sans nickel;D
 Perdition;156;Perte;Déclin;DC;Avenir sans nickel;D
 Perdre;157;Perte;Déclin;DC;Avenir sans nickel;D
 Perte;158;Perte;Déclin;DC;Avenir sans nickel;D
-Plus assez;159;Assèchement;Déclin;DC;Avenir sans nickel;D
+Baisse;148;Réduction;Déclin;DC;Avenir sans nickel;D
+Moins;154;Réduction;Déclin;DC;Avenir sans nickel;D
 Réduire;160;Réduction;Déclin;DC;Avenir sans nickel;D
 Restreindre;161;Restreindre;Déclin;DC;Avenir sans nickel;D
-Secondaire;162;Dispensable;Déclin;DC;Avenir sans nickel;D
-Usure;163;Abîmé;Déclin;DC;Avenir sans nickel;D
 Arrêt;164;Arrêt;Fin;DD;Avenir sans nickel;D
-Asséché;165;Asséché;Fin;DD;Avenir sans nickel;D
-Aucune;166;Néant;Fin;DD;Avenir sans nickel;D
 Cessation;167;Arrêt;Fin;DD;Avenir sans nickel;D
 Cesser;168;Arrêt;Fin;DD;Avenir sans nickel;D
+Fermeture;171;Arrêt;Fin;DD;Avenir sans nickel;D
+Asséché;165;Asséché;Fin;DD;Avenir sans nickel;D
 Dépassé;169;Dépassé;Fin;DD;Avenir sans nickel;D
 Désintérêt;170;Désintérêt;Fin;DD;Avenir sans nickel;D
-Fermeture;171;Arrêt;Fin;DD;Avenir sans nickel;D
 Fin;172;Fin;Fin;DD;Avenir sans nickel;D
 Fini;173;Fin;Fin;DD;Avenir sans nickel;D
 Inexistance;174;Inexistant;Fin;DD;Avenir sans nickel;D
 Inexistant;175;Inexistant;Fin;DD;Avenir sans nickel;D
 Liquidation;176;Liquidation;Fin;DD;Avenir sans nickel;D
+Aucune;166;Néant;Fin;DD;Avenir sans nickel;D
 Néant;177;Néant;Fin;DD;Avenir sans nickel;D
-Obsolescence;178;Obsolescence;Fin;DD;Avenir sans nickel;D
-Obsolète;179;Obsolescence;Fin;DD;Avenir sans nickel;D
 Plus de mine;180;Néant;Fin;DD;Avenir sans nickel;D
 Plus rien;181;Néant;Fin;DD;Avenir sans nickel;D
-Ressource insuffisante;182;Ressource insuffisante;Fin;DD;Avenir sans nickel;D
 Rien;183;Néant;Fin;DD;Avenir sans nickel;D
+Vide;186;Néant;Fin;DD;Avenir sans nickel;D
+Obsolescence;178;Obsolescence;Fin;DD;Avenir sans nickel;D
+Obsolète;179;Obsolescence;Fin;DD;Avenir sans nickel;D
+Ressource insuffisante;182;Ressource insuffisante;Fin;DD;Avenir sans nickel;D
 Sans avenir;184;Sans avenir;Fin;DD;Avenir sans nickel;D
 Stérile;185;Stérile;Fin;DD;Avenir sans nickel;D
-Vide;186;Néant;Fin;DD;Avenir sans nickel;D
-?;187;Inconnu;Incertitude;DE;Avenir sans nickel;D
-Aucune idée;188;Inconnu;Incertitude;DE;Avenir sans nickel;D
 Durée;189;Durée;Incertitude;DE;Avenir sans nickel;D
 Flou;190;Incertitude;Incertitude;DE;Avenir sans nickel;D
 Incertain;191;Incertitude;Incertitude;DE;Avenir sans nickel;D
 Incertitude;192;Incertitude;Incertitude;DE;Avenir sans nickel;D
+?;187;Inconnu;Incertitude;DE;Avenir sans nickel;D
+Aucune idée;188;Inconnu;Incertitude;DE;Avenir sans nickel;D
 Inconnu;193;Inconnu;Incertitude;DE;Avenir sans nickel;D
 Catastrophe;194;Catastrophe;Changement climatique;EA;Dégradation environnementale;E
+Désastre;197;Catastrophe;Changement climatique;EA;Dégradation environnementale;E
 Climat;195;Climat;Changement climatique;EA;Dégradation environnementale;E
 Cyclone;196;Cyclone;Changement climatique;EA;Dégradation environnementale;E
-Désastre;197;Catastrophe;Changement climatique;EA;Dégradation environnementale;E
-Effet de serre;198;GES;Changement climatique;EA;Dégradation environnementale;E
 Empreinte carbone;199;Empreinte carbone;Changement climatique;EA;Dégradation environnementale;E
 Espèce en voie de disparition;200;Espèce en voie de disparition;Changement climatique;EA;Dégradation environnementale;E
+Effet de serre;198;GES;Changement climatique;EA;Dégradation environnementale;E
 GES;201;GES;Changement climatique;EA;Dégradation environnementale;E
 Glissement de terrain;202;Glissement de terrain;Changement climatique;EA;Dégradation environnementale;E
-Inondation;203;Inondation;Changement climatique;EA;Dégradation environnementale;E
 Instabilité du sol;204;Glissement de terrain;Changement climatique;EA;Dégradation environnementale;E
+Inondation;203;Inondation;Changement climatique;EA;Dégradation environnementale;E
 Problème écologique;205;Problème écologique;Changement climatique;EA;Dégradation environnementale;E
 Réchauffement;206;Réchauffement climatique;Changement climatique;EA;Dégradation environnementale;E
 Réchauffement climatique;207;Réchauffement climatique;Changement climatique;EA;Dégradation environnementale;E
 Ruissellement;208;Ruissellement;Changement climatique;EA;Dégradation environnementale;E
 Sécheresse;209;Sécheresse;Changement climatique;EA;Dégradation environnementale;E
-Anéantissement;210;Démolition;Impact environnemental;EB;Dégradation environnementale;E
 Conséquence;211;Conséquence;Impact environnemental;EB;Dégradation environnementale;E
 Danger environnemental;212;Danger environnemental;Impact environnemental;EB;Dégradation environnementale;E
-Déboisement;213;Déforestation;Impact environnemental;EB;Dégradation environnementale;E
 Décharge;214;Décharge;Impact environnemental;EB;Dégradation environnementale;E
+Dépotoir;220;Décharge;Impact environnemental;EB;Dégradation environnementale;E
+Déboisement;213;Déforestation;Impact environnemental;EB;Dégradation environnementale;E
 Déforestation;215;Déforestation;Impact environnemental;EB;Dégradation environnementale;E
 Défrichement;216;Déforestation;Impact environnemental;EB;Dégradation environnementale;E
+Dévégétalisation;224;Déforestation;Impact environnemental;EB;Dégradation environnementale;E
 Dégât;217;Dégât;Impact environnemental;EB;Dégradation environnementale;E
+Dévastateur;223;Dégât;Impact environnemental;EB;Dégradation environnementale;E
 Dégradation;218;Dégradation;Impact environnemental;EB;Dégradation environnementale;E
+Anéantissement;210;Démolition;Impact environnemental;EB;Dégradation environnementale;E
 Démolition;219;Démolition;Impact environnemental;EB;Dégradation environnementale;E
-Dépotoir;220;Décharge;Impact environnemental;EB;Dégradation environnementale;E
 Destruction;221;Démolition;Impact environnemental;EB;Dégradation environnementale;E
 Détruire;222;Démolition;Impact environnemental;EB;Dégradation environnementale;E
-Dévastateur;223;Dégât;Impact environnemental;EB;Dégradation environnementale;E
-Dévégétalisation;224;Déforestation;Impact environnemental;EB;Dégradation environnementale;E
-Disparition;225;Extinction;Impact environnemental;EB;Dégradation environnementale;E
 Éboulement;226;Éboulement;Impact environnemental;EB;Dégradation environnementale;E
 Engravement;227;Engravement;Impact environnemental;EB;Dégradation environnementale;E
-Environnement;228;Impact environnemental;Impact environnemental;EB;Dégradation environnementale;E
 Érosion;229;Érosion;Impact environnemental;EB;Dégradation environnementale;E
+Disparition;225;Extinction;Impact environnemental;EB;Dégradation environnementale;E
 Extinction;230;Extinction;Impact environnemental;EB;Dégradation environnementale;E
+Environnement;228;Impact environnemental;Impact environnemental;EB;Dégradation environnementale;E
 Impact;231;Impact environnemental;Impact environnemental;EB;Dégradation environnementale;E
 Impact écologique;232;Impact environnemental;Impact environnemental;EB;Dégradation environnementale;E
 Préjudice;233;Préjudice;Impact environnemental;EB;Dégradation environnementale;E
@@ -255,10 +255,10 @@ Vendre;254;Vente;Commerce;FA;Échange commercial;F
 Vente;255;Vente;Commerce;FA;Échange commercial;F
 Colas;256;Colas;Entreprise;FB;Échange commercial;F
 Entreprise;257;Entreprise;Entreprise;FB;Échange commercial;F
-FTN;258;FTN;Entreprise;FB;Échange commercial;F
-Micro-entreprise;259;Micro-entreprise;Entreprise;FB;Échange commercial;F
-Multinationale;260;FTN;Entreprise;FB;Échange commercial;F
 Société;261;Entreprise;Entreprise;FB;Échange commercial;F
+FTN;258;FTN;Entreprise;FB;Échange commercial;F
+Multinationale;260;FTN;Entreprise;FB;Échange commercial;F
+Micro-entreprise;259;Micro-entreprise;Entreprise;FB;Échange commercial;F
 Tertiaire;262;Tertiaire;Entreprise;FB;Échange commercial;F
 Tesla;263;Tesla;Entreprise;FB;Échange commercial;F
 Trafigura;264;Trafigura;Entreprise;FB;Échange commercial;F
@@ -296,8 +296,8 @@ Finance;295;Investissement;Investissement;GC;Économie;G
 Financement;296;Investissement;Investissement;GC;Économie;G
 Investir;297;Investissement;Investissement;GC;Économie;G
 Investissement;298;Investissement;Investissement;GC;Économie;G
-Profit;299;Profit;Investissement;GC;Économie;G
 Réinvestissement;300;Investissement;Investissement;GC;Économie;G
+Profit;299;Profit;Investissement;GC;Économie;G
 Route;301;Route;Investissement;GC;Économie;G
 Argent;302;Argent;Revenu;GD;Économie;G
 Monnaie;303;Argent;Revenu;GD;Économie;G
@@ -310,18 +310,17 @@ Source;309;Source;Revenu;GD;Économie;G
 Automate;310;Automatisation;Automatisation;HA;Essor technologique;H
 Automatisation;311;Automatisation;Automatisation;HA;Essor technologique;H
 Automatisé;312;Automatisation;Automatisation;HA;Essor technologique;H
+Mécanisation;316;Automatisation;Automatisation;HA;Essor technologique;H
+Robot;319;Automatisation;Automatisation;HA;Essor technologique;H
+Robotisation;320;Automatisation;Automatisation;HA;Essor technologique;H
 Connecté;313;Connecté;Automatisation;HA;Essor technologique;H
 Efficace;314;Efficace;Automatisation;HA;Essor technologique;H
 Efficacité;315;Efficace;Automatisation;HA;Essor technologique;H
-Mécanisation;316;Automatisation;Automatisation;HA;Essor technologique;H
 Moderne;317;Modernisation;Automatisation;HA;Essor technologique;H
 Modernisation;318;Modernisation;Automatisation;HA;Essor technologique;H
-Robot;319;Automatisation;Automatisation;HA;Essor technologique;H
-Robotisation;320;Automatisation;Automatisation;HA;Essor technologique;H
 Diagnostic;321;Diagnostic;Étude;HB;Essor technologique;H
 Enquête;322;Enquête;Étude;HB;Essor technologique;H
 Étude d’impact;323;Étude d’impact;Étude;HB;Essor technologique;H
-Recherche;324;Recherche;Étude;HB;Essor technologique;H
 Scientifique;325;Scientifique;Étude;HB;Essor technologique;H
 Avancé;326;Avancé;Innovation;HC;Essor technologique;H
 Avancée technologique;327;Avancée technologique;Innovation;HC;Essor technologique;H
@@ -332,10 +331,10 @@ High design;331;High design;Innovation;HC;Essor technologique;H
 Innovant;332;Innovation;Innovation;HC;Essor technologique;H
 Innovation;333;Innovation;Innovation;HC;Essor technologique;H
 Invention;334;Innovation;Innovation;HC;Essor technologique;H
-Nouveau;335;Nouveauté;Innovation;HC;Essor technologique;H
 Nouveau dispositif;336;Nouveau dispositif;Innovation;HC;Essor technologique;H
 Nouveau matériau;337;Nouveau matériau;Innovation;HC;Essor technologique;H
 Nouveau procédé;338;Nouveau procédé;Innovation;HC;Essor technologique;H
+Nouveau;335;Nouveauté;Innovation;HC;Essor technologique;H
 Nouveauté;339;Nouveauté;Innovation;HC;Essor technologique;H
 Nouvelle machine;340;Nouvelle machine;Innovation;HC;Essor technologique;H
 Nouvelle mine;341;Nouvelle mine;Innovation;HC;Essor technologique;H
@@ -351,11 +350,11 @@ Bloc;350;Bloc;Exploitation;IA;Exploitation minière;I
 Chantier;351;Chantier;Exploitation;IA;Exploitation minière;I
 Creusage;352;Creuser;Exploitation;IA;Exploitation minière;I
 Creuser;353;Creuser;Exploitation;IA;Exploitation minière;I
-Dynamite;354;Explosion;Exploitation;IA;Exploitation minière;I
 Exploitation;355;Exploitation;Exploitation;IA;Exploitation minière;I
+Extraction;358;Exploitation;Exploitation;IA;Exploitation minière;I
+Dynamite;354;Explosion;Exploitation;IA;Exploitation minière;I
 Explosif;356;Explosion;Exploitation;IA;Exploitation minière;I
 Explosion;357;Explosion;Exploitation;IA;Exploitation minière;I
-Extraction;358;Exploitation;Exploitation;IA;Exploitation minière;I
 Prélèvement;359;Prélèvement;Exploitation;IA;Exploitation minière;I
 Propreté;360;Propreté;Exploitation;IA;Exploitation minière;I
 Réalisation;361;Réalisation;Exploitation;IA;Exploitation minière;I
@@ -374,16 +373,16 @@ Diamant;373;Diamant;Ressource non-renouvelable;IB;Exploitation minière;I
 Gaz;374;Gaz;Ressource non-renouvelable;IB;Exploitation minière;I
 Granite;375;Granite;Ressource non-renouvelable;IB;Exploitation minière;I
 Hydrocarbure;376;Hydrocarbure;Ressource non-renouvelable;IB;Exploitation minière;I
+Pétrole;379;Hydrocarbure;Ressource non-renouvelable;IB;Exploitation minière;I
 Jade;377;Jade;Ressource non-renouvelable;IB;Exploitation minière;I
 Or;378;Or;Ressource non-renouvelable;IB;Exploitation minière;I
-Pétrole;379;Hydrocarbure;Ressource non-renouvelable;IB;Exploitation minière;I
 Soufre;380;Soufre;Ressource non-renouvelable;IB;Exploitation minière;I
 Aménagement;381;Aménagement;Foncier;JA;Foncier;J
 Déprivatisation;382;Déprivatisation;Foncier;JA;Foncier;J
 Foncier;383;Foncier;Foncier;JA;Foncier;J
 Position géographique;384;Position géographique;Foncier;JA;Foncier;J
-Privé;385;Propriété;Foncier;JA;Foncier;J
 Problème foncier;386;Problème foncier;Foncier;JA;Foncier;J
+Privé;385;Propriété;Foncier;JA;Foncier;J
 Propriété;387;Propriété;Foncier;JA;Foncier;J
 Schéma minier;388;Schéma minier;Foncier;JA;Foncier;J
 Surface;389;Surface;Foncier;JA;Foncier;J
@@ -404,7 +403,6 @@ Centre;403;Centre minier;Site minier;JC;Foncier;J
 Centre minier;404;Centre minier;Site minier;JC;Foncier;J
 Commune minière;405;Commune minière;Site minier;JC;Foncier;J
 Lieu;406;Lieu;Site minier;JC;Foncier;J
-Local;407;Local;Site minier;JC;Foncier;J
 Massif minier;408;Massif minier;Site minier;JC;Foncier;J
 Milieu;409;Milieu;Site minier;JC;Foncier;J
 Réserve minière;410;Réserve minière;Site minier;JC;Foncier;J
@@ -414,14 +412,14 @@ Zone de travail;413;Zone de travail;Site minier;JC;Foncier;J
 Bâtiment;414;Bâtiment;Structure;JD;Foncier;J
 Construction;415;Construction;Structure;JD;Foncier;J
 Infrastructure;416;Infrastructure;Structure;JD;Foncier;J
-Nouvelle construction;417;Nouvelle construction;Structure;JD;Foncier;J
 Structure;418;Infrastructure;Structure;JD;Foncier;J
+Nouvelle construction;417;Nouvelle construction;Structure;JD;Foncier;J
 Artificiel;419;Artificiel;Description minière;KA;Industrie;K
-Caverne;420;Grotte;Description minière;KA;Industrie;K
 Ciel ouvert;421;Ciel ouvert;Description minière;KA;Industrie;K
 Étroit;422;Étroit;Description minière;KA;Industrie;K
 Gigantisme;423;Grand;Description minière;KA;Industrie;K
 Grand;424;Grand;Description minière;KA;Industrie;K
+Caverne;420;Grotte;Description minière;KA;Industrie;K
 Grotte;425;Grotte;Description minière;KA;Industrie;K
 Hauteur;426;Hauteur;Description minière;KA;Industrie;K
 Lourd;427;Lourd;Description minière;KA;Industrie;K
@@ -430,8 +428,8 @@ Mine;429;Mine;Description minière;KA;Industrie;K
 Noir;430;Obscure;Description minière;KA;Industrie;K
 Obscure;431;Obscure;Description minière;KA;Industrie;K
 Ombre;432;Obscure;Description minière;KA;Industrie;K
-Profondeur;433;Souterrain;Description minière;KA;Industrie;K
 Sombre;434;Obscure;Description minière;KA;Industrie;K
+Profondeur;433;Souterrain;Description minière;KA;Industrie;K
 Souterrain;435;Souterrain;Description minière;KA;Industrie;K
 Terrasse;436;Terrasse;Description minière;KA;Industrie;K
 Trou;437;Trou;Description minière;KA;Industrie;K
@@ -445,32 +443,32 @@ Hydrométallurgie;444;Métallurgie;Métallurgie;KC;Industrie;K
 Métallurgie;445;Métallurgie;Métallurgie;KC;Industrie;K
 Pyrométallurgie;446;Métallurgie;Métallurgie;KC;Industrie;K
 Pyrométallurgique;447;Métallurgie;Métallurgie;KC;Industrie;K
+Sidérurgie;450;Métallurgie;Métallurgie;KC;Industrie;K
 Résidu;448;Résidu;Métallurgie;KC;Industrie;K
 Scorie;449;Scorie;Métallurgie;KC;Industrie;K
-Sidérurgie;450;Métallurgie;Métallurgie;KC;Industrie;K
 Cheminée;451;Cheminée;Usine;KD;Industrie;K
-Doniambo;452;Usine du Nord;Usine;KD;Industrie;K
 Four;453;Four;Usine;KD;Industrie;K
 Fourneau;454;Four;Usine;KD;Industrie;K
 Fumée;455;Fumée;Usine;KD;Industrie;K
-Goro;456;Usine du Sud;Usine;KD;Industrie;K
-Koniambo;457;Usine du Nord;Usine;KD;Industrie;K
-Prony;458;Usine du Sud;Usine;KD;Industrie;K
 Restructuration;459;Restructuration;Usine;KD;Industrie;K
 Usine;460;Usine;Usine;KD;Industrie;K
 Usine de Doniambo;461;Usine de Doniambo;Usine;KD;Industrie;K
+Doniambo;452;Usine du Nord;Usine;KD;Industrie;K
+Koniambo;457;Usine du Nord;Usine;KD;Industrie;K
+Usine Nord;464;Usine du Nord;Usine;KD;Industrie;K
+Goro;456;Usine du Sud;Usine;KD;Industrie;K
+Prony;458;Usine du Sud;Usine;KD;Industrie;K
 Usine de Goro;462;Usine du Sud;Usine;KD;Industrie;K
 Usine du Sud;463;Usine du Sud;Usine;KD;Industrie;K
-Usine Nord;464;Usine du Nord;Usine;KD;Industrie;K
 Vapeur;465;Vapeur;Usine;KD;Industrie;K
 Bulldozer;466;Bulldozer;Engin;LA;Matériel;L
 Camion;467;Camion;Engin;LA;Matériel;L
 Contracteur;468;Contracteur;Engin;LA;Matériel;L
 Convoyeur;469;Convoyeur;Engin;LA;Matériel;L
 Engin;470;Engin;Engin;LA;Matériel;L
+Engin minier;473;Engin;Engin;LA;Matériel;L
 Engin d’extraction;471;Engin d’extraction;Engin;LA;Matériel;L
 Engin hybride;472;Engin hybride;Engin;LA;Matériel;L
-Engin minier;473;Engin;Engin;LA;Matériel;L
 Foreuse;474;Foreuse;Engin;LA;Matériel;L
 Mécanique;475;Mécanique;Engin;LA;Matériel;L
 Roue;476;Roue;Engin;LA;Matériel;L
@@ -501,20 +499,22 @@ Matériel;500;Matériel;Outillage;LD;Matériel;L
 Outil;501;Outil;Outillage;LD;Matériel;L
 Pelle;502;Pelle;Outillage;LD;Matériel;L
 Pioche;503;Pioche;Outillage;LD;Matériel;L
-Animal;504;Faune;Biodiversité;MA;Nature;M
 Arbre;505;Arbre;Biodiversité;MA;Nature;M
 Arbuste;506;Arbre;Biodiversité;MA;Nature;M
 Biodiversité;507;Biodiversité;Biodiversité;MA;Nature;M
-Botanique;508;Flore;Biodiversité;MA;Nature;M
-Corail;509;Corail;Biodiversité;MA;Nature;M
 Diversité;510;Biodiversité;Biodiversité;MA;Nature;M
+Corail;509;Corail;Biodiversité;MA;Nature;M
 Endémique;511;Endémisme;Biodiversité;MA;Nature;M
 Endémisme;512;Endémisme;Biodiversité;MA;Nature;M
-Espèce;513;Espèce;Biodiversité;MA;Nature;M
 Espèce endémique;514;Endémisme;Biodiversité;MA;Nature;M
+Espèce;513;Espèce;Biodiversité;MA;Nature;M
+Animal;504;Faune;Biodiversité;MA;Nature;M
 Faune;515;Faune;Biodiversité;MA;Nature;M
+Botanique;508;Flore;Biodiversité;MA;Nature;M
 Fleur;516;Flore;Biodiversité;MA;Nature;M
 Flore;517;Flore;Biodiversité;MA;Nature;M
+Végétal;526;Flore;Biodiversité;MA;Nature;M
+Végétation;527;Flore;Biodiversité;MA;Nature;M
 Fougère;518;Fougère;Biodiversité;MA;Nature;M
 Insecte;519;Insecte;Biodiversité;MA;Nature;M
 Mort;520;Mort;Biodiversité;MA;Nature;M
@@ -523,8 +523,6 @@ Plante endémique;522;Plante endémique;Biodiversité;MA;Nature;M
 Plante hyperaccumulatrice;523;Plante hyperaccumulatrice;Biodiversité;MA;Nature;M
 Poisson;524;Poisson;Biodiversité;MA;Nature;M
 Rongeur;525;Rongeur;Biodiversité;MA;Nature;M
-Végétal;526;Flore;Biodiversité;MA;Nature;M
-Végétation;527;Flore;Biodiversité;MA;Nature;M
 Écosystème;528;Écosystème;Milieu;MB;Nature;M
 Forêt;529;Forêt;Milieu;MB;Nature;M
 Forêt sèche;530;Forêt sèche;Milieu;MB;Nature;M
@@ -532,32 +530,32 @@ Lac;531;Lac;Milieu;MB;Nature;M
 Lagon;532;Lagon;Milieu;MB;Nature;M
 Maquis;533;Maquis minier;Milieu;MB;Nature;M
 Maquis minier;534;Maquis minier;Milieu;MB;Nature;M
-Mer;535;Océan;Milieu;MB;Nature;M
 Nature;536;Nature;Milieu;MB;Nature;M
 Naturel;537;Nature;Milieu;MB;Nature;M
 Nouveau paysage;538;Nouveau paysage;Milieu;MB;Nature;M
+Mer;535;Océan;Milieu;MB;Nature;M
 Océan;539;Océan;Milieu;MB;Nature;M
 Récif;540;Récif;Milieu;MB;Nature;M
 Relief;541;Relief;Milieu;MB;Nature;M
 Rivière;542;Rivière;Milieu;MB;Nature;M
 Ruisseau;543;Rivière;Milieu;MB;Nature;M
 Verdure;544;Verdure;Milieu;MB;Nature;M
-Rouge;545;Terre rouge;Terre;MC;Nature;M
 Sol;546;Terre;Terre;MC;Nature;M
 Terre;547;Terre;Terre;MC;Nature;M
 Terre détruite;548;Terre détruite;Terre;MC;Nature;M
+Rouge;545;Terre rouge;Terre;MC;Nature;M
 Terre rouge;549;Terre rouge;Terre;MC;Nature;M
 Altérite;550;Altérite;Minerai;NA;Nickel;N
-Caillou;551;Roche;Minerai;NA;Nickel;N
 Chrome;552;Chrome;Minerai;NA;Nickel;N
 Cobalt;553;Cobalt;Minerai;NA;Nickel;N
 Garniérite;554;Garniérite;Minerai;NA;Nickel;N
+Roche verte;560;Garniérite;Minerai;NA;Nickel;N
 Latérite;555;Latérite;Minerai;NA;Nickel;N
 Minerai;556;Minerai;Minerai;NA;Nickel;N
 Minéral;557;Minerai;Minerai;NA;Nickel;N
+Caillou;551;Roche;Minerai;NA;Nickel;N
 Pierre;558;Roche;Minerai;NA;Nickel;N
 Roche;559;Roche;Minerai;NA;Nickel;N
-Roche verte;560;Garniérite;Minerai;NA;Nickel;N
 Rocher;561;Roche;Minerai;NA;Nickel;N
 Matière;562;Matière;Nickel;NB;Nickel;N
 Matière première;563;Matière première;Nickel;NB;Nickel;N
@@ -567,9 +565,8 @@ Précieux;566;Précieux;Nickel;NB;Nickel;N
 Vert;567;Vert;Nickel;NB;Nickel;N
 Atout;568;Atout;Richesse;NC;Nickel;N
 Convertissement;569;Convertissement;Richesse;NC;Nickel;N
-Or vert;570;Richesse;Richesse;NC;Nickel;N
 Potentiel;571;Potentiel;Richesse;NC;Nickel;N
-Répartition;572;Répartition;Richesse;NC;Nickel;N
+Or vert;570;Richesse;Richesse;NC;Nickel;N
 Riche;573;Richesse;Richesse;NC;Nickel;N
 Richesse;574;Richesse;Richesse;NC;Nickel;N
 Trésor;575;Richesse;Richesse;NC;Nickel;N
@@ -589,14 +586,14 @@ Développement tribal;588;Développement tribal;Coutume;PA;Nouvelle-Calédonie;P
 Honneur;589;Honneur;Coutume;PA;Nouvelle-Calédonie;P
 ICAN;590;ICAN;Coutume;PA;Nouvelle-Calédonie;P
 Kanak;591;Kanak;Coutume;PA;Nouvelle-Calédonie;P
-Lieu sacré;592;Sacré;Coutume;PA;Nouvelle-Calédonie;P
 Reconnaissance;593;Reconnaissance;Coutume;PA;Nouvelle-Calédonie;P
 Respect;594;Respect;Coutume;PA;Nouvelle-Calédonie;P
 Respectueux;595;Respect;Coutume;PA;Nouvelle-Calédonie;P
+Lieu sacré;592;Sacré;Coutume;PA;Nouvelle-Calédonie;P
 Sacré;596;Sacré;Coutume;PA;Nouvelle-Calédonie;P
 Tradition;597;Tradition;Coutume;PA;Nouvelle-Calédonie;P
-Tribu;598;Tribu;Coutume;PA;Nouvelle-Calédonie;P
 Valeur culturelle;599;Tradition;Coutume;PA;Nouvelle-Calédonie;P
+Tribu;598;Tribu;Coutume;PA;Nouvelle-Calédonie;P
 Village;600;Village;Coutume;PA;Nouvelle-Calédonie;P
 Autonome;601;Autonomie;Indépendance;PB;Nouvelle-Calédonie;P
 Autonomie;602;Autonomie;Indépendance;PB;Nouvelle-Calédonie;P
@@ -605,6 +602,7 @@ Fausse dépendance;604;Fausse dépendance;Indépendance;PB;Nouvelle-Calédonie;P
 FLNKS;605;FLNKS;Indépendance;PB;Nouvelle-Calédonie;P
 Identification;606;Identification;Indépendance;PB;Nouvelle-Calédonie;P
 Indépendance;607;Indépendance;Indépendance;PB;Nouvelle-Calédonie;P
+Souveraineté;615;Indépendance;Indépendance;PB;Nouvelle-Calédonie;P
 Kanaky Dawany;608;Kanaky Dawany;Indépendance;PB;Nouvelle-Calédonie;P
 Militaire;609;Militaire;Indépendance;PB;Nouvelle-Calédonie;P
 Porte d’entrée;610;Porte d’entrée;Indépendance;PB;Nouvelle-Calédonie;P
@@ -612,7 +610,6 @@ Réappropriation;611;Réappropriation;Indépendance;PB;Nouvelle-Calédonie;P
 Rééquilibrage;612;Rééquilibrage;Indépendance;PB;Nouvelle-Calédonie;P
 Référendum;613;Référendum;Indépendance;PB;Nouvelle-Calédonie;P
 Retrait;614;Retrait;Indépendance;PB;Nouvelle-Calédonie;P
-Souveraineté;615;Indépendance;Indépendance;PB;Nouvelle-Calédonie;P
 Côte ouest;616;Côte ouest;Nouvelle-Calédonie;PC;Nouvelle-Calédonie;P
 Décentralisation;617;Décentralisation;Nouvelle-Calédonie;PC;Nouvelle-Calédonie;P
 Image;618;Image;Nouvelle-Calédonie;PC;Nouvelle-Calédonie;P
@@ -626,26 +623,26 @@ Puissance;625;Puissance;Nouvelle-Calédonie;PC;Nouvelle-Calédonie;P
 Sud;626;Sud;Nouvelle-Calédonie;PC;Nouvelle-Calédonie;P
 Symbole;627;Symbole;Nouvelle-Calédonie;PC;Nouvelle-Calédonie;P
 Territoire;628;Territoire;Nouvelle-Calédonie;PC;Nouvelle-Calédonie;P
-Ancien;629;Histoire;Passé;PD;Nouvelle-Calédonie;P
 Boom;630;Boom;Passé;PD;Nouvelle-Calédonie;P
 Colonisation;631;Colonisation;Passé;PD;Nouvelle-Calédonie;P
-Garnier;632;Jules Garnier;Passé;PD;Nouvelle-Calédonie;P
 Gueule noire;633;Gueule noire;Passé;PD;Nouvelle-Calédonie;P
+Ancien;629;Histoire;Passé;PD;Nouvelle-Calédonie;P
 Histoire;634;Histoire;Passé;PD;Nouvelle-Calédonie;P
+Passé;638;Histoire;Passé;PD;Nouvelle-Calédonie;P
+Garnier;632;Jules Garnier;Passé;PD;Nouvelle-Calédonie;P
 Jules Garnier;635;Jules Garnier;Passé;PD;Nouvelle-Calédonie;P
 Les Évènements;636;Les Évènements;Passé;PD;Nouvelle-Calédonie;P
 Mine d’or;637;Mine d’or;Passé;PD;Nouvelle-Calédonie;P
-Passé;638;Histoire;Passé;PD;Nouvelle-Calédonie;P
 Train;639;Train;Passé;PD;Nouvelle-Calédonie;P
 Travail forcé;640;Travail forcé;Passé;PD;Nouvelle-Calédonie;P
 Balance;641;Balance;Balance positive-négative;QA;Politique;Q
-Bien - Mal;642;Positif - négatif;Balance positive-négative;QA;Politique;Q
 Bilan;643;Bilan;Balance positive-négative;QA;Politique;Q
 Choix;644;Choix;Balance positive-négative;QA;Politique;Q
+Dilemme;647;Choix;Balance positive-négative;QA;Politique;Q
 Compliquer;645;Compliquer;Balance positive-négative;QA;Politique;Q
 Compromis;646;Compromis;Balance positive-négative;QA;Politique;Q
-Dilemme;647;Choix;Balance positive-négative;QA;Politique;Q
 Nécessité;648;Compromis;Balance positive-négative;QA;Politique;Q
+Bien - Mal;642;Positif - négatif;Balance positive-négative;QA;Politique;Q
 Positif - négatif;649;Positif - négatif;Balance positive-négative;QA;Politique;Q
 Prix;650;Prix à payer;Balance positive-négative;QA;Politique;Q
 Prix à payer;651;Prix à payer;Balance positive-négative;QA;Politique;Q
@@ -681,6 +678,7 @@ Pire;680;Pire;Crise;QC;Politique;Q
 Survivre;681;Survivre;Crise;QC;Politique;Q
 Abus;682;Abus;Dérive politique;QD;Politique;Q
 Corruption;683;Corruption;Dérive politique;QD;Politique;Q
+Magouille;691;Corruption;Dérive politique;QD;Politique;Q
 Défaillance;684;Défaillance;Dérive politique;QD;Politique;Q
 Détournement;685;Fraude;Dérive politique;QD;Politique;Q
 Fraude;686;Fraude;Dérive politique;QD;Politique;Q
@@ -688,7 +686,6 @@ Hypocrisie;687;Hypocrisie;Dérive politique;QD;Politique;Q
 Incompétence;688;Incompétence;Dérive politique;QD;Politique;Q
 Incompréhension;689;Incompréhension;Dérive politique;QD;Politique;Q
 Lobby;690;Lobby;Dérive politique;QD;Politique;Q
-Magouille;691;Corruption;Dérive politique;QD;Politique;Q
 Manipulation;692;Manipulation;Dérive politique;QD;Politique;Q
 Manque de réflexion;693;Manque de réflexion;Dérive politique;QD;Politique;Q
 Polémique;694;Polémique;Dérive politique;QD;Politique;Q
@@ -741,11 +738,11 @@ Air polluée;740;Air polluée;Pollution;RB;Pollution;R
 Boue;741;Boue;Pollution;RB;Pollution;R
 CO2;742;CO1;Pollution;RB;Pollution;R
 Déchet;743;Déchet;Pollution;RB;Pollution;R
+Rejet;748;Déchet;Pollution;RB;Pollution;R
 Eau;744;Eau;Pollution;RB;Pollution;R
 Polluant;745;Pollution;Pollution;RB;Pollution;R
 Pollué;746;Pollution;Pollution;RB;Pollution;R
 Pollution;747;Pollution;Pollution;RB;Pollution;R
-Rejet;748;Déchet;Pollution;RB;Pollution;R
 Rivière rouge;749;Rivière rouge;Pollution;RB;Pollution;R
 Toxicité;750;Toxicité;Pollution;RB;Pollution;R
 Toxique;751;Toxicité;Pollution;RB;Pollution;R
@@ -763,22 +760,24 @@ Corée;762;Corée;Puissance étrangère;SA;Relation politique;S
 Racheteur;763;Racheteur;Puissance étrangère;SA;Relation politique;S
 Aide;764;Aide;Relation France;SB;Relation politique;S
 Dédommagement;765;Dédommagement;Relation France;SB;Relation politique;S
+Redevance;770;Dédommagement;Relation France;SB;Relation politique;S
+Remboursement;771;Dédommagement;Relation France;SB;Relation politique;S
 Dépendance;766;Dépendance;Relation France;SB;Relation politique;S
 Dépendant;767;Dépendance;Relation France;SB;Relation politique;S
 Empire;768;Empire;Relation France;SB;Relation politique;S
 France;769;France;Relation France;SB;Relation politique;S
-Redevance;770;Dédommagement;Relation France;SB;Relation politique;S
-Remboursement;771;Dédommagement;Relation France;SB;Relation politique;S
 Responsable;772;Responsable;Relation France;SB;Relation politique;S
 Concurrence;773;Concurrence;Relation internationale;SC;Relation politique;S
 Convoitise;774;Convoitise;Relation internationale;SC;Relation politique;S
+Envié;781;Convoitise;Relation internationale;SC;Relation politique;S
 Coopération;775;Coopération;Relation internationale;SC;Relation politique;S
+Partenariat;789;Coopération;Relation internationale;SC;Relation politique;S
 Demande;776;Demande;Relation internationale;SC;Relation politique;S
 Diplomatie;777;Diplomatie;Relation internationale;SC;Relation politique;S
+Politique extérieure;790;Diplomatie;Relation internationale;SC;Relation politique;S
 Échange;778;Échange international;Relation internationale;SC;Relation politique;S
 Échange international;779;Échange international;Relation internationale;SC;Relation politique;S
 Embargo;780;Embargo;Relation internationale;SC;Relation politique;S
-Envié;781;Convoitise;Relation internationale;SC;Relation politique;S
 Géopolitique;782;Géopolitique;Relation internationale;SC;Relation politique;S
 International;783;International;Relation internationale;SC;Relation politique;S
 Monde;784;Mondialisation;Relation internationale;SC;Relation politique;S
@@ -786,8 +785,6 @@ Mondial;785;Mondialisation;Relation internationale;SC;Relation politique;S
 Mondialisation;786;Mondialisation;Relation internationale;SC;Relation politique;S
 Négociation;787;Négociation;Relation internationale;SC;Relation politique;S
 Ouverture;788;Ouverture;Relation internationale;SC;Relation politique;S
-Partenariat;789;Coopération;Relation internationale;SC;Relation politique;S
-Politique extérieure;790;Diplomatie;Relation internationale;SC;Relation politique;S
 Rachat;791;Rachat;Relation internationale;SC;Relation politique;S
 Relation;792;Relation internationale;Relation internationale;SC;Relation politique;S
 Relation internationale;793;Relation internationale;Relation internationale;SC;Relation politique;S
@@ -797,12 +794,17 @@ Carence;796;Carence;Épuisement de la ressource;TA;Ressource minière;T
 Épuisable;797;Épuisable;Épuisement de la ressource;TA;Ressource minière;T
 Épuisé;798;Épuisable;Épuisement de la ressource;TA;Ressource minière;T
 Épuisement;799;Épuisable;Épuisement de la ressource;TA;Ressource minière;T
-Insuffisant;800;Insuffisant;Épuisement de la ressource;TA;Ressource minière;T
-Manque;801;Insuffisant;Épuisement de la ressource;TA;Ressource minière;T
-Manque de matériau;802;Manque de matériau;Épuisement de la ressource;TA;Ressource minière;T
-Pénurie;803;Insuffisant;Épuisement de la ressource;TA;Ressource minière;T
 Raréfaction;804;Épuisable;Épuisement de la ressource;TA;Ressource minière;T
 Ressource limitée;805;Épuisable;Épuisement de la ressource;TA;Ressource minière;T
+Insuffisant;800;Insuffisant;Épuisement de la ressource;TA;Ressource minière;T
+Manque;801;Insuffisant;Épuisement de la ressource;TA;Ressource minière;T
+Pénurie;803;Insuffisant;Épuisement de la ressource;TA;Ressource minière;T
+Manque de matériau;802;Manque de matériau;Épuisement de la ressource;TA;Ressource minière;T
+Non durable;834;Non-renouvelable;Épuisement de la ressource;TA;Ressource minière;T
+Non-renouvelable;835;Non-renouvelable;Épuisement de la ressource;TA;Ressource minière;T
+Pas durable;836;Non-renouvelable;Épuisement de la ressource;TA;Ressource minière;T
+Ressource épuisable;840;Non-renouvelable;Épuisement de la ressource;TA;Ressource minière;T
+Ressource non-renouvelable;842;Non-renouvelable;Épuisement de la ressource;TA;Ressource minière;T
 Fer;806;Fer;Fer;TB;Ressource minière;T
 Fer rubané;807;Fer rubané;Fer;TB;Ressource minière;T
 Ferraille;808;Ferraille;Fer;TB;Ressource minière;T
@@ -810,12 +812,12 @@ Analyse;809;Analyse;Prospection minière;TC;Ressource minière;T
 Découverte;810;Découverte;Prospection minière;TC;Ressource minière;T
 Échantillon;811;Échantillon;Prospection minière;TC;Ressource minière;T
 Expérience scientifique;812;Expérience scientifique;Prospection minière;TC;Ressource minière;T
-Explorer;813;Prospection;Prospection minière;TC;Ressource minière;T
 Forage;814;Forage;Prospection minière;TC;Ressource minière;T
 Géologie;815;Géologie;Prospection minière;TC;Ressource minière;T
 Gisement;816;Gisement;Prospection minière;TC;Ressource minière;T
 Laboratoire;817;Laboratoire;Prospection minière;TC;Ressource minière;T
 Perle;818;Perle;Prospection minière;TC;Ressource minière;T
+Explorer;813;Prospection;Prospection minière;TC;Ressource minière;T
 Prospection;819;Prospection;Prospection minière;TC;Ressource minière;T
 Recherche;820;Recherche;Prospection minière;TC;Ressource minière;T
 Recherche géologique;821;Recherche géologique;Prospection minière;TC;Ressource minière;T
@@ -831,15 +833,9 @@ Fossile;830;Fossile;Vision négative de la ressource;TE;Ressource minière;T
 Frein;831;Frein;Vision négative de la ressource;TE;Ressource minière;T
 Inexploitable;832;Inexploitable;Vision négative de la ressource;TE;Ressource minière;T
 Malédiction;833;Malédiction;Vision négative de la ressource;TE;Ressource minière;T
-Non durable;834;Non-renouvelable;Vision négative de la ressource;TE;Ressource minière;T
-Non-renouvelable;835;Non-renouvelable;Vision négative de la ressource;TE;Ressource minière;T
-Pas durable;836;Non-renouvelable;Vision négative de la ressource;TE;Ressource minière;T
 Rare;837;Rare;Vision négative de la ressource;TE;Ressource minière;T
-Raréfaction;838;Rare;Vision négative de la ressource;TE;Ressource minière;T
 Remplaçable;839;Remplaçable;Vision négative de la ressource;TE;Ressource minière;T
-Ressource épuisable;840;Non-renouvelable;Vision négative de la ressource;TE;Ressource minière;T
 Ressource fossile;841;Ressource fossile;Vision négative de la ressource;TE;Ressource minière;T
-Ressource non-renouvelable;842;Non-renouvelable;Vision négative de la ressource;TE;Ressource minière;T
 Surexploitation;843;Surexploitation;Vision négative de la ressource;TE;Ressource minière;T
 Demandé;844;Demandé;Vision positive de la ressource;TF;Ressource minière;T
 Emblématique;845;Emblématique;Vision positive de la ressource;TF;Ressource minière;T
@@ -858,15 +854,14 @@ Incendie;857;Incendie;Danger;UA;Risque;U
 Métier à risque;858;Métier à risque;Danger;UA;Risque;U
 Remontée de gaz;859;Remontée de gaz;Danger;UA;Risque;U
 Risque;860;Risque;Danger;UA;Risque;U
-Mesure de sécurité;861;Sécurité;Sécurité;UB;Risque;U
 Prévention;862;Prévention;Sécurité;UB;Risque;U
+Mesure de sécurité;861;Sécurité;Sécurité;UB;Risque;U
 Sécurité;863;Sécurité;Sécurité;UB;Risque;U
 Sécurité civile;864;Sécurité;Sécurité;UB;Risque;U
 Sûr;865;Sécurité;Sécurité;UB;Risque;U
 Bourse;866;Bourse;Formation;VA;Secteur nickel;V
 Bourse scolaire;867;Bourse;Formation;VA;Secteur nickel;V
 Connaissance;868;Connaissance;Formation;VA;Secteur nickel;V
-Cours;869;Cours;Formation;VA;Secteur nickel;V
 Diplôme;870;Diplôme;Formation;VA;Secteur nickel;V
 École;871;École;Formation;VA;Secteur nickel;V
 Éducation;872;Éducation;Formation;VA;Secteur nickel;V
@@ -876,6 +871,7 @@ Poro;875;Poro;Formation;VA;Secteur nickel;V
 Stage;876;Stage;Formation;VA;Secteur nickel;V
 Ballande;877;Ballande;Opérateur minier;VB;Secteur nickel;V
 Compagnie;878;Compagnie minière;Opérateur minier;VB;Secteur nickel;V
+Société minière;887;Compagnie minière;Opérateur minier;VB;Secteur nickel;V
 Dang;879;Dang;Opérateur minier;VB;Secteur nickel;V
 DIMENC;880;DIMENC;Opérateur minier;VB;Secteur nickel;V
 Eramet;881;Eramet;Opérateur minier;VB;Secteur nickel;V
@@ -884,20 +880,19 @@ NMC;883;NMC;Opérateur minier;VB;Secteur nickel;V
 Prony Resources;884;Prony Resources;Opérateur minier;VB;Secteur nickel;V
 SLN;885;SLN;Opérateur minier;VB;Secteur nickel;V
 SMSP;886;SMSP;Opérateur minier;VB;Secteur nickel;V
-Société minière;887;Compagnie minière;Opérateur minier;VB;Secteur nickel;V
 Vale;888;Vale;Opérateur minier;VB;Secteur nickel;V
 Acide;889;Acide;Procédé industriel;VC;Secteur nickel;V
-Biochimie;890;Chimie;Procédé industriel;VC;Secteur nickel;V
 Chaîne de production;891;Chaîne de production;Procédé industriel;VC;Secteur nickel;V
+Biochimie;890;Chimie;Procédé industriel;VC;Secteur nickel;V
 Chimie;892;Chimie;Procédé industriel;VC;Secteur nickel;V
 Complexe;893;Complexe;Procédé industriel;VC;Secteur nickel;V
 Fonctionnement;894;Fonctionnement;Procédé industriel;VC;Secteur nickel;V
 Gestion;895;Gestion;Procédé industriel;VC;Secteur nickel;V
+Organisation;900;Gestion;Procédé industriel;VC;Secteur nickel;V
 Hygiène;896;Hygiène;Procédé industriel;VC;Secteur nickel;V
 Logique;897;Logique;Procédé industriel;VC;Secteur nickel;V
 Maintenance;898;Maintenance;Procédé industriel;VC;Secteur nickel;V
 Offshore;899;Offshore;Procédé industriel;VC;Secteur nickel;V
-Organisation;900;Gestion;Procédé industriel;VC;Secteur nickel;V
 Précision;901;Précision;Procédé industriel;VC;Secteur nickel;V
 Procédé;902;Procédé;Procédé industriel;VC;Secteur nickel;V
 Produit;903;Produit;Procédé industriel;VC;Secteur nickel;V
@@ -911,12 +906,12 @@ Traitement chimique;910;Traitement;Procédé industriel;VC;Secteur nickel;V
 Uniformisation;911;Uniformisation;Procédé industriel;VC;Secteur nickel;V
 Acier;912;Acier;Production;VD;Secteur nickel;V
 Batterie;913;Batterie;Production;VD;Secteur nickel;V
+Pile;919;Batterie;Production;VD;Secteur nickel;V
 Fabrication;914;Fabrication;Production;VD;Secteur nickel;V
 Inox;915;Inox;Production;VD;Secteur nickel;V
 Lithium;916;Lithium;Production;VD;Secteur nickel;V
 Matériau;917;Matériau;Production;VD;Secteur nickel;V
 Métal;918;Métal;Production;VD;Secteur nickel;V
-Pile;919;Batterie;Production;VD;Secteur nickel;V
 Production;920;Production;Production;VD;Secteur nickel;V
 Production propre;921;Production propre;Production;VD;Secteur nickel;V
 Produit fini;922;Produit fini;Production;VD;Secteur nickel;V
@@ -936,19 +931,19 @@ Base;935;Base;Secteur indispensable;VG;Secteur nickel;V
 Besoin;936;Besoin;Secteur indispensable;VG;Secteur nickel;V
 Force;937;Force;Secteur indispensable;VG;Secteur nickel;V
 Important;938;Important;Secteur indispensable;VG;Secteur nickel;V
-Impossible;939;Irréel;Secteur indispensable;VG;Secteur nickel;V
 Indispensable;940;Indispensable;Secteur indispensable;VG;Secteur nickel;V
+Pilier économique;943;Indispensable;Secteur indispensable;VG;Secteur nickel;V
+Primaire;945;Indispensable;Secteur indispensable;VG;Secteur nickel;V
+Vital;949;Indispensable;Secteur indispensable;VG;Secteur nickel;V
+Impossible;939;Irréel;Secteur indispensable;VG;Secteur nickel;V
 Irréel;941;Irréel;Secteur indispensable;VG;Secteur nickel;V
 Partout;942;Partout;Secteur indispensable;VG;Secteur nickel;V
-Pilier économique;943;Indispensable;Secteur indispensable;VG;Secteur nickel;V
 Poumon;944;Poumon;Secteur indispensable;VG;Secteur nickel;V
-Primaire;945;Indispensable;Secteur indispensable;VG;Secteur nickel;V
 Repère;946;Repère;Secteur indispensable;VG;Secteur nickel;V
 Utile;947;Utile;Secteur indispensable;VG;Secteur nickel;V
 Véridique;948;Véridique;Secteur indispensable;VG;Secteur nickel;V
-Vital;949;Indispensable;Secteur indispensable;VG;Secteur nickel;V
-Activité;950;Activité minière;Secteur nickel;VH;Secteur nickel;V
 Activité économique;951;Activité économique;Secteur nickel;VH;Secteur nickel;V
+Activité;950;Activité minière;Secteur nickel;VH;Secteur nickel;V
 Activité minière;952;Activité minière;Secteur nickel;VH;Secteur nickel;V
 Déficit;953;Déficit;Secteur nickel;VH;Secteur nickel;V
 Faillite;954;Faillite;Secteur nickel;VH;Secteur nickel;V
@@ -978,15 +973,15 @@ Télévision;977;Télévision;Bien de consommation;WA;Société néo-calédonien
 Voiture;978;Voiture;Bien de consommation;WA;Société néo-calédonienne;W
 Voiture électrique;979;Voiture;Bien de consommation;WA;Société néo-calédonienne;W
 Voiture hybride;980;Voiture;Bien de consommation;WA;Société néo-calédonienne;W
-Appartenance;981;Identité;Calédonien;WB;Société néo-calédonienne;W
 Civilisation;982;Civilisation;Calédonien;WB;Société néo-calédonienne;W
 Condition de vie;983;Condition de vie;Calédonien;WB;Société néo-calédonienne;W
 Éloignement;984;Éloignement;Calédonien;WB;Société néo-calédonienne;W
+Appartenance;981;Identité;Calédonien;WB;Société néo-calédonienne;W
 Identité;985;Identité;Calédonien;WB;Société néo-calédonienne;W
+Racine;989;Identité;Calédonien;WB;Société néo-calédonienne;W
 Mouvement;986;Mouvement;Calédonien;WB;Société néo-calédonienne;W
 Peuple;987;Population;Calédonien;WB;Société néo-calédonienne;W
 Population;988;Population;Calédonien;WB;Société néo-calédonienne;W
-Racine;989;Identité;Calédonien;WB;Société néo-calédonienne;W
 Ville;990;Ville;Calédonien;WB;Société néo-calédonienne;W
 Enfant;991;Enfant;Famille;WC;Société néo-calédonienne;W
 Famille;992;Famille;Famille;WC;Société néo-calédonienne;W
@@ -1014,13 +1009,12 @@ Victime;1013;Victime;Inégalité;WD;Société néo-calédonienne;W
 Accessibilité;1014;Accessibilité;Justice sociale;WE;Société néo-calédonienne;W
 Appropriation;1015;Appropriation;Justice sociale;WE;Société néo-calédonienne;W
 Association;1016;Association;Justice sociale;WE;Société néo-calédonienne;W
-Correct;1017;Juste;Justice sociale;WE;Société néo-calédonienne;W
 Économie sociale et solidaire;1018;Économie sociale et solidaire;Justice sociale;WE;Société néo-calédonienne;W
 Égalité;1019;Égalité;Justice sociale;WE;Société néo-calédonienne;W
 Équité;1020;Équité;Justice sociale;WE;Société néo-calédonienne;W
+Correct;1017;Juste;Justice sociale;WE;Société néo-calédonienne;W
 Juste;1021;Juste;Justice sociale;WE;Société néo-calédonienne;W
 Partage;1022;Partage;Justice sociale;WE;Société néo-calédonienne;W
-Protection;1023;Protection;Justice sociale;WE;Société néo-calédonienne;W
 Redistribution;1024;Redistribution;Justice sociale;WE;Société néo-calédonienne;W
 Répartition;1025;Redistribution;Justice sociale;WE;Société néo-calédonienne;W
 Syndicat;1026;Syndicat;Justice sociale;WE;Société néo-calédonienne;W
@@ -1071,43 +1065,43 @@ Repos;1070;Repos;Condition de travail;XA;Travail;X
 Roulement;1071;Roulement;Condition de travail;XA;Travail;X
 Soir;1072;Soir;Condition de travail;XA;Travail;X
 Tôt;1073;Tôt;Condition de travail;XA;Travail;X
-Assurance d’emploi;1074;Promesse d’embauche;Emploi;XB;Travail;X
 Carrière;1075;Carrière;Emploi;XB;Travail;X
 Chômage;1076;Chômage;Emploi;XB;Travail;X
 Emploi;1077;Emploi;Emploi;XB;Travail;X
+Métier;1080;Emploi;Emploi;XB;Travail;X
+Travail;1084;Emploi;Emploi;XB;Travail;X
 Emploi non-qualifié;1078;Emploi non-qualifié;Emploi;XB;Travail;X
 Emploi qualifié;1079;Emploi qualifié;Emploi;XB;Travail;X
-Métier;1080;Emploi;Emploi;XB;Travail;X
+Assurance d’emploi;1074;Promesse d’embauche;Emploi;XB;Travail;X
 Promesse;1081;Promesse d’embauche;Emploi;XB;Travail;X
 Promesse d’embauche;1082;Promesse d’embauche;Emploi;XB;Travail;X
 Reconversion;1083;Reconversion;Emploi;XB;Travail;X
-Travail;1084;Emploi;Emploi;XB;Travail;X
 Camionneur;1085;Chauffeur;Main d’oeuvre;XC;Travail;X
 Chauffeur;1086;Chauffeur;Main d’oeuvre;XC;Travail;X
 Directeur;1087;Directeur;Main d’oeuvre;XC;Travail;X
-Employé;1088;Main d’oeuvre;Main d’oeuvre;XC;Travail;X
 Géologue;1089;Géologue;Main d’oeuvre;XC;Travail;X
 Humain;1090;Humain;Main d’oeuvre;XC;Travail;X
+Employé;1088;Main d’oeuvre;Main d’oeuvre;XC;Travail;X
 Main d’oeuvre;1091;Main d’oeuvre;Main d’oeuvre;XC;Travail;X
-Mineur;1092;Mineur;Main d’oeuvre;XC;Travail;X
 Ouvrier;1093;Main d’oeuvre;Main d’oeuvre;XC;Travail;X
+Salarié;1097;Main d’oeuvre;Main d’oeuvre;XC;Travail;X
+Travailleur;1099;Main d’oeuvre;Main d’oeuvre;XC;Travail;X
+Mineur;1092;Mineur;Main d’oeuvre;XC;Travail;X
 Personne;1094;Personne;Main d’oeuvre;XC;Travail;X
 Personnel;1095;Personnel;Main d’oeuvre;XC;Travail;X
 Personnel humain;1096;Personnel;Main d’oeuvre;XC;Travail;X
-Salarié;1097;Main d’oeuvre;Main d’oeuvre;XC;Travail;X
 Technicien;1098;Technicien;Main d’oeuvre;XC;Travail;X
-Travailleur;1099;Main d’oeuvre;Main d’oeuvre;XC;Travail;X
 Difficile;1100;Difficile;Travail difficile;XD;Travail;X
 Dur;1101;Difficile;Travail difficile;XD;Travail;X
+Milieu dur;1109;Difficile;Travail difficile;XD;Travail;X
+Travail dur;1113;Difficile;Travail difficile;XD;Travail;X
 Effort;1102;Effort;Travail difficile;XD;Travail;X
 Épuisant;1103;Épuisant;Travail difficile;XD;Travail;X
 Esclavagisme;1104;Esclavagisme;Travail difficile;XD;Travail;X
 Esclave;1105;Esclavagisme;Travail difficile;XD;Travail;X
 Heure;1106;Horaire;Travail difficile;XD;Travail;X
 Horaire;1107;Horaire;Travail difficile;XD;Travail;X
+Quart;1112;Horaire;Travail difficile;XD;Travail;X
 Mal payé;1108;Mal payé;Travail difficile;XD;Travail;X
-Milieu dur;1109;Difficile;Travail difficile;XD;Travail;X
 Monotone;1110;Monotone;Travail difficile;XD;Travail;X
 Productivité;1111;Productivité;Travail difficile;XD;Travail;X
-Quart;1112;Horaire;Travail difficile;XD;Travail;X
-Travail dur;1113;Difficile;Travail difficile;XD;Travail;X
