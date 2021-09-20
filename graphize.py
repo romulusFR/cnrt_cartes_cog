@@ -46,6 +46,18 @@ def extend_matrix_to_nx(matrix, threshold=0.0):
         for row_word in matrix
     }
 
+def cog_map_to_graph(a_map, threshold):
+    graph = nx.Graph(extend_matrix_to_nx(a_map.matrix, threshold))
+    # BUG : est-ce bien le même ordre ? !
+    diagonal = {word: a_map.matrix[word][word] for word in a_map.words}
+
+    # virer les arcs boucles et les isolés
+    graph.remove_edges_from(nx.selfloop_edges(graph))
+    graph.remove_nodes_from(list(nx.isolates(graph)))
+    # pour les noeuds, le poid c'est le nombre de cartes
+    # PAS fait par la diagonale de cooc_matrix
+    nx.set_node_attributes(graph, diagonal, name="weight")
+    return graph
 
 def generate_all_graphs(cog_maps_filenames, thesaurus, weights_map, *, thresholds=None):
     """Genère un ensemble de graphes
@@ -85,20 +97,11 @@ def generate_all_graphs(cog_maps_filenames, thesaurus, weights_map, *, threshold
             for weights_name, weights in weights_map.items():
                 logger.debug(f"{' '*base_indent*2}->{weights_name}")
                 a_map.weights = weights
-                matrix = a_map.matrix
                 export_name = f"{GRAPH_DIR / Path(filename).stem}_{level_name}_{weights_name}"
                 # a_map.dump_matrix(f"{export_name}.csv")
                 for threshold in thresholds:
                     logger.debug(f"{' '*base_indent*3}->{threshold}")
-                    graph = nx.Graph(extend_matrix_to_nx(matrix, threshold))
-                    diagonal = {word: matrix[word][word] for word in a_map.words}
-
-                    # virer les arcs boucles et les isolés
-                    graph.remove_edges_from(nx.selfloop_edges(graph))
-                    graph.remove_nodes_from(list(nx.isolates(graph)))
-                    # pour les noeuds, le poid c'est le nombre de cartes
-                    # PAS fait par la diagonale de cooc_matrix
-                    nx.set_node_attributes(graph, diagonal, name="weight")
+                    graph = cog_map_to_graph(a_map, threshold)
                     # on génère au format graphml et graphviz
                     report[(level_name, threshold, weights_name)] = (graph.number_of_nodes(), graph.number_of_edges())
                     if graph.number_of_nodes() == 0:
@@ -123,7 +126,7 @@ DATASETS = [CM_LA_MINE_FILENAME, CM_FUTUR_FILENAME]
 THE_THESAURUS = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
 THE_WEIGHTS = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
 
-DEMO = True
+DEMO = False
 if __name__ == "__main__":
     if DEMO:
         generate_all_graphs(
@@ -134,8 +137,8 @@ if __name__ == "__main__":
         )
     else:
         generate_all_graphs(
-            cog_maps_filenames=DATASETS,
+            cog_maps_filenames=DATASETS[0:1],
             thesaurus=THE_THESAURUS,
-            weights_map=THE_WEIGHTS,
-            thresholds=[float(n) for n in range(1, 11)],
+            weights_map={"exponentielle" : THE_WEIGHTS["exponentielle"]},
+            thresholds=[float(n) for n in range(2, 10)],
         )
