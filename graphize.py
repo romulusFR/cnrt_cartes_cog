@@ -115,7 +115,7 @@ def generate_all_graphs(cog_maps_filenames, thesaurus, weights_map, *, threshold
 
 
 # dossier et format de sortie
-IMG_FORMAT = "svg"
+IMG_FORMAT = "png"
 GRAPH_DIR = Path("graphs/")
 Path(GRAPH_DIR).mkdir(parents=True, exist_ok=True)
 # nombre minimal de cooc
