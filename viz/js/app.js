@@ -7,9 +7,11 @@ async function addViz(url, containerId) {
         renderer: "svg",
         container: containerId,
         hover: false,
+        logLevel : vega.Debug
     });
     return view.runAsync();
 }
 
+addViz("specs/vega-treemap.json", "#view-treemap");
 addViz("specs/vega-radial.json", "#view-radial");
 addViz("specs/vega-tree.json", "#view-tree");
