@@ -1,16 +1,15 @@
-// "https://vega.github.io/vega/examples/bar-chart.vg.json"
+async function addViz(url, containerId) {
+    const spec = await fetch(url)
+        .then((res) => res.json())
+        .catch(console.error);
 
-const url = "specs/vega-radial.json";
-fetch(url)
-    .then((res) => res.json())
-    .then((spec) => render(spec))
-    .catch((err) => console.error(err));
-
-function render(spec) {
     const view = new vega.View(vega.parse(spec), {
-        renderer: "svg", // renderer (canvas or svg)
-        container: "#tree-view", // parent DOM container
-        hover: false, // enable hover processing
+        renderer: "svg",
+        container: containerId,
+        hover: false,
     });
     return view.runAsync();
 }
+
+addViz("specs/vega-radial.json", "#view-radial");
+addViz("specs/vega-tree.json", "#view-tree");
