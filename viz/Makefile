@@ -1,15 +1,13 @@
 # Notes VIZ
+dist := ../dist/
+spec := specs/
+vega := vg2pdf
+specs := $(wildcard specs/*.json)
+# pdfs := $(patsubst specs/%.json,../dist/%.pdf, $(specs))
+pdfs := $(specs:$(spec)%.json=$(dist)%.pdf)
 
-all: ../dist/thesaurus-sunburst.pdf ../dist/thesaurus-tree.pdf ../dist/thesaurus-radial.pdf ../dist/thesaurus-treemap.pdf
+all : $(pdfs)
 
-../dist/thesaurus-sunburst.pdf: specs/vega-sunburst.json
-	vg2pdf  -b . $< $@
+$(pdfs): $(dist)%.pdf : $(spec)%.json
+	vg2pdf -b . $< $@
 
-../dist/thesaurus-tree.pdf: specs/vega-tree.json
-	vg2pdf  -b . $< $@
-
-../dist/thesaurus-radial.pdf: specs/vega-radial.json
-	vg2pdf  -b . $< $@
-
-../dist/thesaurus-treemap.pdf: specs/vega-treemap.json
-	vg2pdf  -b . $< $@
