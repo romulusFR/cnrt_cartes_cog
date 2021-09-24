@@ -7,13 +7,23 @@ async function addViz(url, containerId) {
         renderer: "svg",
         container: containerId,
         hover: false,
-        logLevel : vega.Debug
+        // logLevel : vega.Debug
     });
     return view.runAsync();
 }
 
+// addViz("specs/vega-sunburst.json", "#view-sunburst");
+// addViz("specs/vega-tree.json", "#view-tree");
+// addViz("specs/vega-radial.json", "#view-radial");
+// addViz("specs/vega-treemap.json", "#view-treemap");
 
-addViz("specs/vega-sunburst.json", "#view-sunburst");
-addViz("specs/vega-tree.json", "#view-tree");
-addViz("specs/vega-radial.json", "#view-radial");
-addViz("specs/vega-treemap.json", "#view-treemap");
+console.info(`vega.version = ${vega.version}`);
+console.info(`vegaLite.version = ${vegaLite.version}`);
+console.info(`vegaEmbed.version = ${vegaEmbed.version}`);
+
+vegaOptions = { actions: { export: true, source: true, compiled: false, editor: false }, theme: "quartz" };
+
+vegaEmbed("#view-sunburst", "specs/vega-sunburst.json", vegaOptions);
+vegaEmbed("#view-radial", "specs/vega-radial.json", vegaOptions);
+vegaEmbed("#view-radial", "specs/vega-radial.json", vegaOptions);
+vegaEmbed("#view-treemap", "specs/vega-treemap.json");

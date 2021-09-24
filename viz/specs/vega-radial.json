@@ -33,11 +33,6 @@
             "bind": { "input": "range", "min": 0, "max": 360, "step": 1 }
         },
         {
-            "name": "layout",
-            "value": "tidy",
-            "bind": { "input": "radio", "options": ["tidy", "cluster"] }
-        },
-        {
             "name": "links",
             "value": "line",
             "bind": {
@@ -61,7 +56,7 @@
                 },
                 {
                     "type": "tree",
-                    "method": { "signal": "layout" },
+                    "method": "tidy",
                     "size": [1, { "signal": "radius" }],
                     "as": ["alpha", "radius", "depth", "children"]
                 },
