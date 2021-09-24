@@ -3,10 +3,10 @@
     "description": "An example of treemap layout for hierarchical data.",
     "width": 1920,
     "height": 1080,
-    "padding": 2.5,
+    "padding": 5,
     "autosize": "none",
     "title": {
-        "text": "Représentation treemap du thesaurus",
+        "text": "Représentation treemap du thesaurus : niveaux grand-mères et mots énoncés",
         "subtitle": "Repris de https://vega.github.io/vega/examples/treemap/",
         "fontSize": 18,
         "subtitlePadding": 5
@@ -15,7 +15,7 @@
       {
         "name": "layout", "value": "squarify",
         "bind": {
-          "input": "select",
+          "input": "binary",
           "options": [
             "squarify",
             "binary",
@@ -42,24 +42,24 @@
           {
             "type": "treemap",
             "field": "weight",
-            "sort": {"field": "value"},
+            "sort": {"field": "weight"},
             "round": true,
             "method": {"signal": "layout"},
             "ratio": {"signal": "aspectRatio"},
             "size": [{"signal": "width"}, {"signal": "height"}]
           },
-          { "type": "filter", "expr": "datum.depth == 1 || datum.depth == 3" }
+          { "type": "filter", "expr": "datum.depth == 1 || datum.depth == 4" }
         ]
       },
       {
         "name": "nodes",
         "source": "tree",
-        "transform": [{ "type": "filter", "expr": "datum.depth != 3" }]
+        "transform": [{ "type": "filter", "expr": "datum.depth != 4" }]
       },
       {
         "name": "leaves",
         "source": "tree",
-        "transform": [{ "type": "filter", "expr": "datum.depth == 3" }]
+        "transform": [{ "type": "filter", "expr": "datum.depth == 4" }]
       }
     ],
   
@@ -96,7 +96,8 @@
         "interactive": true,
         "encode": {
           "enter": {
-            "fill": {"scale": "color", "field": "name"}
+            "fill": {"scale": "color", "field": "name"},
+            "tooltip": {"signal": "datum.name + (datum.weight ? ' (' + datum.weight + ')' : '')"}
           },
           "update": {
             "x": {"field": "x0"},
@@ -111,7 +112,8 @@
         "from": {"data": "leaves"},
         "encode": {
           "enter": {
-            "stroke": {"value": "#fff"}
+            "stroke": {"value": "#fff"},
+            "tooltip": {"signal": "datum.name + (datum.weight ? ' (' + datum.weight + ')' : '')"}
           },
           "update": {
             "x": {"field": "x0"},
@@ -127,7 +129,7 @@
       },
       {
         "type": "text",
-        "from": {"data": "leaves"},
+        "from": {"data": "nodes"},
         "interactive": false,
         "encode": {
           "enter": {
@@ -137,6 +139,26 @@
             "fill": {"value": "#000"},
             "text": {"field": "name"},
             "fontSize": {"scale": "size", "field": "depth"},
+            "fillOpacity": {"scale": "opacity", "field": "depth"}
+          },
+          "update": {
+            "x": {"signal": "0.5 * (datum.x0 + datum.x1)"},
+            "y": {"signal": "0.5 * (datum.y0 + datum.y1)"}
+          }
+        }
+      },
+      {
+        "type": "text",
+        "from": {"data": "leaves"},
+        "interactive": false,
+        "encode": {
+          "enter": {
+            "font": {"value": "Helvetica Neue, Arial"},
+            "align": {"value": "right"},
+            "baseline": {"value": "middle"},
+            "fill": {"value": "#000"},
+            "text": {"field": "name"},
+            "fontSize": {"value": 8},
             "fillOpacity": {"scale": "opacity", "field": "depth"}
           },
           "update": {

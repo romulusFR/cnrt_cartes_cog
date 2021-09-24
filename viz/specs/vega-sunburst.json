@@ -1,0 +1,74 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "description": "An example of a space-fulling radial layout for hierarchical data.",
+    "width": 1024,
+    "height": 1024,
+    "padding": 5,
+    "autosize": "pad",
+    "title": {
+        "text": "Représentation sunbust du thesaurus",
+        "subtitle": "Repris de https://vega.github.io/vega/examples/sunburst/",
+        "fontSize": 18,
+        "subtitlePadding": 5
+    },
+
+    "data": [
+      {
+        "name": "tree",
+        "url": "data/thesaurus.json",
+        "transform": [
+          {
+            "type": "stratify",
+            "key": "id",
+            "parentKey": "parent"
+          },
+          {
+            "type": "partition",
+            "field": "weight",
+            "sort": {"field": "value"},
+            "size": [{"signal": "2 * PI"}, {"signal": "width / 2"}],
+            "as": ["a0", "r0", "a1", "r1", "depth", "children"]
+          }
+        ]
+      }
+    ],
+  
+    "scales": [
+      {
+        "name": "color",
+        "type": "ordinal",
+        "domain": {"data": "tree", "field": "depth"},
+        "range": {"scheme": "tableau20"}
+      }
+    ],
+  
+    "marks": [
+      {
+        "type": "arc",
+        "from": {"data": "tree"},
+        "encode": {
+          "enter": {
+            "x": {"signal": "width / 2"},
+            "y": {"signal": "height / 2"},
+            "fill": {"scale": "color", "field": "depth"},
+            "tooltip": {"signal": "datum.name + (datum.weight ? ' (' + datum.weight + ')' : '')"}
+          },
+          "update": {
+            "startAngle": {"field": "a0"},
+            "endAngle": {"field": "a1"},
+            "innerRadius": {"field": "r0"},
+            "outerRadius": {"field": "r1"},
+            "stroke": {"value": "white"},
+            "strokeWidth": {"value": 1.5},
+            "zindex": {"value": 0}
+          },
+          "hover": {
+            "stroke": {"value": "red"},
+            "strokeWidth": {"value": 2},
+            "zindex": {"value": 1}
+          }
+        }
+      }
+    ]
+  }
+  

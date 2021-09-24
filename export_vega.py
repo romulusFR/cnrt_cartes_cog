@@ -8,16 +8,15 @@ from pathlib import Path
 from dataclasses import asdict, dataclass
 from typing import Tuple, Optional
 import json
+import logging
 
-
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib.colors import LogNorm, PowerNorm, Normalize
-import seaborn as sns
-import networkx as nx
 
 from cog_maps import CogMaps, CM_LA_MINE_FILENAME, THESAURUS_FILENAME, WEIGHTS_MAP_FILENAME, DEFAULT_WEIGHTS, LEVELS
+
+logger = logging.getLogger(f"COGNITIVE_MAP.{__name__}")
+if __name__ == "__main__":
+    logging.basicConfig()
+    logger.setLevel(logging.INFO)
 
 
 thesaurus = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
@@ -27,12 +26,13 @@ mine_map = CogMaps(CM_LA_MINE_FILENAME)
 
 all_maps, report = mine_map.apply_many(thesaurus, with_unknown=False)
 for name, a_map in all_maps.items():
-    a_map.weights = DEFAULT_WEIGHTS
+    a_map.weights = weights["inverse"]
 
 # %%
 
 
 def mk_unique_id():
+    """Generateur d'identifiant"""
     counter = 0
 
     def inner():
@@ -44,9 +44,6 @@ def mk_unique_id():
 
 
 unique_id = mk_unique_id()
-
-
-ROOT_LVL = "racine"
 
 
 @dataclass
@@ -61,14 +58,15 @@ class WordInfo:
     depth: int = 0
 
 
+ROOT_LVL = "racine"
 # la racine
-global_word_map = {(ROOT_LVL, ROOT_LVL): WordInfo(id=0, word=(ROOT_LVL, ROOT_LVL), pid=None, parent=None)}
+global_word_map = {(ROOT_LVL, ROOT_LVL): WordInfo(id=0, word=(ROOT_LVL, ROOT_LVL), pid=None, parent=None, depth=0)}
 lvl_last = LEVELS[-1]
 
 
-depth = 0
-
+depth = 1
 # on commence par le niveau le plus haut : les grand-mères
+print(f"ajout {LEVELS[-1]}")
 for word in thesaurus[lvl_last].values():
     weight = all_maps[lvl_last].occurrences[word]
     global_word_map[(lvl_last, word)] = WordInfo(
@@ -81,7 +79,7 @@ for word in thesaurus[lvl_last].values():
 # base concept
 
 for lvl_w, lvl_p in zip(LEVELS[::-1][1::], LEVELS[::-1]):
-    print(lvl_w, lvl_p)
+    print(f"ajout {lvl_w} -> {lvl_p}")
     depth += 1
     for word, parent in thesaurus[lvl_p].items():
         # print("    ", word, parent)
@@ -111,15 +109,13 @@ print(global_word_map[("gd_mother", "travail")])
 a_wi = global_word_map[("base", "travail")]
 # {detail.word[0]}-
 objects = [
-    {"id": detail.id, "name": f"{detail.word[1]}", "weight": detail.weight, "parent": detail.pid, "depth": detail.depth}
+    {"id": detail.id, "name": f"{detail.word[1]}", "weight": round(detail.weight,2), "parent": detail.pid, "depth": detail.depth}
     for detail in global_word_map.values()
     if detail.weight is not None
 ]
 with open("viz/data/thesaurus.json", mode="w", encoding="utf-8") as fp:
-    json.dump(objects, fp)
-
-
+    json.dump(objects, fp, indent=4, ensure_ascii=False)
 
 
 max_weight = max(detail.weight for detail in global_word_map.values() if detail.weight is not None)
-print(max_weight)
+print(f"max_weight={max_weight}")

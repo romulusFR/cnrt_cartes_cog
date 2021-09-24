@@ -3,7 +3,7 @@
     "description": "An example of Cartesian layouts for a node-link diagram of hierarchical data.",
     "width": 1024,
     "height": 8192,
-    "padding": 10,
+    "padding": 5,
     "title": {
         "text": "Représentation arborescente du thesaurus",
         "subtitle": "Repris de https://vega.github.io/vega/examples/tree-layout/",
@@ -117,8 +117,7 @@
                 "update": {
                     "x": { "field": "x" },
                     "y": { "field": "y" },
-                    "dx": { "signal": "datum.children ? -7 : 7" },
-                    "align": { "signal": "datum.children ? 'right' : 'left'" },
+                    "dx": { "value": 7 },
                     "opacity": { "signal": "labels ? 1 : 0" }
                 }
             }

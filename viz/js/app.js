@@ -12,6 +12,8 @@ async function addViz(url, containerId) {
     return view.runAsync();
 }
 
-addViz("specs/vega-treemap.json", "#view-treemap");
-addViz("specs/vega-radial.json", "#view-radial");
+
+addViz("specs/vega-sunburst.json", "#view-sunburst");
 addViz("specs/vega-tree.json", "#view-tree");
+addViz("specs/vega-radial.json", "#view-radial");
+addViz("specs/vega-treemap.json", "#view-treemap");
