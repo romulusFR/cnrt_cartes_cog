@@ -1,6 +1,6 @@
 // "https://vega.github.io/vega/examples/bar-chart.vg.json"
 
-const url = "specs/vega-tree.json";
+const url = "specs/vega-radial.json";
 fetch(url)
     .then((res) => res.json())
     .then((spec) => render(spec))
