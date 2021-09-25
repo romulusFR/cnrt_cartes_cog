@@ -1,0 +1,35 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Histogram using vega-lite.",
+    "width": 512,
+    "height": 512,
+    "padding": 5,
+    "autosize": "pad",
+    "title": {
+        "text": "Histogramme de la fréquence des mots dans les cartes la mine",
+        "subtitle": "Repris de https://vega.github.io/vega-lite/examples/",
+        "fontSize": 18,
+        "subtitlePadding": 5
+    },
+    "data": { "url": "data/thesaurus.json" },
+    "transform": [
+        { "filter": "datum.depth >= 3" },
+        {
+            "calculate": "datum.depth == 4 ? '4-énoncés' : (datum.depth ==  3 ? '3-concepts' : (datum.depth == 2 ? '2-mères' : ('1-grands-mères')))",
+            "as": "level"
+        },
+        { "calculate": "log(datum.weight)", "as": "logWeight" }
+    ],
+
+    "mark": "bar",
+    "encoding": {
+        "facet": { "field": "level", "columns": 2, "title": "Nombre de mots fonction du nombre d'occurrences (Zipf)" },
+        "x": {
+            "bin": { "maxbins": 20 },
+            "type": "ordinal",
+            "field": "logWeight",
+            "title": "Nombre d'occurences (log)"
+        },
+        "y": { "aggregate": "count", "scale": { "type": "log" }, "title": "Nombre de mots (log)" }
+    }
+}
