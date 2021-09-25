@@ -15,7 +15,7 @@
         "bind": {"input": "range", "min":-100, "max": 10, "step": 1} },
       { "name": "linkDistance", "value": 30,
         "bind": {"input": "range", "min": 5, "max": 100, "step": 1} },
-      { "name": "static", "value": true,
+      { "name": "static", "value": false,
         "bind": {"input": "checkbox"} },
       {
         "description": "State variable for active node fix status.",
