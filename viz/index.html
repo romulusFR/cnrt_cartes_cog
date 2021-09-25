@@ -32,12 +32,23 @@
         <h1>Visualisation du thésaurus avec Vega</h1>
 
         <p>
-            On représente graphiquement les quatres niveaux du thésauraus avec
-            <a href="https://vega.github.io/vega/">https://vega.github.io/vega/</a> à partir des données calculées en
-            Python. Ici, les cartes <em>la mine</em> avec le système de poids inverse (1/n où n est la position dans la
-            carte).
+            On représente graphiquement les quatres niveaux (<em>mots énoncés</em> - code 4, <em>mots concepts</em> -
+            code 3, <em>mots mères</em> - code 2, <em>mots grands-mères</em> - code 1) du thésaurus (<a
+                href="https://github.com/romulusFR/cnrt_cartes_cog/blob/main/input/thesaurus.csv"
+                >source</a
+            >) avec <a href="https://vega.github.io/vega/">https://vega.github.io/vega/</a> à partir des données
+            calculées en Python. Pour déterminer les poids des mots, on utilise ici les quatres cartes obtenues à partir
+            des mots-énoncés de <em>la mine</em> (<a
+                href="https://github.com/romulusFR/cnrt_cartes_cog/blob/main/input/cartes_cog_la_mine.csv"
+                >source</a
+            >) avec le système de poids inverse de la forme \(1/n\) où \(n\) est la position dans la carte (<a
+                href="https://github.com/romulusFR/cnrt_cartes_cog/blob/main/input/coefficients.csv"
+                >source</a
+            >).
         </p>
 
+        La liste des visualisations disponibles (passer la souris sur les visualisations pour avoir les info-bulles avec
+        quelques détails) :
         <ul>
             <li>
                 <a href="#view-sunburst">vue <i>sunburst</i></a>
@@ -52,6 +63,9 @@
                 <a href="#view-treemap">vue <i>treemap</i></a>
             </li>
             <li>
+                <a href="#view-circle">vue <i>circle-packing</i></a>
+            </li>
+            <li>
                 <a href="#view-hist">vue histogramme</a>
             </li>
         </ul>
@@ -60,6 +74,7 @@
         <div id="view-tree"></div>
         <div id="view-radial"></div>
         <div id="view-treemap"></div>
+        <div id="view-circle"></div>
         <div id="view-hist"></div>
 
         <p>

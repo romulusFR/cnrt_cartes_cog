@@ -31,5 +31,6 @@ vegaEmbed("#view-sunburst", "specs/vega-sunburst.json", vegaOptions);
 vegaEmbed("#view-tree", "specs/vega-tree.json", vegaOptions);
 vegaEmbed("#view-radial", "specs/vega-radial.json", vegaOptions);
 vegaEmbed("#view-treemap", "specs/vega-treemap.json", vegaOptions);
+vegaEmbed("#view-circle", "specs/vega-circle.json", vegaOptions);
 vegaEmbed("#view-hist", "specs/vega-lite-hist.json", vegaOptions);
 
