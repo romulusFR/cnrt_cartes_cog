@@ -39,7 +39,7 @@
                 },
                 {
                     "type": "treemap",
-                    "field": "weight",
+                    "field": "lweight",
                     "sort": { "field": "weight" },
                     "round": true,
                     "method": { "signal": "layout" },
@@ -110,8 +110,8 @@
             "interactive": true,
             "encode": {
                 "enter": {
-                    "fill": { "scale": "color", "field": "name" },
-                    "tooltip": { "signal": "datum.name + (datum.weight ? ' (' + datum.weight + ')' : '')" }
+                    "fill": { "scale": "color", "field": "name" }
+                    
                 },
                 "update": {
                     "x": { "field": "x0" },
@@ -127,7 +127,7 @@
             "encode": {
                 "enter": {
                     "stroke": { "value": "#fff" },
-                    "tooltip": { "signal": "datum.name + (datum.weight ? ' (' + datum.weight + ')' : '')" }
+                    "tooltip": { "signal": "datum.name + '@' + datum.depth + ' (' + datum.lweight + ')'" }
                 },
                 "update": {
                     "x": { "field": "x0" },

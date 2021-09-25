@@ -50,28 +50,30 @@ unique_id = mk_unique_id()
 class WordInfo:
     """Classe pour l'index de tous les mots"""
 
-    id: int
+    id: int # pylint: disable=invalid-name
     word: Tuple[str, str]
     pid: Optional[int]
     parent: Optional[Tuple[str, str]]
     weight: float = 0.0
     depth: int = 0
 
-
-ROOT_LVL = "racine"
 # la racine
-global_word_map = {(ROOT_LVL, ROOT_LVL): WordInfo(id=0, word=(ROOT_LVL, ROOT_LVL), pid=None, parent=None, depth=0)}
-lvl_last = LEVELS[-1]
+ROOT_NAME = "racine"
+LVL_LAST = LEVELS[-1]
+global_word_map = {(ROOT_NAME, ROOT_NAME): WordInfo(id=0, word=(ROOT_NAME, ROOT_NAME), pid=None, parent=None, depth=0)}
 
-
-depth = 1
+ROOT_WEIGHT = 0
+DEPTH = 1
 # on commence par le niveau le plus haut : les grand-mères
 print(f"ajout {LEVELS[-1]}")
-for word in thesaurus[lvl_last].values():
-    weight = all_maps[lvl_last].occurrences[word]
-    global_word_map[(lvl_last, word)] = WordInfo(
-        id=unique_id(), word=(lvl_last, word), pid=0, parent=(ROOT_LVL, ROOT_LVL), weight=weight, depth=depth
+for word in set(thesaurus[LVL_LAST].values()):
+    weight = all_maps[LVL_LAST].occurrences[word]
+    ROOT_WEIGHT += weight
+    global_word_map[(LVL_LAST, word)] = WordInfo(
+        id=unique_id(), word=(LVL_LAST, word), pid=0, parent=(ROOT_NAME, ROOT_NAME), weight=weight, depth=DEPTH
     )
+
+global_word_map[(ROOT_NAME, ROOT_NAME)].weight=ROOT_WEIGHT
 
 # du plus général au plus précis :
 # mother gd_mother
@@ -80,7 +82,7 @@ for word in thesaurus[lvl_last].values():
 
 for lvl_w, lvl_p in zip(LEVELS[::-1][1::], LEVELS[::-1]):
     print(f"ajout {lvl_w} -> {lvl_p}")
-    depth += 1
+    DEPTH += 1
     for word, parent in thesaurus[lvl_p].items():
         # print("    ", word, parent)
         # print("    ", global_word_map[(lvl_p, parent)].pid)
@@ -91,7 +93,7 @@ for lvl_w, lvl_p in zip(LEVELS[::-1][1::], LEVELS[::-1]):
             pid=global_word_map[(lvl_p, parent)].id,
             parent=(lvl_p, parent),
             weight=weight,
-            depth=depth,
+            depth=DEPTH,
         )
 
 
@@ -112,6 +114,7 @@ objects = [
     {
         "id": detail.id,
         "name": f"{detail.word[1]}",
+        "lweight": round(detail.weight, 2) if detail.depth==4 else None,
         "weight": round(detail.weight, 2),
         "parent": detail.pid,
         "depth": detail.depth,
@@ -125,7 +128,7 @@ objects = [
 
 
 def verif_sum(lvl_1_word):
-
+    """Vérifie si la somme des foils vaut bien celle du père (aux arrondis float près)"""
     ref = global_word_map[("gd_mother", lvl_1_word)]
 
     sons = [
