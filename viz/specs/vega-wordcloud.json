@@ -1,0 +1,69 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "description": "A word cloud visualization depicting Vega research paper abstracts.",
+    "padding": 5,
+    "autosize": "pad",
+    "title": {
+        "text": "Représentation wordcloud du thesaurus : niveau mots concept pour poids inverses > 1.0 ",
+        "subtitle": "Repris de https://vega.github.io/vega/examples/word-cloud/",
+        "fontSize": 18,
+        "subtitlePadding": 5
+    },
+    "data": [
+        {
+            "name": "table",
+            "url": "data/thesaurus.json",
+            "transform": [
+                { "type": "filter", "expr": "datum.depth == 3 && datum.weight > 1.0" },
+                {
+                    "type": "formula",
+                    "as": "angle",
+                    "expr": "[-30, 0, 30][~~(random() * 3)]"
+                }
+            ]
+        }
+    ],
+
+    "scales": [
+        {
+            "name": "color",
+            "type": "ordinal",
+            "domain": { "data": "table", "field": "name" },
+            "range": ["#d5a928", "#652c90", "#939597"]
+        }
+    ],
+
+    "marks": [
+        {
+            "type": "text",
+            "from": { "data": "table" },
+            "encode": {
+                "enter": {
+                    "text": { "field": "name" },
+                    "align": { "value": "center" },
+                    "baseline": { "value": "alphabetic" },
+                    "fill": { "scale": "color", "field": "name" }
+                },
+                "update": {
+                    "fillOpacity": { "value": 1 }
+                },
+                "hover": {
+                    "fillOpacity": { "value": 0.5 }
+                }
+            },
+            "transform": [
+                {
+                    "type": "wordcloud",
+                    "size": [1024, 768],
+                    "text": { "field": "name" },
+                    "rotate": { "field": "datum.angle" },
+                    "font": "Helvetica Neue, Arial",
+                    "fontSize": { "field": "datum.weight" },
+
+                    "fontSizeRange": [6, 60],
+                    "padding": 2
+                }
+            ]
+        }
+    ]
+}

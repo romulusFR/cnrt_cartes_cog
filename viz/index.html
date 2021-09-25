@@ -63,6 +63,9 @@
                 <a href="#view-circle">vue <i>circle-packing</i></a>
             </li>
             <li>
+                <a href="#view-wordcloud">vue <i>wordcloud</i></a>
+            </li>
+            <li>
                 <a href="#view-hist">vue histogramme</a>
             </li>
         </ul>
@@ -72,15 +75,16 @@
         <div id="view-radial"></div>
         <div id="view-treemap"></div>
         <div id="view-circle"></div>
+        <div id="view-wordcloud"></div>
         <div id="view-hist"></div>
 
         <p>
             Intuitivement, avec l'échelle log-log, on a une relation \(\log(c) = a*\log(w) + b\) avec \(a < 0 \), où
             \(c\) est le nombre de mots et \(w\) le nombre d'occurrence, ce qui indiquerait une
-            <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipf's law</a>. Ici c'est pour un système de poids <em>inverse</em>, est-ce que la loi résiste avec d'autres systèmes de positions pondérées ?
-
-            \begin{align} c &= \exp(\log(c))\\ &= \exp(a*\log(w) + b)\\ &= \exp(b)*\exp(a*\log(w))\\ &=
-            \exp(b)*\exp(\log(w))^a\\ &= \exp(b)*w^a \end{align}
+            <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipf's law</a>. Ici c'est pour un système de poids
+            <em>inverse</em>, est-ce que la loi résiste avec d'autres systèmes de positions pondérées ? \begin{align} c
+            &= \exp(\log(c))\\ &= \exp(a*\log(w) + b)\\ &= \exp(b)*\exp(a*\log(w))\\ &= \exp(b)*\exp(\log(w))^a\\ &=
+            \exp(b)*w^a \end{align}
         </p>
     </body>
 </html>
