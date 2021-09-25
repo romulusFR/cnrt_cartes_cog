@@ -12,6 +12,7 @@ from cog_maps import (
     THESAURUS_FILENAME,
     WEIGHTS_MAP_FILENAME,
     OUTPUT_DIR,
+    DEFAULT_WEIGHTS_NAME,
     generate_results,
 )
 
@@ -42,6 +43,13 @@ def get_parser():
         action="store",
         default=WEIGHTS_MAP_FILENAME,
         help=f"fichier csv des pondérations par position, au format (pos; poids A; poids B, ...), par défaut '{WEIGHTS_MAP_FILENAME}'",
+    )
+    res.add_argument(
+        "--weights-name",
+        "-n",
+        action="store",
+        default=DEFAULT_WEIGHTS_NAME,
+        help=f"nom de la pondération à utiliser, par défaut '{DEFAULT_WEIGHTS_NAME}'",
     )
     res.add_argument(
         "--output",
@@ -95,4 +103,4 @@ if __name__ == "__main__":
         logger.critical(f"Le fichier {args.weights} est introuvable")
         sys.exit(1)
 
-    generate_results(args.output, args.maps, args.thesaurus, args.weights, args.unknown)
+    generate_results(output_dir=args.output, cog_maps_filename=args.maps, thesaurus_filename=args.thesaurus, weights_filename=args.weights, with_unknown=args.unknown, weights_name=args.weights_name)

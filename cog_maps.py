@@ -493,6 +493,7 @@ def generate_results(
     thesaurus_filename: StringOrPath,
     weights_filename: StringOrPath,
     with_unknown: bool = False,
+    weights_name:str = DEFAULT_WEIGHTS_NAME,
 ) -> list[Tuple[Level, CogMaps]]:
     """ "Wrapper principal utilisé par la CLI et la GUI"""
     logger.debug(f"output_dir = {output_dir}")
@@ -522,8 +523,8 @@ def generate_results(
         a_map.dump(get_name(a_lvl))
         a_map.dump_occurrences_many(get_name(f"{a_lvl}_{occurrences_suffix}"), the_weights)
         a_map.dump_occurrences_in_position(get_name(f"{a_lvl}_{positions_suffix}"))
-        a_map.weights = the_weights[DEFAULT_WEIGHTS_NAME]
-        a_map.dump_matrix(get_name(f"{a_lvl}_{matrix_suffix}_{DEFAULT_WEIGHTS_NAME}"))
+        a_map.weights = the_weights[weights_name]
+        a_map.dump_matrix(get_name(f"{a_lvl}_{matrix_suffix}_{weights_name}"))
 
     for a_lvl, a_report in all_reports.items():
         a_report.dump(get_name(f"{a_lvl}_{unknown_suffix}"))
