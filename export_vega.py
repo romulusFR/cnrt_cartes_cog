@@ -109,10 +109,40 @@ print(global_word_map[("gd_mother", "travail")])
 a_wi = global_word_map[("base", "travail")]
 # {detail.word[0]}-
 objects = [
-    {"id": detail.id, "name": f"{detail.word[1]}", "weight": round(detail.weight,2), "parent": detail.pid, "depth": detail.depth}
+    {
+        "id": detail.id,
+        "name": f"{detail.word[1]}",
+        "weight": round(detail.weight, 2),
+        "parent": detail.pid,
+        "depth": detail.depth,
+    }
     for detail in global_word_map.values()
     if detail.weight is not None
 ]
+# %%
+
+# vérification de la somme du nickel de mere à gd mere
+
+
+def verif_sum(lvl_1_word):
+
+    ref = global_word_map[("gd_mother", lvl_1_word)]
+
+    sons = [
+        global_word_map[("mother", word)] for word, parent in thesaurus["gd_mother"].items() if parent == lvl_1_word
+    ]
+
+    print("ref.weight =", ref.weight)
+    print("sons.weight =", sum(map(lambda x: x.weight, sons)))
+    print("sons =", list(map(lambda x: x.word[1], sons)))
+
+verif_sum("nickel")
+verif_sum("travail")
+
+# verdict : OK
+
+# %%
+
 with open("viz/data/thesaurus.json", mode="w", encoding="utf-8") as fp:
     json.dump(objects, fp, indent=4, ensure_ascii=False)
 
