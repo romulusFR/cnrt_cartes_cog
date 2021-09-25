@@ -4,11 +4,6 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <!-- <script src="js/vega@5.js" defer></script> -->
-
-        <!-- <script src="https://vega.github.io/vega/vega.min.js"></script> -->
-        <!-- <script src="https://cdn.jsdelivr.net/npm/vega@5"></script> -->
-
         <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
         <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
         <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -18,14 +13,16 @@
             async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
         ></script>
-
         <script src="js/app.js" defer></script>
+
         <link href="css/app.css" rel="stylesheet" />
+        <!-- la css de GH Pages -->
+        <link
+            rel="stylesheet"
+            href="/cnrt_cartes_cog/assets/css/style.css?v=2984d6189ce6f01afa017d6f566a24ced6a21c7c"
+        />
 
         <link rel="icon" href="data:;base64,=" />
-        <!-- la css de GH Pages -->
-        <!-- <link rel="stylesheet" href="/cnrt_cartes_cog/assets/css/style.css?v=2984d6189ce6f01afa017d6f566a24ced6a21c7c"> -->
-
         <title>Demo vizualisation thesaurus</title>
     </head>
     <body>
@@ -80,7 +77,7 @@
         <p>
             Intuitivement, avec l'échelle log-log, on a une relation \(\log(c) = a*\log(w) + b\) avec \(a < 0 \), où
             \(c\) est le nombre de mots et \(w\) le nombre d'occurrence, ce qui indiquerait une
-            <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipf's law</a>
+            <a href="https://en.wikipedia.org/wiki/Zipf%27s_law">Zipf's law</a>. Ici c'est pour un système de poids <em>inverse</em>, est-ce que la loi résiste avec d'autres systèmes de positions pondérées ?
 
             \begin{align} c &= \exp(\log(c))\\ &= \exp(a*\log(w) + b)\\ &= \exp(b)*\exp(a*\log(w))\\ &=
             \exp(b)*\exp(\log(w))^a\\ &= \exp(b)*w^a \end{align}

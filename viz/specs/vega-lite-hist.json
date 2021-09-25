@@ -18,18 +18,31 @@
             "calculate": "datum.depth == 4 ? '4-énoncés' : (datum.depth ==  3 ? '3-concepts' : (datum.depth == 2 ? '2-mères' : ('1-grands-mères')))",
             "as": "level"
         },
-        { "calculate": "log(datum.weight)", "as": "logWeight" }
+        { "calculate": "log(datum.weight)/log(10)", "as": "log_weight" },
+        {
+            "bin": { "maxbins": 30 },
+            "field": "log_weight",
+            "as": "bin_log_weight"
+        },
+        {
+            "calculate": "pow(10, datum.bin_log_weight)",
+            "as": "x1"
+        },
+        {
+            "calculate": "pow(10, datum.bin_log_weight)",
+            "as": "x2"
+        }
     ],
 
-    "mark": "bar",
+    "mark": { "type": "point" },
     "encoding": {
         "facet": { "field": "level", "columns": 2, "title": "Nombre de mots fonction du nombre d'occurrences (Zipf)" },
         "x": {
-            "bin": { "maxbins": 20 },
-            "type": "ordinal",
-            "field": "logWeight",
-            "title": "Nombre d'occurences (log)"
+            "scale": { "type": "log", "base": 10 },
+            "field": "x1",
+            "title": "Nombre d'occurences (log_10)"
         },
-        "y": { "aggregate": "count", "scale": { "type": "log" }, "title": "Nombre de mots (log)" }
+        "y": { "aggregate": "count", "scale": { "type": "log" }, "title": "Nombre de mots (log_10)" },
+        "tooltip": { "field": "__count", "title": "Nombre de mots" }
     }
 }
