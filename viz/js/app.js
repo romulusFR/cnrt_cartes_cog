@@ -34,3 +34,4 @@ vegaEmbed("#view-treemap", "specs/vega-treemap.json", vegaOptions);
 vegaEmbed("#view-circle", "specs/vega-circle.json", vegaOptions);
 vegaEmbed("#view-wordcloud", "specs/vega-wordcloud.json", vegaOptions);
 vegaEmbed("#view-hist", "specs/vega-lite-hist.json", vegaOptions);
+vegaEmbed("#view-lite-heatmap", "specs/vega-lite-heatmap.json", vegaOptions);
