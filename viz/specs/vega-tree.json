@@ -96,7 +96,10 @@
             "encode": {
                 "enter": {
                     "size": { "value": 100 },
-                    "stroke": { "value": "#fff" }
+                    "stroke": { "value": "#fff" },
+                    "tooltip": {
+                        "signal": "datum.name + '@' + datum.depth + (datum.weight?' (' + datum.weight + ')':'') "
+                    }
                 },
                 "update": {
                     "x": { "field": "x" },

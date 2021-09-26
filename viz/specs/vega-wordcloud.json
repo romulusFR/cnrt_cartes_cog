@@ -42,7 +42,8 @@
                     "text": { "field": "name" },
                     "align": { "value": "center" },
                     "baseline": { "value": "alphabetic" },
-                    "fill": { "scale": "color", "field": "name" }
+                    "fill": { "scale": "color", "field": "name" },
+                    "tooltip": { "signal": "datum.weight" }
                 },
                 "update": {
                     "fillOpacity": { "value": 1 }
@@ -59,7 +60,6 @@
                     "rotate": { "field": "datum.angle" },
                     "font": "Helvetica Neue, Arial",
                     "fontSize": { "field": "datum.weight" },
-
                     "fontSizeRange": [6, 60],
                     "padding": 2
                 }

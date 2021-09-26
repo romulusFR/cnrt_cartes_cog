@@ -12,56 +12,58 @@
         "subtitlePadding": 5
     },
     "data": [
-      {
-        "name": "tree",
-        "url": "data/thesaurus.json",
-        "transform": [
-          {
-            "type": "stratify",
-            "key": "id",
-            "parentKey": "parent"
-          },
-          {
-            "type": "pack",
-            "field": "weight",
-            "sort": {"field": "value"},
-            "size": [{"signal": "width"}, {"signal": "height"}]
-          }
-        ]
-      }
-    ],
-  
-    "scales": [
-      {
-        "name": "color",
-        "type": "ordinal",
-        "domain": {"data": "tree", "field": "depth"},
-        "range": {"scheme": "tableau20"}
-      }
-    ],
-  
-    "marks": [
-      {
-        "type": "symbol",
-        "from": {"data": "tree"},
-        "encode": {
-          "enter": {
-            "shape": {"value": "circle"},
-            "fill": {"scale": "color", "field": "depth"},
-            "tooltip": { "signal": "datum.name + '@' + datum.depth + (datum.weight?' (' + datum.weight + ')':'') " }
-          },
-          "update": {
-            "x": {"field": "x"},
-            "y": {"field": "y"},
-            "size": {"signal": "4 * datum.r * datum.r"},
-            "stroke": {"value": "white"},
-            "strokeWidth": {"value": 0.5}
-          },
-          "hover": {
-            "stroke": {"value": "red"},
-            "strokeWidth": {"value": 2}
-          }
+        {
+            "name": "tree",
+            "url": "data/thesaurus.json",
+            "transform": [
+                {
+                    "type": "stratify",
+                    "key": "id",
+                    "parentKey": "parent"
+                },
+                {
+                    "type": "pack",
+                    "field": "weight",
+                    "sort": { "field": "value" },
+                    "size": [{ "signal": "width" }, { "signal": "height" }]
+                }
+            ]
         }
-      }
+    ],
+
+    "scales": [
+        {
+            "name": "color",
+            "type": "ordinal",
+            "domain": { "data": "tree", "field": "depth" },
+            "range": { "scheme": "tableau20" }
+        }
+    ],
+
+    "marks": [
+        {
+            "type": "symbol",
+            "from": { "data": "tree" },
+            "encode": {
+                "enter": {
+                    "shape": { "value": "circle" },
+                    "fill": { "scale": "color", "field": "depth" },
+                    "tooltip": {
+                        "signal": "datum.name + '@' + datum.depth + (datum.weight?' (' + datum.weight + ')':'') "
+                    }
+                },
+                "update": {
+                    "x": { "field": "x" },
+                    "y": { "field": "y" },
+                    "size": { "signal": "4 * datum.r * datum.r" },
+                    "stroke": { "value": "white" },
+                    "strokeWidth": { "value": 0.5 }
+                },
+                "hover": {
+                    "stroke": { "value": "red" },
+                    "strokeWidth": { "value": 2 }
+                }
+            }
+        }
     ]
-  }
+}
