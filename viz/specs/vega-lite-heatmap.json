@@ -14,6 +14,11 @@
     "height": { "step": 10 },
     "params": [
         {
+            "name": "dynamic",
+            "value": false,
+            "bind": {"input": "checkbox"}
+        },
+        {
             "name": "level",
             "value": "mother",
             "bind": { "input": "select", "options": ["base", "concept", "mother", "gd_mother"] }
@@ -31,7 +36,7 @@
         { "filter": "datum.lvl == level" },
         { "calculate": "datum[normalisation]", "as": "chosen" },
         { "calculate": "datum.weight >= seuil", "as": "kept" },
-        { "filter": "true" }
+        { "filter": "!dynamic || datum.kept" }
     ],
     "mark": {
         "type": "rect",
