@@ -9,6 +9,7 @@ from dataclasses import asdict, dataclass
 from typing import Tuple, Optional
 import json
 import logging
+import math
 
 
 from cog_maps import (
@@ -184,14 +185,25 @@ concept_map = all_maps[CONCEPT_LVL]
 #         # print(src, dst, weight)
 #         pass
 
+# matrix_obj = [
+#     {"lvl":lvl, "src": src, "dst": dst, "weight": round(all_maps[lvl].matrix[src][dst],2)}
+#     for lvl in LEVELS[::]
+#     for src in all_maps[lvl].words
+#     for dst in all_maps[lvl].words
+#     if src != dst
+#     # if weight > 0.0
+# ]
+
 matrix_obj = [
-    {"src": src, "dst": dst, "weight": round(weight,2)}
-    for src, out in concept_map.matrix.items()
+    {"lvl":lvl, "src": src, "dst": dst, "weight": round(weight,2), "normal_weight": round(weight/sum(out.values()),2)}
+    for lvl in LEVELS[::]
+    for src, out in all_maps[lvl].matrix.items()
     for dst, weight in out.items()
-    if weight > 0.0
+    if src != dst
+    # if weight > 0.0
 ]
 
 PRINT_MATRIX = True
 if PRINT_MATRIX:
-    with open("viz/data/matrix_concept_inverse.json", mode="w", encoding="utf-8") as fp:
+    with open("viz/data/matrix_inverse.json", mode="w", encoding="utf-8") as fp:
         json.dump(matrix_obj, fp, indent=4, ensure_ascii=False)

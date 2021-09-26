@@ -27,7 +27,7 @@ vegaOptions = {
     // theme: "quartz",
 };
 
-vegaEmbed("#view-heatmap", "specs/vega-heatmap.json", vegaOptions);
+// vegaEmbed("#view-heatmap", "specs/vega-heatmap.json", vegaOptions);
 vegaEmbed("#view-lite-heatmap", "specs/vega-lite-heatmap.json", vegaOptions);
-vegaEmbed("#view-force-directed", "specs/vega-force-directed.json", vegaOptions);
-vegaEmbed("#view-edge-bundling", "specs/vega-edge-bundling.json", vegaOptions);
+// vegaEmbed("#view-force-directed", "specs/vega-force-directed.json", vegaOptions);
+// vegaEmbed("#view-edge-bundling", "specs/vega-edge-bundling.json", vegaOptions);
