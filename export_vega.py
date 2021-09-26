@@ -11,7 +11,18 @@ import json
 import logging
 
 
-from cog_maps import CogMaps, CM_LA_MINE_FILENAME, THESAURUS_FILENAME, WEIGHTS_MAP_FILENAME, DEFAULT_WEIGHTS, LEVELS
+from cog_maps import (
+    CogMaps,
+    CM_LA_MINE_FILENAME,
+    THESAURUS_FILENAME,
+    WEIGHTS_MAP_FILENAME,
+    DEFAULT_WEIGHTS,
+    LEVELS,
+    BASE_LVL,
+    CONCEPT_LVL,
+    MOTHER_LVL,
+    GD_MOTHER_LVL,
+)
 
 logger = logging.getLogger(f"COGNITIVE_MAP.{__name__}")
 if __name__ == "__main__":
@@ -50,12 +61,13 @@ unique_id = mk_unique_id()
 class WordInfo:
     """Classe pour l'index de tous les mots"""
 
-    id: int # pylint: disable=invalid-name
+    id: int  # pylint: disable=invalid-name
     word: Tuple[str, str]
     pid: Optional[int]
     parent: Optional[Tuple[str, str]]
     weight: float = 0.0
     depth: int = 0
+
 
 # la racine
 ROOT_NAME = "racine"
@@ -73,7 +85,7 @@ for word in set(thesaurus[LVL_LAST].values()):
         id=unique_id(), word=(LVL_LAST, word), pid=0, parent=(ROOT_NAME, ROOT_NAME), weight=weight, depth=DEPTH
     )
 
-global_word_map[(ROOT_NAME, ROOT_NAME)].weight=ROOT_WEIGHT
+global_word_map[(ROOT_NAME, ROOT_NAME)].weight = ROOT_WEIGHT
 
 # du plus général au plus précis :
 # mother gd_mother
@@ -97,10 +109,10 @@ for lvl_w, lvl_p in zip(LEVELS[::-1][1::], LEVELS[::-1]):
         )
 
 
-print(global_word_map[("base", "travail")])
-print(global_word_map[("concept", "emploi")])
-print(global_word_map[("mother", "emploi")])
-print(global_word_map[("gd_mother", "travail")])
+print(global_word_map[(BASE_LVL, "travail")])
+print(global_word_map[(CONCEPT_LVL, "emploi")])
+print(global_word_map[(MOTHER_LVL, "emploi")])
+print(global_word_map[(GD_MOTHER_LVL, "travail")])
 
 
 # le format ciblé
@@ -108,13 +120,13 @@ print(global_word_map[("gd_mother", "travail")])
 # { "id": 2, "relief": 0.37859110586383315, "name": "Credit card", "parent": 1, "size": 2541 }
 
 
-a_wi = global_word_map[("base", "travail")]
+a_wi = global_word_map[(BASE_LVL, "travail")]
 # {detail.word[0]}-
 objects = [
     {
         "id": detail.id,
         "name": f"{detail.word[1]}",
-        "lweight": round(detail.weight, 2) if detail.depth==4 else None,
+        "lweight": round(detail.weight, 2) if detail.depth == 4 else None,
         "weight": round(detail.weight, 2),
         "parent": detail.pid,
         "depth": detail.depth,
@@ -132,12 +144,13 @@ def verif_sum(lvl_1_word):
     ref = global_word_map[("gd_mother", lvl_1_word)]
 
     sons = [
-        global_word_map[("mother", word)] for word, parent in thesaurus["gd_mother"].items() if parent == lvl_1_word
+        global_word_map[("mother", word)] for word, parent in thesaurus[GD_MOTHER_LVL].items() if parent == lvl_1_word
     ]
 
     print("ref.weight =", ref.weight)
     print("sons.weight =", sum(map(lambda x: x.weight, sons)))
     print("sons =", list(map(lambda x: x.word[1], sons)))
+
 
 verif_sum("nickel")
 verif_sum("travail")
@@ -145,10 +158,40 @@ verif_sum("travail")
 # verdict : OK
 
 # %%
-
-with open("viz/data/thesaurus.json", mode="w", encoding="utf-8") as fp:
-    json.dump(objects, fp, indent=4, ensure_ascii=False)
+PRINT_THESAURUS = False
+if PRINT_THESAURUS:
+    with open("viz/data/thesaurus.json", mode="w", encoding="utf-8") as fp:
+        json.dump(objects, fp, indent=4, ensure_ascii=False)
 
 
 max_weight = max(detail.weight for detail in global_word_map.values() if detail.weight is not None)
 print(f"max_weight={max_weight}")
+
+
+# %%
+
+# export de la matrice
+
+# le format ciblé
+# { "src": "pollution", "dst": "patate", "weight": 2.32113 }
+
+
+concept_map = all_maps[CONCEPT_LVL]
+
+
+# for src, out in concept_map.matrix.items():
+#     for dst, weight in out.items():
+#         # print(src, dst, weight)
+#         pass
+
+matrix_obj = [
+    {"src": src, "dst": dst, "weight": round(weight,2)}
+    for src, out in concept_map.matrix.items()
+    for dst, weight in out.items()
+    if weight > 0.0
+]
+
+PRINT_MATRIX = True
+if PRINT_MATRIX:
+    with open("viz/data/matrix_concept_inverse.json", mode="w", encoding="utf-8") as fp:
+        json.dump(matrix_obj, fp, indent=4, ensure_ascii=False)
