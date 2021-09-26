@@ -3,44 +3,52 @@
     "data": {
         "url": "data/matrix_inverse.json"
     },
+
     "title": "Heatmap des cooccurrences avec poids 'inverse'",
     "config": {
-        "view": {
-            "strokeWidth": 0,
-            "step": 6
-        },
         "axis": {
             "domain": false
         }
     },
-    "mark": { "type": "rect", "tooltip": { "content": "data" } },
+    "width": { "step": 10 },
+    "height": { "step": 10 },
     "params": [
-        { "name": "seuil", "value": 0.0, "bind": { "input": "range", "min": 0.0, "max": 100.0, "step": 0.5 } },
-        { "name": "seuil_rel", "value": 0.0, "bind": { "input": "range", "min": 0.0, "max": 0.20, "step": 0.01 } },
         {
             "name": "level",
             "value": "mother",
             "bind": { "input": "select", "options": ["base", "concept", "mother", "gd_mother"] }
         },
+        { "name": "taille", "value": 10, "bind": { "input": "range", "min": 4, "max": 20, "step": 1 } },
+        { "name": "seuil", "value": 0.0, "bind": { "input": "range", "min": 0.0, "max": 100.0, "step": 0.5 } },
+
         {
             "name": "normalisation",
             "value": "weight",
             "bind": { "input": "select", "options": ["log_weight", "weight", "normal_weight"] }
         }
     ],
-    "transform": [{ "filter": "datum.lvl == level" }, {"calculate": "datum[normalisation]", "as" : "chosen"}],
+    "transform": [
+        { "filter": "datum.lvl == level" },
+        { "calculate": "datum[normalisation]", "as": "chosen" },
+        { "calculate": "datum.weight >= seuil", "as": "kept" },
+        { "filter": "true" }
+    ],
+    "mark": {
+        "type": "rect",
+        "tooltip": { "content": "data" }
+    },
     "encoding": {
         "x": {
             "field": "src",
             "type": "nominal",
             "title": null,
-            "axis": { "orient": "top", "labelFontSize": 8 }
+            "axis": { "orient": "top", "labelFontSize": { "expr": "taille" } }
         },
         "y": {
             "field": "dst",
             "type": "nominal",
             "title": null,
-            "axis": { "orient": "left", "labelFontSize": 8 }
+            "axis": { "orient": "left", "labelFontSize": { "expr": "taille" } }
         },
         "color": {
             "field": "chosen",
@@ -50,7 +58,7 @@
                 "title": null,
                 "gradientLength": { "expr": "height" }
             },
-            "condition": { "test": "datum.weight < seuil || datum.normal_weight < seuil_rel", "value": "white" }
+            "condition": { "test": "!datum.kept", "value": "white" }
         }
     }
 }
