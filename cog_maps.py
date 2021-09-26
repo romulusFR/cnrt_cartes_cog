@@ -73,8 +73,8 @@ DEFAULT_WEIGHTS_NAME: str = "arithmetique"
 BASE_LVL: Level = "base"
 CONCEPT_LVL: Level = "concept"
 MOTHER_LVL: Level = "mother"
-GRAND_MOTHER_LVL: Level = "gd_mother"
-LEVELS = [BASE_LVL, CONCEPT_LVL, MOTHER_LVL, GRAND_MOTHER_LVL]
+GD_MOTHER_LVL: Level = "gd_mother"
+LEVELS = [BASE_LVL, CONCEPT_LVL, MOTHER_LVL, GD_MOTHER_LVL]
 
 
 class CogMaps:  # pylint: disable=too-many-instance-attributes
@@ -144,7 +144,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         thesaurus_map: ThesaurusMapType = {
             CONCEPT_LVL: defaultdict(lambda: DEFAULT_CONCEPT),  # word -> concept
             MOTHER_LVL: defaultdict(lambda: DEFAULT_CONCEPT),  # concept -> mother
-            GRAND_MOTHER_LVL: defaultdict(lambda: DEFAULT_CONCEPT),  # mother -> grand_mother
+            GD_MOTHER_LVL: defaultdict(lambda: DEFAULT_CONCEPT),  # mother -> grand_mother
         }
 
         def check_and_add(level: Level, src: Word, dst: Word):
@@ -174,7 +174,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
                 check_and_add(CONCEPT_LVL, word, concept)
                 check_and_add(MOTHER_LVL, concept, mother)
-                check_and_add(GRAND_MOTHER_LVL, mother, grand_mother)
+                check_and_add(GD_MOTHER_LVL, mother, grand_mother)
 
         logger.info(f"CogMaps.load_thesaurus: {len(thesaurus_map)} levels")
         # words to {len(set(thesaurus.values()))} concepts")
