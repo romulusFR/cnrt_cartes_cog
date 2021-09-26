@@ -195,7 +195,16 @@ concept_map = all_maps[CONCEPT_LVL]
 # ]
 
 matrix_obj = [
-    {"lvl":lvl, "src": src, "dst": dst, "weight": round(weight,2), "normal_weight": round(weight/sum(out.values()),2)}
+    {
+        "lvl": lvl,
+        "src": src,
+        "dst": dst,
+        "weight": round(weight, 2),
+        "log_weight": round(math.log10(weight), 2),
+        "normal_weight": round(
+            weight / math.sqrt(sum(all_maps[lvl].matrix[src].values()) * sum(all_maps[lvl].matrix[dst].values())), 2
+        ),
+    }
     for lvl in LEVELS[::]
     for src, out in all_maps[lvl].matrix.items()
     for dst, weight in out.items()

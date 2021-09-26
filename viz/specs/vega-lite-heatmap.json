@@ -14,8 +14,21 @@
         }
     },
     "mark": { "type": "rect", "tooltip": { "content": "data" } },
-    "params": [{ "name": "seuil", "value": 0.0, "bind": { "input": "range", "min": 0.0, "max": 80.0, "step": 0.5 } }],
-    "transform": [{ "filter": "datum.lvl == 'mother'" }],
+    "params": [
+        { "name": "seuil", "value": 0.0, "bind": { "input": "range", "min": 0.0, "max": 100.0, "step": 0.5 } },
+        { "name": "seuil_rel", "value": 0.0, "bind": { "input": "range", "min": 0.0, "max": 0.20, "step": 0.01 } },
+        {
+            "name": "level",
+            "value": "mother",
+            "bind": { "input": "select", "options": ["base", "concept", "mother", "gd_mother"] }
+        },
+        {
+            "name": "normalisation",
+            "value": "weight",
+            "bind": { "input": "select", "options": ["log_weight", "weight", "normal_weight"] }
+        }
+    ],
+    "transform": [{ "filter": "datum.lvl == level" }, {"calculate": "datum[normalisation]", "as" : "chosen"}],
     "encoding": {
         "x": {
             "field": "src",
@@ -30,14 +43,14 @@
             "axis": { "orient": "left", "labelFontSize": 8 }
         },
         "color": {
-            "field": "weight",
+            "field": "chosen",
             "type": "quantitative",
             "scale": { "scheme": "yellowgreenblue" },
             "legend": {
                 "title": null,
                 "gradientLength": { "expr": "height" }
             },
-            "condition": { "test": "datum.weight < seuil", "value": "white" }
+            "condition": { "test": "datum.weight < seuil || datum.normal_weight < seuil_rel", "value": "white" }
         }
     }
 }
