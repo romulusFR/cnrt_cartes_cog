@@ -1,12 +1,14 @@
 """Export des cartes cog dans un format json pour vega-lite"""
-# pylint: disable=unused-import
-# %%
+# pylint: disable=unused-import, logging-fstring-interpolation
 
+# %%
+# chargement de tous les objets de base
 from itertools import islice, accumulate
 from collections import defaultdict
 from pathlib import Path
 from dataclasses import asdict, dataclass
 from typing import Tuple, Optional
+from pprint import pprint
 import json
 import logging
 import math
@@ -25,10 +27,16 @@ from cog_maps import (
     GD_MOTHER_LVL,
 )
 
+DEBUG = True
+WRITE_FILES = True
+
 logger = logging.getLogger(f"COGNITIVE_MAP.{__name__}")
 if __name__ == "__main__":
     logging.basicConfig()
-    logger.setLevel(logging.INFO)
+    if DEBUG:
+        logger.setLevel(logging.DEBUG)
+    else:
+        logger.setLevel(logging.INFO)
 
 
 thesaurus = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
@@ -40,11 +48,14 @@ all_maps, report = mine_map.apply_many(thesaurus, with_unknown=False)
 for name, a_map in all_maps.items():
     a_map.weights = weights["inverse"]
 
+
+
 # %%
+# outil
 
 
 def mk_unique_id():
-    """Generateur d'identifiant"""
+    """Générateur d'identifiant"""
     counter = 0
 
     def inner():
@@ -57,6 +68,11 @@ def mk_unique_id():
 
 unique_id = mk_unique_id()
 
+# %%
+# génération du grand dictionnaire de tous les mots de la carte
+
+ROOT_NAME = "racine"
+DEPTH = 0
 
 @dataclass
 class WordInfo:
@@ -67,18 +83,19 @@ class WordInfo:
     pid: Optional[int]
     parent: Optional[Tuple[str, str]]
     weight: float = 0.0
-    depth: int = 0
+    depth: int = DEPTH
 
 
 # la racine
-ROOT_NAME = "racine"
 LVL_LAST = LEVELS[-1]
+logger.info(f"adding root {ROOT_NAME} at depth {DEPTH}")
 global_word_map = {(ROOT_NAME, ROOT_NAME): WordInfo(id=0, word=(ROOT_NAME, ROOT_NAME), pid=None, parent=None, depth=0)}
 
+
+# on commence par le niveau le plus haut : les grand-mères
 ROOT_WEIGHT = 0
 DEPTH = 1
-# on commence par le niveau le plus haut : les grand-mères
-print(f"ajout {LEVELS[-1]}")
+logger.info(f"adding level {LVL_LAST} -> {ROOT_NAME} at depth {DEPTH}")
 for word in set(thesaurus[LVL_LAST].values()):
     weight = all_maps[LVL_LAST].occurrences[word]
     ROOT_WEIGHT += weight
@@ -86,6 +103,7 @@ for word in set(thesaurus[LVL_LAST].values()):
         id=unique_id(), word=(LVL_LAST, word), pid=0, parent=(ROOT_NAME, ROOT_NAME), weight=weight, depth=DEPTH
     )
 
+# somme des poids des fils affectée à la racine
 global_word_map[(ROOT_NAME, ROOT_NAME)].weight = ROOT_WEIGHT
 
 # du plus général au plus précis :
@@ -94,8 +112,8 @@ global_word_map[(ROOT_NAME, ROOT_NAME)].weight = ROOT_WEIGHT
 # base concept
 
 for lvl_w, lvl_p in zip(LEVELS[::-1][1::], LEVELS[::-1]):
-    print(f"ajout {lvl_w} -> {lvl_p}")
     DEPTH += 1
+    logger.info(f"adding level {lvl_w} -> {lvl_p} at depth {DEPTH}")
     for word, parent in thesaurus[lvl_p].items():
         # print("    ", word, parent)
         # print("    ", global_word_map[(lvl_p, parent)].pid)
@@ -110,27 +128,35 @@ for lvl_w, lvl_p in zip(LEVELS[::-1][1::], LEVELS[::-1]):
         )
 
 
-print(global_word_map[(BASE_LVL, "travail")])
-print(global_word_map[(CONCEPT_LVL, "emploi")])
-print(global_word_map[(MOTHER_LVL, "emploi")])
-print(global_word_map[(GD_MOTHER_LVL, "travail")])
+# %%
+# tests
 
+if DEBUG:
+
+    print(global_word_map[(BASE_LVL, "travail")])
+    print(global_word_map[(CONCEPT_LVL, "emploi")])
+    print(global_word_map[(MOTHER_LVL, "emploi")])
+    print(global_word_map[(GD_MOTHER_LVL, "travail")])
+# a_wi = global_word_map[(BASE_LVL, "travail")]
+
+# %%
+# transformation au format attendu pour le json
 
 # le format ciblé
 # { "id": 1, "relief": 0.228, "name": "Complaints" },
 # { "id": 2, "relief": 0.37859110586383315, "name": "Credit card", "parent": 1, "size": 2541 }
 
 
-a_wi = global_word_map[(BASE_LVL, "travail")]
-# {detail.word[0]}-
 objects = [
     {
         "id": detail.id,
+        "level":f"{detail.word[0]}",
         "name": f"{detail.word[1]}",
-        "lweight": round(detail.weight, 2) if detail.depth == 4 else None,
+        "leaf_weight": round(detail.weight, 2) if detail.depth == 4 else None,
         "weight": round(detail.weight, 2),
         "parent": detail.pid,
         "depth": detail.depth,
+
     }
     for detail in global_word_map.values()
     if detail.weight is not None
@@ -152,53 +178,35 @@ def verif_sum(lvl_1_word):
     print("sons.weight =", sum(map(lambda x: x.weight, sons)))
     print("sons =", list(map(lambda x: x.word[1], sons)))
 
-
-verif_sum("nickel")
-verif_sum("travail")
+if DEBUG:
+    verif_sum("nickel")
+    verif_sum("travail")
 
 # verdict : OK
 
 # %%
-PRINT_THESAURUS = False
-if PRINT_THESAURUS:
+
+if WRITE_FILES:
     with open("viz/data/thesaurus.json", mode="w", encoding="utf-8") as fp:
         json.dump(objects, fp, indent=4, ensure_ascii=False)
-
+else:
+    pprint(objects[:5:])
 
 max_weight = max(detail.weight for detail in global_word_map.values() if detail.weight is not None)
 print(f"max_weight={max_weight}")
 
 
 # %%
+# export de la matrice des co-occurrences avec poids inverse
 
-# export de la matrice
-
-# le format ciblé
-# { "src": "pollution", "dst": "patate", "weight": 2.32113 }
-
-
-concept_map = all_maps[CONCEPT_LVL]
-
-
-# for src, out in concept_map.matrix.items():
-#     for dst, weight in out.items():
-#         # print(src, dst, weight)
-#         pass
-
-# matrix_obj = [
-#     {"lvl":lvl, "src": src, "dst": dst, "weight": round(all_maps[lvl].matrix[src][dst],2)}
-#     for lvl in LEVELS[::]
-#     for src in all_maps[lvl].words
-#     for dst in all_maps[lvl].words
-#     if src != dst
-#     # if weight > 0.0
-# ]
 
 matrix_obj = [
     {
-        "lvl": lvl,
-        "src": src,
-        "dst": dst,
+        "level": lvl,
+        "src_name": src,
+        "dst_name": dst,
+        "src": global_word_map[(lvl, src)].id,
+        "dst": global_word_map[(lvl, dst)].id,
         "weight": round(weight, 2),
         "log_weight": round(math.log10(weight), 2),
         "normal_weight": round(
@@ -212,7 +220,8 @@ matrix_obj = [
     # if weight > 0.0
 ]
 
-PRINT_MATRIX = True
-if PRINT_MATRIX:
+if WRITE_FILES:
     with open("viz/data/matrix_inverse.json", mode="w", encoding="utf-8") as fp:
         json.dump(matrix_obj, fp, indent=4, ensure_ascii=False)
+else:
+    pprint(matrix_obj[:5:])
