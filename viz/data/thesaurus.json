@@ -11,15 +11,6 @@
     {
         "id": 1,
         "level": "gd_mother",
-        "name": "industrie",
-        "leaf_weight": null,
-        "weight": 67.48,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 2,
-        "level": "gd_mother",
         "name": "politique",
         "leaf_weight": null,
         "weight": 36.66,
@@ -27,16 +18,7 @@
         "depth": 1
     },
     {
-        "id": 3,
-        "level": "gd_mother",
-        "name": "travail",
-        "leaf_weight": null,
-        "weight": 94.81,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 4,
+        "id": 2,
         "level": "gd_mother",
         "name": "exploitation minière",
         "leaf_weight": null,
@@ -45,70 +27,7 @@
         "depth": 1
     },
     {
-        "id": 5,
-        "level": "gd_mother",
-        "name": "pollution",
-        "leaf_weight": null,
-        "weight": 68.47,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 6,
-        "level": "gd_mother",
-        "name": "échange commercial",
-        "leaf_weight": null,
-        "weight": 16.66,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 7,
-        "level": "gd_mother",
-        "name": "matériel",
-        "leaf_weight": null,
-        "weight": 55.88,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 8,
-        "level": "gd_mother",
-        "name": "amélioration environnementale",
-        "leaf_weight": null,
-        "weight": 6.02,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 9,
-        "level": "gd_mother",
-        "name": "économie",
-        "leaf_weight": null,
-        "weight": 87.77,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 10,
-        "level": "gd_mother",
-        "name": "foncier",
-        "leaf_weight": null,
-        "weight": 16.63,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 11,
-        "level": "gd_mother",
-        "name": "secteur nickel",
-        "leaf_weight": null,
-        "weight": 54.33,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 12,
+        "id": 3,
         "level": "gd_mother",
         "name": "nouvelle-calédonie",
         "leaf_weight": null,
@@ -117,97 +36,16 @@
         "depth": 1
     },
     {
-        "id": 13,
+        "id": 4,
         "level": "gd_mother",
-        "name": "avenir sans nickel",
+        "name": "économie",
         "leaf_weight": null,
-        "weight": 2.45,
+        "weight": 87.77,
         "parent": 0,
         "depth": 1
     },
     {
-        "id": 14,
-        "level": "gd_mother",
-        "name": "relation politique",
-        "leaf_weight": null,
-        "weight": 10.38,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 15,
-        "level": "gd_mother",
-        "name": "nickel",
-        "leaf_weight": null,
-        "weight": 209.58,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 16,
-        "level": "gd_mother",
-        "name": "dégradation environnementale",
-        "leaf_weight": null,
-        "weight": 110.0,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 17,
-        "level": "gd_mother",
-        "name": "société néo-calédonienne",
-        "leaf_weight": null,
-        "weight": 9.35,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 18,
-        "level": "gd_mother",
-        "name": "non classé",
-        "leaf_weight": null,
-        "weight": 2.74,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 19,
-        "level": "gd_mother",
-        "name": "nature",
-        "leaf_weight": null,
-        "weight": 54.46,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 20,
-        "level": "gd_mother",
-        "name": "ressource minière",
-        "leaf_weight": null,
-        "weight": 40.52,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 21,
-        "level": "gd_mother",
-        "name": "risque",
-        "leaf_weight": null,
-        "weight": 6.34,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 22,
-        "level": "gd_mother",
-        "name": "essor technologique",
-        "leaf_weight": null,
-        "weight": 0.74,
-        "parent": 0,
-        "depth": 1
-    },
-    {
-        "id": 23,
+        "id": 5,
         "level": "gd_mother",
         "name": "alternative au développement",
         "leaf_weight": null,
@@ -216,11 +54,173 @@
         "depth": 1
     },
     {
-        "id": 24,
+        "id": 6,
+        "level": "gd_mother",
+        "name": "relation politique",
+        "leaf_weight": null,
+        "weight": 10.38,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 7,
+        "level": "gd_mother",
+        "name": "industrie",
+        "leaf_weight": null,
+        "weight": 67.48,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 8,
+        "level": "gd_mother",
+        "name": "nature",
+        "leaf_weight": null,
+        "weight": 54.46,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 9,
+        "level": "gd_mother",
+        "name": "essor technologique",
+        "leaf_weight": null,
+        "weight": 0.74,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 10,
+        "level": "gd_mother",
+        "name": "travail",
+        "leaf_weight": null,
+        "weight": 94.81,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 11,
+        "level": "gd_mother",
+        "name": "échange commercial",
+        "leaf_weight": null,
+        "weight": 16.66,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 12,
+        "level": "gd_mother",
+        "name": "matériel",
+        "leaf_weight": null,
+        "weight": 55.88,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 13,
+        "level": "gd_mother",
+        "name": "société néo-calédonienne",
+        "leaf_weight": null,
+        "weight": 9.35,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 14,
+        "level": "gd_mother",
+        "name": "nickel",
+        "leaf_weight": null,
+        "weight": 209.58,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 15,
+        "level": "gd_mother",
+        "name": "amélioration environnementale",
+        "leaf_weight": null,
+        "weight": 6.02,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 16,
+        "level": "gd_mother",
+        "name": "risque",
+        "leaf_weight": null,
+        "weight": 6.34,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 17,
+        "level": "gd_mother",
+        "name": "ressource minière",
+        "leaf_weight": null,
+        "weight": 40.52,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 18,
         "level": "gd_mother",
         "name": "avenir avec nickel",
         "leaf_weight": null,
         "weight": 2.48,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 19,
+        "level": "gd_mother",
+        "name": "avenir sans nickel",
+        "leaf_weight": null,
+        "weight": 2.45,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 20,
+        "level": "gd_mother",
+        "name": "pollution",
+        "leaf_weight": null,
+        "weight": 68.47,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 21,
+        "level": "gd_mother",
+        "name": "secteur nickel",
+        "leaf_weight": null,
+        "weight": 54.33,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 22,
+        "level": "gd_mother",
+        "name": "dégradation environnementale",
+        "leaf_weight": null,
+        "weight": 110.0,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 23,
+        "level": "gd_mother",
+        "name": "foncier",
+        "leaf_weight": null,
+        "weight": 16.63,
+        "parent": 0,
+        "depth": 1
+    },
+    {
+        "id": 24,
+        "level": "gd_mother",
+        "name": "non classé",
+        "leaf_weight": null,
+        "weight": 2.74,
         "parent": 0,
         "depth": 1
     },
@@ -230,7 +230,7 @@
         "name": "développement",
         "leaf_weight": null,
         "weight": 13.22,
-        "parent": 23,
+        "parent": 5,
         "depth": 2
     },
     {
@@ -239,7 +239,7 @@
         "name": "développement alternatif",
         "leaf_weight": null,
         "weight": 0.42,
-        "parent": 23,
+        "parent": 5,
         "depth": 2
     },
     {
@@ -248,7 +248,7 @@
         "name": "développement culturel",
         "leaf_weight": null,
         "weight": 0.58,
-        "parent": 23,
+        "parent": 5,
         "depth": 2
     },
     {
@@ -257,7 +257,7 @@
         "name": "développement durable",
         "leaf_weight": null,
         "weight": 0.42,
-        "parent": 23,
+        "parent": 5,
         "depth": 2
     },
     {
@@ -266,7 +266,7 @@
         "name": "amélioration environnementale",
         "leaf_weight": null,
         "weight": 6.02,
-        "parent": 8,
+        "parent": 15,
         "depth": 2
     },
     {
@@ -275,7 +275,7 @@
         "name": "croissance minière",
         "leaf_weight": null,
         "weight": 1.65,
-        "parent": 24,
+        "parent": 18,
         "depth": 2
     },
     {
@@ -284,7 +284,7 @@
         "name": "maintien de l’exploitation",
         "leaf_weight": null,
         "weight": 0.83,
-        "parent": 24,
+        "parent": 18,
         "depth": 2
     },
     {
@@ -293,7 +293,7 @@
         "name": "avenir",
         "leaf_weight": null,
         "weight": 1.4,
-        "parent": 13,
+        "parent": 19,
         "depth": 2
     },
     {
@@ -302,7 +302,7 @@
         "name": "déclin",
         "leaf_weight": null,
         "weight": 0.6,
-        "parent": 13,
+        "parent": 19,
         "depth": 2
     },
     {
@@ -311,7 +311,7 @@
         "name": "fin",
         "leaf_weight": null,
         "weight": 0.45,
-        "parent": 13,
+        "parent": 19,
         "depth": 2
     },
     {
@@ -320,7 +320,7 @@
         "name": "changement climatique",
         "leaf_weight": null,
         "weight": 3.31,
-        "parent": 16,
+        "parent": 22,
         "depth": 2
     },
     {
@@ -329,7 +329,7 @@
         "name": "impact environnemental",
         "leaf_weight": null,
         "weight": 79.47,
-        "parent": 16,
+        "parent": 22,
         "depth": 2
     },
     {
@@ -338,7 +338,7 @@
         "name": "montagne",
         "leaf_weight": null,
         "weight": 23.48,
-        "parent": 16,
+        "parent": 22,
         "depth": 2
     },
     {
@@ -347,7 +347,7 @@
         "name": "transition",
         "leaf_weight": null,
         "weight": 3.74,
-        "parent": 16,
+        "parent": 22,
         "depth": 2
     },
     {
@@ -356,7 +356,7 @@
         "name": "commerce",
         "leaf_weight": null,
         "weight": 10.88,
-        "parent": 6,
+        "parent": 11,
         "depth": 2
     },
     {
@@ -365,7 +365,7 @@
         "name": "entreprise",
         "leaf_weight": null,
         "weight": 2.88,
-        "parent": 6,
+        "parent": 11,
         "depth": 2
     },
     {
@@ -374,7 +374,7 @@
         "name": "exportation",
         "leaf_weight": null,
         "weight": 2.9,
-        "parent": 6,
+        "parent": 11,
         "depth": 2
     },
     {
@@ -383,7 +383,7 @@
         "name": "économie du pays",
         "leaf_weight": null,
         "weight": 50.2,
-        "parent": 9,
+        "parent": 4,
         "depth": 2
     },
     {
@@ -392,7 +392,7 @@
         "name": "fiscalité",
         "leaf_weight": null,
         "weight": 1.33,
-        "parent": 9,
+        "parent": 4,
         "depth": 2
     },
     {
@@ -401,7 +401,7 @@
         "name": "investissement",
         "leaf_weight": null,
         "weight": 3.63,
-        "parent": 9,
+        "parent": 4,
         "depth": 2
     },
     {
@@ -410,7 +410,7 @@
         "name": "revenu",
         "leaf_weight": null,
         "weight": 32.61,
-        "parent": 9,
+        "parent": 4,
         "depth": 2
     },
     {
@@ -419,7 +419,7 @@
         "name": "automatisation",
         "leaf_weight": null,
         "weight": 0.33,
-        "parent": 22,
+        "parent": 9,
         "depth": 2
     },
     {
@@ -428,7 +428,7 @@
         "name": "innovation",
         "leaf_weight": null,
         "weight": 0.41,
-        "parent": 22,
+        "parent": 9,
         "depth": 2
     },
     {
@@ -437,7 +437,7 @@
         "name": "exploitation",
         "leaf_weight": null,
         "weight": 43.37,
-        "parent": 4,
+        "parent": 2,
         "depth": 2
     },
     {
@@ -446,7 +446,7 @@
         "name": "ressource non-renouvelable",
         "leaf_weight": null,
         "weight": 15.71,
-        "parent": 4,
+        "parent": 2,
         "depth": 2
     },
     {
@@ -455,7 +455,7 @@
         "name": "foncier",
         "leaf_weight": null,
         "weight": 5.87,
-        "parent": 10,
+        "parent": 23,
         "depth": 2
     },
     {
@@ -464,7 +464,7 @@
         "name": "localité",
         "leaf_weight": null,
         "weight": 6.32,
-        "parent": 10,
+        "parent": 23,
         "depth": 2
     },
     {
@@ -473,7 +473,7 @@
         "name": "site minier",
         "leaf_weight": null,
         "weight": 2.96,
-        "parent": 10,
+        "parent": 23,
         "depth": 2
     },
     {
@@ -482,7 +482,7 @@
         "name": "structure",
         "leaf_weight": null,
         "weight": 1.48,
-        "parent": 10,
+        "parent": 23,
         "depth": 2
     },
     {
@@ -491,7 +491,7 @@
         "name": "description minière",
         "leaf_weight": null,
         "weight": 15.13,
-        "parent": 1,
+        "parent": 7,
         "depth": 2
     },
     {
@@ -500,7 +500,7 @@
         "name": "industrie",
         "leaf_weight": null,
         "weight": 9.57,
-        "parent": 1,
+        "parent": 7,
         "depth": 2
     },
     {
@@ -509,7 +509,7 @@
         "name": "métallurgie",
         "leaf_weight": null,
         "weight": 4.09,
-        "parent": 1,
+        "parent": 7,
         "depth": 2
     },
     {
@@ -518,7 +518,7 @@
         "name": "usine",
         "leaf_weight": null,
         "weight": 38.69,
-        "parent": 1,
+        "parent": 7,
         "depth": 2
     },
     {
@@ -527,7 +527,7 @@
         "name": "engin",
         "leaf_weight": null,
         "weight": 37.96,
-        "parent": 7,
+        "parent": 12,
         "depth": 2
     },
     {
@@ -536,7 +536,7 @@
         "name": "équipement",
         "leaf_weight": null,
         "weight": 2.93,
-        "parent": 7,
+        "parent": 12,
         "depth": 2
     },
     {
@@ -545,7 +545,7 @@
         "name": "machine",
         "leaf_weight": null,
         "weight": 6.66,
-        "parent": 7,
+        "parent": 12,
         "depth": 2
     },
     {
@@ -554,7 +554,7 @@
         "name": "outillage",
         "leaf_weight": null,
         "weight": 8.33,
-        "parent": 7,
+        "parent": 12,
         "depth": 2
     },
     {
@@ -563,7 +563,7 @@
         "name": "biodiversité",
         "leaf_weight": null,
         "weight": 5.25,
-        "parent": 19,
+        "parent": 8,
         "depth": 2
     },
     {
@@ -572,7 +572,7 @@
         "name": "milieu",
         "leaf_weight": null,
         "weight": 13.14,
-        "parent": 19,
+        "parent": 8,
         "depth": 2
     },
     {
@@ -581,7 +581,7 @@
         "name": "terre",
         "leaf_weight": null,
         "weight": 36.07,
-        "parent": 19,
+        "parent": 8,
         "depth": 2
     },
     {
@@ -590,7 +590,7 @@
         "name": "minerai",
         "leaf_weight": null,
         "weight": 61.55,
-        "parent": 15,
+        "parent": 14,
         "depth": 2
     },
     {
@@ -599,7 +599,7 @@
         "name": "nickel",
         "leaf_weight": null,
         "weight": 116.04,
-        "parent": 15,
+        "parent": 14,
         "depth": 2
     },
     {
@@ -608,7 +608,7 @@
         "name": "richesse",
         "leaf_weight": null,
         "weight": 31.99,
-        "parent": 15,
+        "parent": 14,
         "depth": 2
     },
     {
@@ -617,7 +617,7 @@
         "name": "culture pop",
         "leaf_weight": null,
         "weight": 0.57,
-        "parent": 18,
+        "parent": 24,
         "depth": 2
     },
     {
@@ -626,7 +626,7 @@
         "name": "non classé",
         "leaf_weight": null,
         "weight": 2.17,
-        "parent": 18,
+        "parent": 24,
         "depth": 2
     },
     {
@@ -635,7 +635,7 @@
         "name": "coutume",
         "leaf_weight": null,
         "weight": 4.63,
-        "parent": 12,
+        "parent": 3,
         "depth": 2
     },
     {
@@ -644,7 +644,7 @@
         "name": "indépendance",
         "leaf_weight": null,
         "weight": 2.06,
-        "parent": 12,
+        "parent": 3,
         "depth": 2
     },
     {
@@ -653,7 +653,7 @@
         "name": "nouvelle-calédonie",
         "leaf_weight": null,
         "weight": 9.39,
-        "parent": 12,
+        "parent": 3,
         "depth": 2
     },
     {
@@ -662,7 +662,7 @@
         "name": "passé",
         "leaf_weight": null,
         "weight": 4.32,
-        "parent": 12,
+        "parent": 3,
         "depth": 2
     },
     {
@@ -671,7 +671,7 @@
         "name": "balance positive-négative",
         "leaf_weight": null,
         "weight": 2.25,
-        "parent": 2,
+        "parent": 1,
         "depth": 2
     },
     {
@@ -680,7 +680,7 @@
         "name": "conflit",
         "leaf_weight": null,
         "weight": 20.47,
-        "parent": 2,
+        "parent": 1,
         "depth": 2
     },
     {
@@ -689,7 +689,7 @@
         "name": "crise",
         "leaf_weight": null,
         "weight": 1.72,
-        "parent": 2,
+        "parent": 1,
         "depth": 2
     },
     {
@@ -698,7 +698,7 @@
         "name": "dérive politique",
         "leaf_weight": null,
         "weight": 2.28,
-        "parent": 2,
+        "parent": 1,
         "depth": 2
     },
     {
@@ -707,7 +707,7 @@
         "name": "enjeu",
         "leaf_weight": null,
         "weight": 2.24,
-        "parent": 2,
+        "parent": 1,
         "depth": 2
     },
     {
@@ -716,7 +716,7 @@
         "name": "politique",
         "leaf_weight": null,
         "weight": 4.74,
-        "parent": 2,
+        "parent": 1,
         "depth": 2
     },
     {
@@ -725,7 +725,7 @@
         "name": "production énergétique",
         "leaf_weight": null,
         "weight": 2.96,
-        "parent": 2,
+        "parent": 1,
         "depth": 2
     },
     {
@@ -734,7 +734,7 @@
         "name": "nuisance",
         "leaf_weight": null,
         "weight": 8.39,
-        "parent": 5,
+        "parent": 20,
         "depth": 2
     },
     {
@@ -743,7 +743,7 @@
         "name": "pollution",
         "leaf_weight": null,
         "weight": 58.32,
-        "parent": 5,
+        "parent": 20,
         "depth": 2
     },
     {
@@ -752,7 +752,7 @@
         "name": "santé",
         "leaf_weight": null,
         "weight": 1.76,
-        "parent": 5,
+        "parent": 20,
         "depth": 2
     },
     {
@@ -761,7 +761,7 @@
         "name": "puissance étrangère",
         "leaf_weight": null,
         "weight": 1.67,
-        "parent": 14,
+        "parent": 6,
         "depth": 2
     },
     {
@@ -770,7 +770,7 @@
         "name": "relation france",
         "leaf_weight": null,
         "weight": 3.84,
-        "parent": 14,
+        "parent": 6,
         "depth": 2
     },
     {
@@ -779,7 +779,7 @@
         "name": "relation internationale",
         "leaf_weight": null,
         "weight": 4.87,
-        "parent": 14,
+        "parent": 6,
         "depth": 2
     },
     {
@@ -788,7 +788,7 @@
         "name": "épuisement de la ressource",
         "leaf_weight": null,
         "weight": 3.96,
-        "parent": 20,
+        "parent": 17,
         "depth": 2
     },
     {
@@ -797,7 +797,7 @@
         "name": "fer",
         "leaf_weight": null,
         "weight": 4.48,
-        "parent": 20,
+        "parent": 17,
         "depth": 2
     },
     {
@@ -806,7 +806,7 @@
         "name": "prospection minière",
         "leaf_weight": null,
         "weight": 7.32,
-        "parent": 20,
+        "parent": 17,
         "depth": 2
     },
     {
@@ -815,7 +815,7 @@
         "name": "revalorisation de la ressource",
         "leaf_weight": null,
         "weight": 1.02,
-        "parent": 20,
+        "parent": 17,
         "depth": 2
     },
     {
@@ -824,7 +824,7 @@
         "name": "vision négative de la ressource",
         "leaf_weight": null,
         "weight": 1.57,
-        "parent": 20,
+        "parent": 17,
         "depth": 2
     },
     {
@@ -833,7 +833,7 @@
         "name": "vision positive de la ressource",
         "leaf_weight": null,
         "weight": 22.17,
-        "parent": 20,
+        "parent": 17,
         "depth": 2
     },
     {
@@ -842,7 +842,7 @@
         "name": "danger",
         "leaf_weight": null,
         "weight": 4.7,
-        "parent": 21,
+        "parent": 16,
         "depth": 2
     },
     {
@@ -851,7 +851,7 @@
         "name": "sécurité",
         "leaf_weight": null,
         "weight": 1.64,
-        "parent": 21,
+        "parent": 16,
         "depth": 2
     },
     {
@@ -860,7 +860,7 @@
         "name": "formation",
         "leaf_weight": null,
         "weight": 1.39,
-        "parent": 11,
+        "parent": 21,
         "depth": 2
     },
     {
@@ -869,7 +869,7 @@
         "name": "opérateur minier",
         "leaf_weight": null,
         "weight": 28.09,
-        "parent": 11,
+        "parent": 21,
         "depth": 2
     },
     {
@@ -878,7 +878,7 @@
         "name": "procédé industriel",
         "leaf_weight": null,
         "weight": 6.99,
-        "parent": 11,
+        "parent": 21,
         "depth": 2
     },
     {
@@ -887,7 +887,7 @@
         "name": "production",
         "leaf_weight": null,
         "weight": 7.06,
-        "parent": 11,
+        "parent": 21,
         "depth": 2
     },
     {
@@ -896,7 +896,7 @@
         "name": "représentation opérateur",
         "leaf_weight": null,
         "weight": 1.21,
-        "parent": 11,
+        "parent": 21,
         "depth": 2
     },
     {
@@ -905,7 +905,7 @@
         "name": "secteur indispensable",
         "leaf_weight": null,
         "weight": 2.96,
-        "parent": 11,
+        "parent": 21,
         "depth": 2
     },
     {
@@ -914,7 +914,7 @@
         "name": "secteur nickel",
         "leaf_weight": null,
         "weight": 4.7,
-        "parent": 11,
+        "parent": 21,
         "depth": 2
     },
     {
@@ -923,7 +923,7 @@
         "name": "sous-traitance",
         "leaf_weight": null,
         "weight": 1.93,
-        "parent": 11,
+        "parent": 21,
         "depth": 2
     },
     {
@@ -932,7 +932,7 @@
         "name": "bien de consommation",
         "leaf_weight": null,
         "weight": 0.97,
-        "parent": 17,
+        "parent": 13,
         "depth": 2
     },
     {
@@ -941,7 +941,7 @@
         "name": "calédonien",
         "leaf_weight": null,
         "weight": 1.7,
-        "parent": 17,
+        "parent": 13,
         "depth": 2
     },
     {
@@ -950,7 +950,7 @@
         "name": "famille",
         "leaf_weight": null,
         "weight": 2.86,
-        "parent": 17,
+        "parent": 13,
         "depth": 2
     },
     {
@@ -959,7 +959,7 @@
         "name": "inégalité",
         "leaf_weight": null,
         "weight": 1.34,
-        "parent": 17,
+        "parent": 13,
         "depth": 2
     },
     {
@@ -968,7 +968,7 @@
         "name": "justice sociale",
         "leaf_weight": null,
         "weight": 1.16,
-        "parent": 17,
+        "parent": 13,
         "depth": 2
     },
     {
@@ -977,7 +977,7 @@
         "name": "sentiment négatif",
         "leaf_weight": null,
         "weight": 0.66,
-        "parent": 17,
+        "parent": 13,
         "depth": 2
     },
     {
@@ -986,7 +986,7 @@
         "name": "sentiment positif",
         "leaf_weight": null,
         "weight": 0.11,
-        "parent": 17,
+        "parent": 13,
         "depth": 2
     },
     {
@@ -995,7 +995,7 @@
         "name": "social",
         "leaf_weight": null,
         "weight": 0.55,
-        "parent": 17,
+        "parent": 13,
         "depth": 2
     },
     {
@@ -1004,7 +1004,7 @@
         "name": "condition de travail",
         "leaf_weight": null,
         "weight": 2.79,
-        "parent": 3,
+        "parent": 10,
         "depth": 2
     },
     {
@@ -1013,7 +1013,7 @@
         "name": "emploi",
         "leaf_weight": null,
         "weight": 72.37,
-        "parent": 3,
+        "parent": 10,
         "depth": 2
     },
     {
@@ -1022,7 +1022,7 @@
         "name": "main d’oeuvre",
         "leaf_weight": null,
         "weight": 16.27,
-        "parent": 3,
+        "parent": 10,
         "depth": 2
     },
     {
@@ -1031,7 +1031,7 @@
         "name": "travail difficile",
         "leaf_weight": null,
         "weight": 3.38,
-        "parent": 3,
+        "parent": 10,
         "depth": 2
     },
     {

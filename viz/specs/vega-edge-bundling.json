@@ -2,25 +2,34 @@
     "$schema": "https://vega.github.io/schema/vega/v5.json",
     "description": "A network diagram of software dependencies, with edges grouped via hierarchical edge bundling.",
     "padding": 5,
-    "width": 720,
-    "height": 720,
-    "autosize": "none",
+    "width": 2048,
+    "height": 2048,
+    "autosize": "pad",
 
     "signals": [
         {
+            "name": "max_depth",
+            "value": 2,
+            "bind": { "input": "range", "min": 0, "max": 4, "step": 1 }
+        },
+        {
+            "name": "threshold",
+            "value": 2.0,
+            "bind": { "input": "range", "min": 0.0, "max": 50.0, "step": 0.5 }
+        },
+        {
             "name": "tension",
-            "value": 0.85,
+            "value": 0.80,
             "bind": { "input": "range", "min": 0, "max": 1, "step": 0.01 }
         },
         {
             "name": "radius",
-            "value": 280,
-            "bind": { "input": "range", "min": 20, "max": 400 }
+            "value": 384,
+            "bind": { "input": "range", "min": 64, "max": 1024 }
         },
         {
             "name": "extent",
-            "value": 360,
-            "bind": { "input": "range", "min": 0, "max": 360, "step": 1 }
+            "value": 360
         },
         {
             "name": "rotate",
@@ -29,20 +38,20 @@
         },
         {
             "name": "textSize",
-            "value": 8,
-            "bind": { "input": "range", "min": 2, "max": 20, "step": 1 }
+            "value": 10,
+            "bind": { "input": "range", "min": 4, "max": 32, "step": 1 }
         },
         {
             "name": "textOffset",
             "value": 2,
-            "bind": { "input": "range", "min": 0, "max": 10, "step": 1 }
+            "bind": { "input": "range", "min": 0, "max": 40, "step": 1 }
         },
         {
             "name": "layout",
             "value": "cluster",
             "bind": { "input": "radio", "options": ["tidy", "cluster"] }
         },
-        { "name": "colorIn", "value": "firebrick" },
+        { "name": "colorIn", "value": "forestgreen" },
         { "name": "colorOut", "value": "forestgreen" },
         { "name": "originX", "update": "width / 2" },
         { "name": "originY", "update": "height / 2" },
@@ -61,7 +70,7 @@
             "name": "tree",
             "url": "data/thesaurus.json",
             "transform": [
-                { "type": "filter", "expr": "datum.depth == 2" },
+                { "type": "filter", "expr": "datum.depth <= max_depth" },
                 {
                     "type": "stratify",
                     "key": "id",
@@ -71,7 +80,7 @@
                     "type": "tree",
                     "method": { "signal": "layout" },
                     "size": [1, 1],
-                    "as": ["alpha", "beta", "depth", "children"]
+                    "as": ["alpha", "beta", "c_depth", "children"]
                 },
                 {
                     "type": "formula",
@@ -110,7 +119,10 @@
             "url": "data/matrix_inverse.json",
 
             "transform": [
-                { "type": "filter", "expr": "datum.lvl == 'mother'" },
+                {
+                    "type": "filter",
+                    "expr": "datum.weight >= threshold && max_depth <= datum.depth && datum.depth <= max_depth"
+                },
                 {
                     "type": "formula",
                     "expr": "treePath('tree', datum.src, datum.dst)",
@@ -175,10 +187,17 @@
                     "type": "line",
                     "interactive": false,
                     "from": { "data": "path" },
+                    "transform": [
+                        {
+                            "type": "formula",
+                            "expr": "datum.weight * 1",
+                            "as": "strokeWidth"
+                        }
+                    ],
                     "encode": {
                         "enter": {
                             "interpolate": { "value": "bundle" },
-                            "strokeWidth": { "value": 1.5 }
+                            "strokeWidth": { "field": "strokeWidth" }
                         },
                         "update": {
                             "stroke": [
@@ -197,24 +216,6 @@
                     }
                 }
             ]
-        }
-    ],
-
-    "scales": [
-        {
-            "name": "color",
-            "type": "ordinal",
-            "domain": ["depends on", "imported by"],
-            "range": [{ "signal": "colorIn" }, { "signal": "colorOut" }]
-        }
-    ],
-
-    "legends": [
-        {
-            "stroke": "color",
-            "orient": "bottom-right",
-            "title": "Dependencies",
-            "symbolType": "stroke"
         }
     ]
 }

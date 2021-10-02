@@ -203,6 +203,7 @@ print(f"max_weight={max_weight}")
 matrix_obj = [
     {
         "level": lvl,
+        "depth": global_word_map[(lvl, src)].depth,
         "src_name": src,
         "dst_name": dst,
         "src": global_word_map[(lvl, src)].id,

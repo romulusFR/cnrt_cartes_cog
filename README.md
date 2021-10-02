@@ -5,7 +5,8 @@
 
 ## Visualisation du thésauraus avec Vega
 
-Pour les visualizations du thésauraus avec <https://vega.github.io/vega/> voir [cette page](viz/index.html).
+- Pour les visualisations du thésauraus avec <https://vega.github.io/vega/> voir [cette page](viz/index.html).
+- Pour la visualisation _edge bundling_ (voir sur [www.data-to-viz.com](https://www.data-to-viz.com/graph/edge_bundling.html)), voir [cette page ci](viz/bundling.html) (assez gourmant en ressources)
 
 ## Images extraites du IPython Notebook
 

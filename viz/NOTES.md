@@ -13,8 +13,15 @@ date        precipitation   temp_max    temp_min    wind   weather
 
 ## Edge bundling
 
+<https://stackoverflow.com/questions/64874024/vega-edge-bundling-directed-vary-thickness-of-each-edge-to-show-strength-of>
+
 ```json
+
+{ "type": "filter", "expr": "datum.level == 'mother'" },
+
 "url": "https://vega.github.io/vega/data/flare.json",
 
  "url": "https://vega.github.io/vega/data/flare-dependencies.json",
+
+ "strokeWidth": { "value": 1.5 }
 ```
