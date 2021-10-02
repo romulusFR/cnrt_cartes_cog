@@ -33,7 +33,7 @@
         }
     ],
     "transform": [
-        { "filter": "datum.lvl == level" },
+        { "filter": "datum.level == level" },
         { "calculate": "datum[normalisation]", "as": "chosen" },
         { "calculate": "datum.weight >= seuil", "as": "kept" },
         { "filter": "!dynamic || datum.kept" }

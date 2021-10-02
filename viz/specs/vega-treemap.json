@@ -39,7 +39,7 @@
                 },
                 {
                     "type": "treemap",
-                    "field": "lweight",
+                    "field": "leaf_weight",
                     "sort": { "field": "weight" },
                     "round": true,
                     "method": { "signal": "layout" },

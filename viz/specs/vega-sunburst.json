@@ -25,7 +25,7 @@
                 
                 {
                     "type": "partition",
-                    "field": "lweight",
+                    "field": "leaf_weight",
                     "sort": { "field": "value", "order": "descending" },
                     "size": [{ "signal": "2 * PI" }, { "signal": "width / 2" }],
                     "as": ["a0", "r0", "a1", "r1", "depth", "children"]
