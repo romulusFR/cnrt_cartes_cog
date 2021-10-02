@@ -44,13 +44,13 @@
     },
     "encoding": {
         "x": {
-            "field": "src",
+            "field": "src_name",
             "type": "nominal",
             "title": null,
             "axis": { "orient": "top", "labelFontSize": { "expr": "taille" } }
         },
         "y": {
-            "field": "dst",
+            "field": "dst_name",
             "type": "nominal",
             "title": null,
             "axis": { "orient": "left", "labelFontSize": { "expr": "taille" } }
