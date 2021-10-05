@@ -1,4 +1,5 @@
-"""Anonymizer"""
+"""Permet de transformer un csv de fichier de données personnelles sur les cartes en une version "anonymisée"."""
+
 # %%
 from math import floor, isnan, nan
 from functools import partial

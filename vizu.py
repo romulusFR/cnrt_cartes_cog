@@ -1,4 +1,9 @@
-"""Vizualisation graphique"""
+"""Vizualisation graphique
+
+Ici, une heatmap de seaborn avec reindexation des mots par clustering sur les co-occurences normalisées
+"""
+# pylint: disable=unused-import
+
 # %%
 
 import locale
@@ -41,6 +46,7 @@ cog_maps, _ = base_cog_maps.apply_many(thesaurus)
 
 
 def cog_maps_to_df(cog_maps):
+    """Charge une caret cognitive en DataFrame pandas"""
     df = pd.DataFrame(cog_maps.matrix).fillna(0.0)
     # on trie en gérant les accents
     alpha_words = sorted(cog_maps.words, key=lambda x: unicodedata.normalize("NFD", x))
@@ -52,8 +58,9 @@ def cog_maps_to_df(cog_maps):
 
 
 def heatmap(df: pd.DataFrame, limits=None):
+    """Affiche une Heatmap seaborn à partir d'un DataFrame"""
     sns.despine()
-    fig, ax = plt.subplots(figsize=(18, 16))
+    _, ax = plt.subplots(figsize=(18, 16))
 
     # https://stackoverflow.com/questions/50754471/seaborn-heatmap-not-displaying-all-xticks-and-yticks
     sns.heatmap(df, xticklabels=True, yticklabels=True, cmap="RdYlGn_r")
@@ -71,7 +78,7 @@ def normalize_sym(m):
     return dsqrt @ m @ dsqrt
 
 
-def clusterize(df: pd.DataFrame, n_clusters=5, normalize=False, threshold = 0.05):
+def clusterize(df: pd.DataFrame, n_clusters=5, normalize=False, threshold=0.05):
     # https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster
 
     # choix d'un algo de clustering
@@ -90,7 +97,7 @@ def clusterize(df: pd.DataFrame, n_clusters=5, normalize=False, threshold = 0.05
 
     if normalize:
         data = normalize_sym(data)
-    data[data<threshold] = 0.0
+    data[data < threshold] = 0.0
     # data = np.exp(1-data)
     # np.fill_diagonal(tdata, 0)
 
@@ -100,7 +107,6 @@ def clusterize(df: pd.DataFrame, n_clusters=5, normalize=False, threshold = 0.05
     for i, cluster in enumerate(clusters):
         clusters_idx[cluster].append(df.index[i])
     return clusters_idx
-
 
 
 def test():
@@ -117,7 +123,12 @@ def test():
     pprint(idx)
 
 
-if __name__ == "__main__":
+def main():
+    """Fonction principale :
+    1. chargement
+    2. clustering
+    3. vizu heatmap avec séparation inter clusters
+    """
     # mise en place
     level_name = "mother"
     weights_name = "pos_6_arith"
@@ -142,3 +153,7 @@ if __name__ == "__main__":
     # le contenu des cluster, id les groupes dans les lignes blanches
     for idx, clust in sorted(the_clusters_idx.items()):
         print(idx, clust)
+
+
+if __name__ == "__main__":
+    main()

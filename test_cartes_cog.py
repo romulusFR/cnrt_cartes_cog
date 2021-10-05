@@ -1,5 +1,5 @@
 # pylint: disable =  unused-import, missing-class-docstring, missing-function-docstring, too-few-public-methods, no-self-use
-"""Tests"""
+"""Tests de la lib CogMaps"""
 
 # %%
 

@@ -1,4 +1,4 @@
-"""Wrapper pour utiliser pygraphviz avec un style sympa"""
+"""Wrapper pour utiliser pygraphviz avec un style custom"""
 
 from pathlib import Path
 from typing import Union
@@ -91,7 +91,7 @@ def draw_graphviz(a_graph: nx.Graph, destination: Union[Path, str], /, **gv_args
     graph.graph["overlap"] = gv_args["overlap"]  # "false" #scale false prism
     graph.graph["K"] = gv_args["K"]
 
-    nx.set_node_attributes(graph, values=round(gv_args["min_node_size"] * inch_factor / 5), name="penwidth")
+    nx.set_node_attributes(graph, values=round(gv_args["min_node_size"] * inch_factor / 5), name="penwidth") # type: ignore
     nx.set_node_attributes(graph, values=0, name="margin")
     nx.set_node_attributes(graph, values=10, name="fontsize")
     nx.set_node_attributes(graph, values="grey30", name="fontcolor")
@@ -119,7 +119,7 @@ def draw_graphviz(a_graph: nx.Graph, destination: Union[Path, str], /, **gv_args
 
     nx.set_edge_attributes(graph, values=edge_penwidths, name="penwidth")
     nx.set_edge_attributes(graph, values="darkgrey", name="color")
-    nx.set_edge_attributes(graph, values=gv_args["edge_penwidths"] / 2, name="arrowsize")
+    nx.set_edge_attributes(graph, values=gv_args["edge_penwidths"] / 2, name="arrowsize") # type: ignore
 
     # crée le graph pygraphviz
     pdestination = Path(destination)

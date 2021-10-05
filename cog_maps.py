@@ -1,5 +1,5 @@
 # pylint: disable = logging-fstring-interpolation, line-too-long, unused-import
-"""Outil de traitement des cartes cognitives"""
+"""Module principal de chargement, traitement et export des cartes cognitives"""
 
 __author__ = "Romuald Thion"
 
@@ -423,8 +423,8 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         return new_cog_maps, unknowns_maps
 
     def apply_many(self, thesaurus_maps, *, with_unknown=True):
+        """Génération des 4 niveaux cartes du thesaurus (base, concept, mother, gd_mother) et les 3 rapports d'erreur"""
         logger.debug(f"CogMaps.apply_many({len(self)}, {len(thesaurus_maps)})")
-        # génération de 4 cartes : la base, + trois niveau de thesaurus
         the_maps = {BASE_LVL: self}
         the_reports = {}
         # le thesaurus a plusieurs niveau. On va appliquer chacun
@@ -493,7 +493,7 @@ def generate_results(
     thesaurus_filename: StringOrPath,
     weights_filename: StringOrPath,
     with_unknown: bool = False,
-    weights_name:str = DEFAULT_WEIGHTS_NAME,
+    weights_name: str = DEFAULT_WEIGHTS_NAME,
 ) -> list[Tuple[Level, CogMaps]]:
     """ "Wrapper principal utilisé par la CLI et la GUI"""
     logger.debug(f"output_dir = {output_dir}")

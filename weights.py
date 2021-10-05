@@ -1,4 +1,4 @@
-"""Juste la définition des poids"""
+"""Sauvegarde de la définition Python des systèmes de  poids"""
 
 from math import exp
 

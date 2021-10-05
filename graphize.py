@@ -1,5 +1,5 @@
 # pylint: disable = logging-fstring-interpolation, unused-import
-"""génération de graphe de co-occurence des paire de mots mères"""
+"""Génération d'un ensemble de graphes de co-occurence des paires de mots mères. Ici format image / svg"""
 
 __author__ = "Romuald Thion"
 
@@ -47,6 +47,7 @@ def extend_matrix_to_nx(matrix, threshold=0.0):
     }
 
 def cog_map_to_graph(a_map, threshold):
+    """Etend une cogmap à un graphe Networkx et fait un peu de nettoyage"""
     graph = nx.Graph(extend_matrix_to_nx(a_map.matrix, threshold))
     # BUG : est-ce bien le même ordre ? !
     diagonal = {word: a_map.matrix[word][word] for word in a_map.words}

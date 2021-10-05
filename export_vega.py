@@ -1,4 +1,4 @@
-"""Export des cartes cog dans un format json pour vega-lite"""
+"""Export des cartes cog dans un format json pour vega et vega-lite"""
 # pylint: disable=unused-import, logging-fstring-interpolation
 
 # %%
