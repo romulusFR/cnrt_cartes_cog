@@ -10,7 +10,7 @@ from typing import Any
 import pandas as pd
 
 
-FILE = Path("anonymization/personal_data.csv")
+PERSONAL_DATA_FILE = Path("anonymization/personal_data.csv")
 
 #%%
 
@@ -57,8 +57,8 @@ def get_data(file, drop=False) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    data = get_data(FILE, drop=True)
-    data.to_csv(FILE.with_stem(FILE.stem + "_anonymized"))
+    data = get_data(PERSONAL_DATA_FILE, drop=True)
+    data.to_csv(PERSONAL_DATA_FILE.with_stem(PERSONAL_DATA_FILE.stem + "_anonymized"))
 
 
 # %%

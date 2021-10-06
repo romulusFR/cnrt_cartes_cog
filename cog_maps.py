@@ -89,7 +89,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         return string.strip().lower()
 
     @staticmethod
-    def load_cog_maps(filename: StringOrPath) -> CogMapsType:
+    def load_cog_maps(filename: StringOrPath, predicate) -> CogMapsType:
         """Charge les cartes brutes depuis le fichier CSV"""
         logger.debug(f"CogMaps.load_cog_maps({filename})")
 
@@ -100,10 +100,11 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
                 # indice 0 : l'id de la carte
                 # indices 1 et suivants : les mots de la carte
                 identifier = int(row[0])
-                # on élimine les mots vides et NULL
-                cog_maps[identifier] = [
-                    CogMaps.clean_word(w) for w in row[1:] if CogMaps.clean_word(w) not in CogMaps.EMPTY_WORDS
-                ]
+                # on élimine les mots vides et NULL et on filtre les cartes qui ne respectent pas le prédicat
+                if predicate(identifier):
+                    cog_maps[identifier] = [
+                        CogMaps.clean_word(w) for w in row[1:] if CogMaps.clean_word(w) not in CogMaps.EMPTY_WORDS
+                    ]
 
         logger.info(
             f"CogMaps.load_cog_maps: {len(cog_maps)} maps with {sum(len(l) for l in cog_maps.values())} words in total"
@@ -180,7 +181,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         # words to {len(set(thesaurus.values()))} concepts")
         return thesaurus_map
 
-    def __init__(self, cog_maps_filename=None):
+    def __init__(self, cog_maps_filename=None, predicate=lambda _ : True):
         # le fichier duquel lire les cartes cognitives
         self.__cog_maps_filename: Optional[StringOrPath] = cog_maps_filename
         # les cartes elles-mêmes : à un id, la liste des mots
@@ -201,7 +202,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         self.__parent: Optional[CogMaps] = None
 
         if cog_maps_filename is not None:
-            self.__cog_maps = CogMaps.load_cog_maps(cog_maps_filename)
+            self.__cog_maps = CogMaps.load_cog_maps(cog_maps_filename, predicate=predicate)
 
     def invalidate(self) -> None:
         """Invalide les attributs privés qui dependent de cog_maps"""
