@@ -38,11 +38,11 @@ def get_data(file, drop=False) -> pd.DataFrame:
     for attr in bool_attrs:
         df[attr] = df[attr].apply(bool_mapper)
 
-    # cast de la commune_minière "tri valuée"
-    tri_mapper: dict[str, Any] = defaultdict(lambda: nan)
-    tri_mapper |= {"Minière": 1, "Non minière": -1, "Mixte": 0}
+    # # cast de la commune_minière "tri valuée"
+    # tri_mapper: dict[str, Any] = defaultdict(lambda: nan)
+    # tri_mapper |= {"Minière": 1, "Non minière": -1, "Mixte": 0}
 
-    df["commune_miniere"] = df["commune_miniere"].apply(lambda x: tri_mapper[x])
+    # df["commune_miniere"] = df["commune_miniere"].apply(lambda x: tri_mapper[x])
 
     # intervalles d'anonymisation pour les durées
     interval_mapper = {"age": 10, "duree_residence": 10, "duree_presence_nc": 10, "duree_travail_mine": 5}
