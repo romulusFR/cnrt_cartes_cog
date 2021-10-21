@@ -80,7 +80,7 @@ LEVELS = [BASE_LVL, CONCEPT_LVL, MOTHER_LVL, GD_MOTHER_LVL]
 
 class CogMaps:  # pylint: disable=too-many-instance-attributes
     """Conteneur pour un ensemble de cartes cognitives.
-    
+
     La classe a 4 attributs dynamiques paresseus, qui sont calculés quand nécessaire et
     renvoyés directement lors des appels subséquents :
 
@@ -88,9 +88,9 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
     - self.__occurrences_in_positions : reflété par occurrences_in_positions
     - self.__occurrences : reflété par occurrences
     - self.__matrix : reflété par matrix
-    
+
     Ces attributs dynamiques sont remis à zéro (via invalidate) quand on modifie l'un des attributs suivants :
-    
+
     - self.cog_maps : les cartes cognitives
     - self.weights : le système de poids en cours
     - self.partition : le sous-ensemble des cartes actuellement sélectionnés
@@ -218,7 +218,8 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         self.__parent: Optional[CogMaps] = None
 
         if cog_maps_filename is not None:
-            self.__cog_maps = CogMaps.load_cog_maps(cog_maps_filename)
+            self.__cog_maps_full = CogMaps.load_cog_maps(cog_maps_filename)
+            self.__cog_maps = self.__cog_maps_full
         # la partition courante, actuellement sélectionnée
         self.__partition = None
 
@@ -323,9 +324,9 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         if not isinstance(values, Iterable):
             raise NotImplementedError(f"CogMaps.partition cannot dispatch {type(values)}")
         self.__partition = values
+        self.__cog_maps = {ident:val for ident, val in self.__cog_maps_full.items() if ident in self.__partition}
         # invalidation des attributs dynamiques
         self.invalidate()
-
 
     @property
     def occurrences(self) -> OccurrencesType:
@@ -585,4 +586,5 @@ if __name__ == "__main__" and DEBUG:
 
     # pprint(test_maps.matrix)
     test_maps.weights = test_weights[DEFAULT_WEIGHTS_NAME]
-    test_maps.dump_matrix("output/test_matrice.csv")
+    test_maps.partition = [1, 3, 5]
+    # test_maps.dump_matrix("output/test_matrice.csv")
