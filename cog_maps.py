@@ -9,7 +9,7 @@ import csv
 import logging
 import time
 from math import exp
-from typing import Union, Tuple, Iterator, Optional
+from typing import Union, Tuple, Iterator, Optional, Iterable
 from collections import Counter, defaultdict
 from itertools import product, zip_longest
 from functools import partial, singledispatchmethod
@@ -41,6 +41,7 @@ IndexType = dict[Word, list[Tuple[Ident, Position]]]
 OccurrencesType = dict[Word, float]
 OccurrencesInPositionsType = dict[Position, Counter[Word]]
 MatrixType = dict[Word, dict[Word, float]]
+PartitionType = list[Ident]
 
 
 INPUT_DIR = Path("./input")
@@ -78,7 +79,22 @@ LEVELS = [BASE_LVL, CONCEPT_LVL, MOTHER_LVL, GD_MOTHER_LVL]
 
 
 class CogMaps:  # pylint: disable=too-many-instance-attributes
-    """Conteneur pour un ensemble de cartes cognitives"""
+    """Conteneur pour un ensemble de cartes cognitives.
+    
+    La classe a 4 attributs dynamiques paresseus, qui sont calculés quand nécessaire et
+    renvoyés directement lors des appels subséquents :
+
+    - self.__index : reflété par index
+    - self.__occurrences_in_positions : reflété par occurrences_in_positions
+    - self.__occurrences : reflété par occurrences
+    - self.__matrix : reflété par matrix
+    
+    Ces attributs dynamiques sont remis à zéro (via invalidate) quand on modifie l'un des attributs suivants :
+    
+    - self.cog_maps : les cartes cognitives
+    - self.weights : le système de poids en cours
+    - self.partition : le sous-ensemble des cartes actuellement sélectionnés
+    """
 
     # listes des mots considérés comme vides et exlcus de la carte
     EMPTY_WORDS = ("null", "")
@@ -89,7 +105,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         return string.strip().lower()
 
     @staticmethod
-    def load_cog_maps(filename: StringOrPath, predicate) -> CogMapsType:
+    def load_cog_maps(filename: StringOrPath) -> CogMapsType:
         """Charge les cartes brutes depuis le fichier CSV"""
         logger.debug(f"CogMaps.load_cog_maps({filename})")
 
@@ -101,10 +117,9 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
                 # indices 1 et suivants : les mots de la carte
                 identifier = int(row[0])
                 # on élimine les mots vides et NULL et on filtre les cartes qui ne respectent pas le prédicat
-                if predicate(identifier):
-                    cog_maps[identifier] = [
-                        CogMaps.clean_word(w) for w in row[1:] if CogMaps.clean_word(w) not in CogMaps.EMPTY_WORDS
-                    ]
+                cog_maps[identifier] = [
+                    CogMaps.clean_word(w) for w in row[1:] if CogMaps.clean_word(w) not in CogMaps.EMPTY_WORDS
+                ]
 
         logger.info(
             f"CogMaps.load_cog_maps: {len(cog_maps)} maps with {sum(len(l) for l in cog_maps.values())} words in total"
@@ -139,7 +154,8 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         5 - Concepts grands-mères;  -- clef 2
         6 - Code Grand-mère
 
-        Assure l'application de CogMaps.clean_word"""
+        Assure l'application de CogMaps.clean_word
+        """
         logger.debug(f"CogMaps.load_thesaurus({filename})")
         # defaultdict(lambda: DEFAULT_CONCEPT)
         thesaurus_map: ThesaurusMapType = {
@@ -181,7 +197,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         # words to {len(set(thesaurus.values()))} concepts")
         return thesaurus_map
 
-    def __init__(self, cog_maps_filename=None, predicate=lambda _ : True):
+    def __init__(self, cog_maps_filename=None):
         # le fichier duquel lire les cartes cognitives
         self.__cog_maps_filename: Optional[StringOrPath] = cog_maps_filename
         # les cartes elles-mêmes : à un id, la liste des mots
@@ -202,7 +218,9 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
         self.__parent: Optional[CogMaps] = None
 
         if cog_maps_filename is not None:
-            self.__cog_maps = CogMaps.load_cog_maps(cog_maps_filename, predicate=predicate)
+            self.__cog_maps = CogMaps.load_cog_maps(cog_maps_filename)
+        # la partition courante, actuellement sélectionnée
+        self.__partition = None
 
     def invalidate(self) -> None:
         """Invalide les attributs privés qui dependent de cog_maps"""
@@ -233,7 +251,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
     @cog_maps.setter
     def cog_maps(self, values: CogMapsType) -> None:
-        """On bloque l'affectation sur cog_maps"""
+        """On contrôle l'affectation sur cog_maps"""
         if not isinstance(values, dict):
             raise TypeError(f"CogMaps.cog_maps does not support direct assignment from {type(values)}")
         self.__cog_maps = values
@@ -246,8 +264,7 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
     @thesaurus.setter
     def thesaurus(self, data: ThesaurusType) -> None:  # pylint: disable=no-self-use
-        """On bloque l'affectation sur thesaurus"""
-        # raise TypeError("CogMaps.thesaurus does not support direct assignment")
+        """Contrôle de l'affectation sur thesaurus"""
         self.__thesaurus = data
 
     def dump(self, filename: StringOrPath) -> None:
@@ -290,13 +307,25 @@ class CogMaps:  # pylint: disable=too-many-instance-attributes
 
     @weights.setter
     def weights(self, values: WeightsType):
-        # dispatch manuel
         if not isinstance(values, dict):
             raise NotImplementedError(f"CogMaps.weights cannot dispatch {type(values)}")
-        # ràz des occurences et de la matrice des co-occurences
-        self.__occurrences = None
-        self.__matrix = None
         self.__weights = values
+        # invalidation des attributs dynamiques
+        self.invalidate()
+
+    @property
+    def partition(self) -> PartitionType:
+        """Les identifiants actuellement sélectionnés"""
+        return self.__partition
+
+    @partition.setter
+    def partition(self, values: PartitionType):
+        if not isinstance(values, Iterable):
+            raise NotImplementedError(f"CogMaps.partition cannot dispatch {type(values)}")
+        self.__partition = values
+        # invalidation des attributs dynamiques
+        self.invalidate()
+
 
     @property
     def occurrences(self) -> OccurrencesType:
