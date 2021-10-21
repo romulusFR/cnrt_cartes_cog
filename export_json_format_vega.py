@@ -49,7 +49,6 @@ for name, a_map in all_maps.items():
     a_map.weights = weights["inverse"]
 
 
-
 # %%
 # outil
 
@@ -73,6 +72,7 @@ unique_id = mk_unique_id()
 
 ROOT_NAME = "racine"
 DEPTH = 0
+
 
 @dataclass
 class WordInfo:
@@ -150,13 +150,12 @@ if DEBUG:
 objects = [
     {
         "id": detail.id,
-        "level":f"{detail.word[0]}",
+        "level": f"{detail.word[0]}",
         "name": f"{detail.word[1]}",
         "leaf_weight": round(detail.weight, 2) if detail.depth == 4 else None,
         "weight": round(detail.weight, 2),
         "parent": detail.pid,
         "depth": detail.depth,
-
     }
     for detail in global_word_map.values()
     if detail.weight is not None
@@ -177,6 +176,7 @@ def verif_sum(lvl_1_word):
     print("ref.weight =", ref.weight)
     print("sons.weight =", sum(map(lambda x: x.weight, sons)))
     print("sons =", list(map(lambda x: x.word[1], sons)))
+
 
 if DEBUG:
     verif_sum("nickel")

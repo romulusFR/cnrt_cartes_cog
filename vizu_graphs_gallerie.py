@@ -3,9 +3,8 @@
 
 __author__ = "Romuald Thion"
 
-import logging
-
 # %%
+import logging
 from math import isclose, exp
 from collections import Counter, defaultdict
 from functools import partial

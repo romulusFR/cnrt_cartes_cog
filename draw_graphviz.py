@@ -74,15 +74,14 @@ def draw_graphviz(a_graph: nx.Graph, destination: Union[Path, str], /, **gv_args
 
     node_gwidths = {n: compute_size(v) for n, v in node_nbs.items()}
 
-
     if isinstance(gv_args["fontsize"], int):
-        node_fontsize = {n : gv_args["fontsize"] for n,v in node_gwidths.items()}
+        node_fontsize = {n: gv_args["fontsize"] for n, v in node_gwidths.items()}
     elif gv_args["fontsize"] == "proportional":
-        node_fontsize = {n : v*32 for n,v in node_gwidths.items()}
+        node_fontsize = {n: v * 32 for n, v in node_gwidths.items()}
 
     # graph.graph["fontsize"] = gv_args["fontsize"]
     # graph.graph["fontname"] = "Helvetica"
-    
+
     graph.graph["outputorder"] = "edgesfirst"
     graph.graph["bgcolor"] = "white"
     # ici pour jouer sur le rapprochement des noeuds en mode scale
@@ -91,7 +90,7 @@ def draw_graphviz(a_graph: nx.Graph, destination: Union[Path, str], /, **gv_args
     graph.graph["overlap"] = gv_args["overlap"]  # "false" #scale false prism
     graph.graph["K"] = gv_args["K"]
 
-    nx.set_node_attributes(graph, values=round(gv_args["min_node_size"] * inch_factor / 5), name="penwidth") # type: ignore
+    nx.set_node_attributes(graph, values=round(gv_args["min_node_size"] * inch_factor / 5), name="penwidth")  # type: ignore
     nx.set_node_attributes(graph, values=0, name="margin")
     nx.set_node_attributes(graph, values=10, name="fontsize")
     nx.set_node_attributes(graph, values="grey30", name="fontcolor")
@@ -119,7 +118,7 @@ def draw_graphviz(a_graph: nx.Graph, destination: Union[Path, str], /, **gv_args
 
     nx.set_edge_attributes(graph, values=edge_penwidths, name="penwidth")
     nx.set_edge_attributes(graph, values="darkgrey", name="color")
-    nx.set_edge_attributes(graph, values=gv_args["edge_penwidths"] / 2, name="arrowsize") # type: ignore
+    nx.set_edge_attributes(graph, values=gv_args["edge_penwidths"] / 2, name="arrowsize")  # type: ignore
 
     # crée le graph pygraphviz
     pdestination = Path(destination)

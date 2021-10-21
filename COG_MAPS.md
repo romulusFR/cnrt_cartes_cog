@@ -8,6 +8,9 @@ Deux interfaces client existent avec les mêmes fonctionnalités :
 
 ## CHANGELOG
 
+- 2021-10-21 :
+  - amélioration gestion des filtres
+  - génération gallerie
 - 2021-09-18 :
   - reprise GUI, CLI et générateur de graphe avec nouvelles structures
   - simplification calcul matrice co-oc
