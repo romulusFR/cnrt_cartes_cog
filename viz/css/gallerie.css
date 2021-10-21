@@ -15,10 +15,11 @@ body {
 .item img {
   vertical-align: top;
   /* display: block; */
-  max-height: 15rem; /* calc(100% - 2em); */
+  max-height: 20rem; /* calc(100% - 2em); */
+  /* max-width: 15rem; */
   /* min-width: 100%; */
   /* https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit */
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .item figcaption {

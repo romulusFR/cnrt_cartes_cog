@@ -25,7 +25,7 @@
             {% if content[(filename, level, weight, threshold)][1] %}
             <figure class="item">
                 <figcaption>{{level}}/{{threshold}}</figcaption>
-                <img src="graphs/{{content[(filename, level, weight, threshold)][0]}}" alt="{{(filename, level, weight, threshold)}}" loading="lazy" onclick="window.open(this.src, '_blank');">
+                <img src="../graphs/{{content[(filename, level, weight, threshold)][0]}}" alt="{{(filename, level, weight, threshold)}}" loading="lazy" onclick="window.open(this.src, '_blank');">
               </figure>
             {% endif %}
             {% endfor %}
