@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- la css de GH Pages -->
+    <link rel="stylesheet" href="css/gallerie.css" />
+    <link rel="stylesheet" href="https://romulusfr.github.io/cnrt_cartes_cog/assets/css/style.css" />
+    <link rel="icon" href="data:;base64,=" />
+    <title>Gallerie des graphes de co-occurences</title>
+  </head>
+  <body>
+    <div>
+      <h1>Gallerie des graphes de co-occurences</h1>
+
+      {% for filename in dimensions["filenames"] %}
+      <div>
+        <h3>Fichier {{filename}}</h3>
+        {% for weight in dimensions["weights"] %}
+        <div>
+          <h4>Poids {{weight}}</h4>
+          {% for level in dimensions["levels"] %}
+          <div class="row-container">
+            {% for threshold in dimensions["thresholds"] %}
+            {% if content[(filename, level, weight, threshold)][1] %}
+            <figure class="item">
+                <figcaption>{{level}}/{{threshold}}</figcaption>
+                <img src="graphs/{{content[(filename, level, weight, threshold)][0]}}" alt="{{(filename, level, weight, threshold)}}" loading="lazy" onclick="window.open(this.src, '_blank');">
+              </figure>
+            {% endif %}
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>

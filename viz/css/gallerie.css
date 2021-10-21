@@ -1,0 +1,27 @@
+body {
+    width : 90%;
+}
+.row-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.item {
+  display: inline-block;
+  border: 1px dotted gray;
+  margin: 0.2rem;
+}
+.item img {
+  vertical-align: top;
+  /* display: block; */
+  max-height: 15rem; /* calc(100% - 2em); */
+  /* min-width: 100%; */
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit */
+  object-fit: cover;
+}
+
+.item figcaption {
+  border: 1px dotted blue;
+  text-align: center;
+}

@@ -10,8 +10,13 @@ from collections import Counter, defaultdict
 from functools import partial
 from pathlib import Path
 from pprint import pprint
+from operator import itemgetter
 
 import networkx as nx
+from jinja2 import Environment, FileSystemLoader, select_autoescape
+
+env = Environment(loader=FileSystemLoader("."), autoescape=select_autoescape())
+template = env.get_template("viz/gallerie.jinja2.html")
 
 
 from cog_maps import (
@@ -45,6 +50,7 @@ def extend_matrix_to_nx(matrix, threshold=0.0):
         for row_word in matrix
     }
 
+
 def cog_map_to_graph(a_map, threshold):
     """Etend une cogmap à un graphe Networkx et fait un peu de nettoyage"""
     graph = nx.Graph(extend_matrix_to_nx(a_map.matrix, threshold))
@@ -58,6 +64,7 @@ def cog_map_to_graph(a_map, threshold):
     # PAS fait par la diagonale de cooc_matrix
     nx.set_node_attributes(graph, diagonal, name="weight")
     return graph
+
 
 def generate_all_graphs(cog_maps_filenames, thesaurus, weights_map, *, thresholds=None):
     """Genère un ensemble de graphes
@@ -102,20 +109,45 @@ def generate_all_graphs(cog_maps_filenames, thesaurus, weights_map, *, threshold
                 for threshold in thresholds:
                     logger.debug(f"{' '*base_indent*3}->{threshold}")
                     graph = cog_map_to_graph(a_map, threshold)
+                    full_export_name = f"{export_name}_{threshold}.{IMG_FORMAT}"
                     # on génère au format graphml et graphviz
-                    report[(level_name, threshold, weights_name)] = (graph.number_of_nodes(), graph.number_of_edges())
+                    report[(Path(filename).name, level_name, weights_name, threshold)] = (
+                        Path(full_export_name).name,
+                        graph.number_of_nodes(),
+                        graph.number_of_edges(),
+                    )
                     if graph.number_of_nodes() == 0:
                         logger.warning(f"empty graph {export_name}_{threshold}")
                         continue
                     # else
                     # nx.write_graphml(graph, f"{filename}.graphml")
-                    logger.info(f"{' '*base_indent*3}*{export_name}_{threshold}.{IMG_FORMAT}*")
-                    draw(graph, f"{export_name}_{threshold}.{IMG_FORMAT}")
+                    logger.info(f"{' '*base_indent*3}*{full_export_name}*")
+                    if DRAW:
+                        draw(graph, full_export_name)
     return report
 
 
+def render(content):
+    """Génére une gallerie des images svg avec Jinja"""
+    print(f"{len(content) = }")
+    helper = lambda i: sorted(set(cont[i] for cont in content.keys()))
+    dimensions = {
+        "filenames": helper(0),
+        "levels": helper(1),
+        "weights": helper(2),
+        "thresholds": helper(3),
+    }
+    pprint(dimensions)
+
+    html_content = template.render(dimensions=dimensions, content=content)
+    # on enregistre le fichier produit sur le disque
+    fichier = "viz/gallerie.html"
+    with open(fichier, mode="w", encoding="utf-8") as file:
+        file.write(html_content)
+
+
 # dossier et format de sortie
-IMG_FORMAT = "png"
+IMG_FORMAT = "svg"  # "png"
 GRAPH_DIR = Path("graphs/")
 Path(GRAPH_DIR).mkdir(parents=True, exist_ok=True)
 # nombre minimal de cooc
@@ -126,19 +158,26 @@ DATASETS = [CM_LA_MINE_FILENAME, CM_FUTUR_FILENAME]
 THE_THESAURUS = CogMaps.load_thesaurus_map(THESAURUS_FILENAME)
 THE_WEIGHTS = CogMaps.load_weights(WEIGHTS_MAP_FILENAME)
 
+DRAW = True
 DEMO = False
 if __name__ == "__main__":
     if DEMO:
-        generate_all_graphs(
+        report = generate_all_graphs(
             cog_maps_filenames=["input/cartes_cog_small_cooc.csv"],
             thesaurus=THE_THESAURUS,
             weights_map=THE_WEIGHTS,
-            thresholds=[float(n) for n in range(1, 4)],
+            thresholds=[float(n) for n in range(1, 3)],
         )
     else:
-        generate_all_graphs(
-            cog_maps_filenames=DATASETS[0:1],
+        report = generate_all_graphs(
+            cog_maps_filenames=DATASETS,  # DATASETS[0:1],
             thesaurus=THE_THESAURUS,
-            weights_map={"exponentielle" : THE_WEIGHTS["exponentielle"]},
-            thresholds=[float(n) for n in range(2, 10)],
+            weights_map={
+                name: weights
+                for name, weights in THE_WEIGHTS.items()
+                if name in ["arithmetique", "inverse", "exponentielle"]
+            },
+            thresholds=[float(n) for n in range(6, 12)],
         )
+    # pprint(report)
+    render(report)
