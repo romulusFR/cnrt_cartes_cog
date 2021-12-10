@@ -43,53 +43,13 @@ L'intégralité du travail produit dans l'action est publiquement accessible à 
 
 ## Méthodes
 
-Nous avons réalisé un module et quelques outils afférents Python pour traiter les cartes cognitives. Ces outils prenent en entrée des cartes, un thésaurus et des pondérations toutes au format _Comma Separated Values_ (CSV) comme ci-après.
+Nous avons réalisé un module et quelques outils afférents Python pour traiter les cartes cognitives. Ces outils prenent en entrée des cartes, un thésaurus et des pondérations toutes au format _Comma Separated Values_ (CSV) respectivement comme ci-après.
 
-```csv
-1  ;Pollution     ;Inondation    ;Boom      ;Travail     ;Retombée    ;               ;           ;          ;        ;     ;
-2  ;Richesse      ;Malédiction   ;Travail   ;Destruction ;Histoire    ;Frein          ;Blocage    ;Coutumier ;        ;     ;
-4  ;Travail       ;Pollution     ;Plainte   ;            ;            ;               ;           ;          ;        ;     ;
-5  ;Argent        ;Pollution     ;Nickel    ;Production  ;Nature      ;Réparation     ;Mer        ;Inégalité ;        ;     ;
-6  ;Extraction    ;Montagne      ;Pollution ;Mineur      ;Train       ;Diversité      ;Évolution  ;          ;        ;     ;
-7  ;Pollution     ;Nickel        ;Argent    ;Mer         ;Camion      ;               ;           ;          ;        ;     ;
-8  ;Centre minier ;Village       ;Économie  ;Production  ;Travail     ;Environnement  ;Revenu     ;          ;        ;     ;
-9  ;Camion        ;Contracteur   ;Caillou   ;Terre rouge ;Géologie    ;Laboratoire    ;Perle      ;Argent    ;Travail ;Aide ;
-10 ;Emploi        ;Environnement ;Pollution ;Aide        ;Reboisement ;Porte d’entrée ;Inondation ;          ;        ;     ;
-```
+![cartes la mine](img/cartes_mine.png)
 
-```csv
-"MOT ENONCE"                ;"MOT CONCEPT"               ;"MOT MERE"      ;"MOT GRAND MERE"
-"Développement"             ;"Développement"             ;"Développement" ;"Alternative au développement"
-"Développement d’activités" ;"Développement économique"  ;"Développement" ;"Alternative au développement"
-"Développement économique"  ;"Développement économique"  ;"Développement" ;"Alternative au développement"
-"Développement territorial" ;"Développement territorial" ;"Développement" ;"Alternative au développement"
-"Développé"                 ;"Développer"                ;"Développement" ;"Alternative au développement"
-"Développer"                ;"Développer"                ;"Développement" ;"Alternative au développement"
-"Évoluer"                   ;"Évolution"                 ;"Développement" ;"Alternative au développement"
-"Évolution"                 ;"Évolution"                 ;"Développement" ;"Alternative au développement"
-"Projet"                    ;"Projet"                    ;"Développement" ;"Alternative au développement"
-```
+![thesaurus](img/thesaurus.png)
 
-```csv
-position ;arithmetique ;inverse ;pos_1 ;pos_3 ;pos_6 ;pos_3_arith ;pos_6_arith ;exponentielle
-1        ;1            ;1       ;1     ;1     ;1     ;1           ;1           ;1.00
-2        ;0.94         ;0.5     ;0     ;1     ;1     ;0.5         ;0.83        ;0.37
-3        ;0.88         ;0.33    ;0     ;1     ;1     ;0.33        ;0.67        ;0.14
-4        ;0.82         ;0.25    ;0     ;0     ;1     ;0           ;0.5         ;0.05
-5        ;0.76         ;0.2     ;0     ;0     ;1     ;0           ;0.33        ;0.02
-6        ;0.71         ;0.17    ;0     ;0     ;1     ;0           ;0.17        ;0.01
-7        ;0.65         ;0.14    ;0     ;0     ;0     ;0           ;0           ;0.00
-8        ;0.59         ;0.13    ;0     ;0     ;0     ;0           ;0           ;0.00
-9        ;0.53         ;0.11    ;0     ;0     ;0     ;0           ;0           ;0.00
-10       ;0.47         ;0.1     ;0     ;0     ;0     ;0           ;0           ;0.00
-11       ;0.41         ;0.09    ;0     ;0     ;0     ;0           ;0           ;0.00
-12       ;0.35         ;0.08    ;0     ;0     ;0     ;0           ;0           ;0.00
-13       ;0.29         ;0.08    ;0     ;0     ;0     ;0           ;0           ;0.00
-14       ;0.24         ;0.07    ;0     ;0     ;0     ;0           ;0           ;0.00
-15       ;0.18         ;0.07    ;0     ;0     ;0     ;0           ;0           ;0.00
-16       ;0.12         ;0.06    ;0     ;0     ;0     ;0           ;0           ;0.00
-17       ;0.06         ;0.06    ;0     ;0     ;0     ;0           ;0           ;0.00
-```
+![poids](img/poids.png)
 
 Les principales fonctionnalités du logiciel sont les suivantes, la description technique est donnée [en annexe](#formalisation).
 
