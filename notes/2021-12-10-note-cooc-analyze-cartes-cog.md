@@ -39,10 +39,116 @@ L'intégralité du travail produit dans l'action est publiquement accessible à 
 - la forge de développement <https://github.com/romulusFR/cnrt_cartes_cog> sur un projet public, contenant le code et les cartes à l'exclusion de toute information concernant l'identité des enquêtés. Cet outil permet de partager le code, gérer ses différentes versions, gérer la documentation et les évolutions successives et également générer automatiquement des sites webs à partir des documents versionnés.
 - l'écosystème libre du langage de programmation <https://www.python.org/> version 3.9 pour les transformations les plus complexes et la génération de tableaux de bords d'avancement de l'intégration des données. Sont notamment utilisés les bibliothèques <https://pandas.pydata.org/> (gestion de données tabulaires), <https://seaborn.pydata.org/> (visualisation graphique) et <https://networkx.org/> (gestion de graphes)
 - l'écosytème de visualisation graphique <https://vega.github.io/vega/> qui permet de produire des représentations graphiques Web riches et intéractives.
+- le logiciel <https://graphviz.org/> pour le dessin des graphes, avec notamment les algorithmes de placement en 2 dimensions à inspiré de la physique des ressorts.
 
 ## Méthodes
 
-On formalise les cartes et leur traitement comme suit.
+Nous avons réalisé un module et quelques outils afférents Python pour traiter les cartes cognitives. Ces outils prenent en entrée des cartes, un thésaurus et des pondérations toutes au format _Comma Separated Values_ (CSV) comme ci-après.
+
+```csv
+1  ;Pollution     ;Inondation    ;Boom      ;Travail     ;Retombée    ;               ;           ;          ;        ;     ;
+2  ;Richesse      ;Malédiction   ;Travail   ;Destruction ;Histoire    ;Frein          ;Blocage    ;Coutumier ;        ;     ;
+4  ;Travail       ;Pollution     ;Plainte   ;            ;            ;               ;           ;          ;        ;     ;
+5  ;Argent        ;Pollution     ;Nickel    ;Production  ;Nature      ;Réparation     ;Mer        ;Inégalité ;        ;     ;
+6  ;Extraction    ;Montagne      ;Pollution ;Mineur      ;Train       ;Diversité      ;Évolution  ;          ;        ;     ;
+7  ;Pollution     ;Nickel        ;Argent    ;Mer         ;Camion      ;               ;           ;          ;        ;     ;
+8  ;Centre minier ;Village       ;Économie  ;Production  ;Travail     ;Environnement  ;Revenu     ;          ;        ;     ;
+9  ;Camion        ;Contracteur   ;Caillou   ;Terre rouge ;Géologie    ;Laboratoire    ;Perle      ;Argent    ;Travail ;Aide ;
+10 ;Emploi        ;Environnement ;Pollution ;Aide        ;Reboisement ;Porte d’entrée ;Inondation ;          ;        ;     ;
+```
+
+```csv
+"MOT ENONCE"                ;"MOT CONCEPT"               ;"MOT MERE"      ;"MOT GRAND MERE"
+"Développement"             ;"Développement"             ;"Développement" ;"Alternative au développement"
+"Développement d’activités" ;"Développement économique"  ;"Développement" ;"Alternative au développement"
+"Développement économique"  ;"Développement économique"  ;"Développement" ;"Alternative au développement"
+"Développement territorial" ;"Développement territorial" ;"Développement" ;"Alternative au développement"
+"Développé"                 ;"Développer"                ;"Développement" ;"Alternative au développement"
+"Développer"                ;"Développer"                ;"Développement" ;"Alternative au développement"
+"Évoluer"                   ;"Évolution"                 ;"Développement" ;"Alternative au développement"
+"Évolution"                 ;"Évolution"                 ;"Développement" ;"Alternative au développement"
+"Projet"                    ;"Projet"                    ;"Développement" ;"Alternative au développement"
+```
+
+```csv
+position ;arithmetique ;inverse ;pos_1 ;pos_3 ;pos_6 ;pos_3_arith ;pos_6_arith ;exponentielle
+1        ;1            ;1       ;1     ;1     ;1     ;1           ;1           ;1.00
+2        ;0.94         ;0.5     ;0     ;1     ;1     ;0.5         ;0.83        ;0.37
+3        ;0.88         ;0.33    ;0     ;1     ;1     ;0.33        ;0.67        ;0.14
+4        ;0.82         ;0.25    ;0     ;0     ;1     ;0           ;0.5         ;0.05
+5        ;0.76         ;0.2     ;0     ;0     ;1     ;0           ;0.33        ;0.02
+6        ;0.71         ;0.17    ;0     ;0     ;1     ;0           ;0.17        ;0.01
+7        ;0.65         ;0.14    ;0     ;0     ;0     ;0           ;0           ;0.00
+8        ;0.59         ;0.13    ;0     ;0     ;0     ;0           ;0           ;0.00
+9        ;0.53         ;0.11    ;0     ;0     ;0     ;0           ;0           ;0.00
+10       ;0.47         ;0.1     ;0     ;0     ;0     ;0           ;0           ;0.00
+11       ;0.41         ;0.09    ;0     ;0     ;0     ;0           ;0           ;0.00
+12       ;0.35         ;0.08    ;0     ;0     ;0     ;0           ;0           ;0.00
+13       ;0.29         ;0.08    ;0     ;0     ;0     ;0           ;0           ;0.00
+14       ;0.24         ;0.07    ;0     ;0     ;0     ;0           ;0           ;0.00
+15       ;0.18         ;0.07    ;0     ;0     ;0     ;0           ;0           ;0.00
+16       ;0.12         ;0.06    ;0     ;0     ;0     ;0           ;0           ;0.00
+17       ;0.06         ;0.06    ;0     ;0     ;0     ;0           ;0           ;0.00
+```
+
+Les principales fonctionnalités du logiciel sont les suivantes, la description technique est donnée [en annexe](#formalisation).
+
+- remplacer les mots _énoncés_ des cartes cognitives par ceux des niveaux supérieurs du thésaurus pour obtenir les cartes des mots _concepts_, _mères_ et _grands-mères_.
+- pour chacun des 4 niveaux et pour chaque pondération, calculer le nombre d'occurence de chaque mot,
+- pour chacun des 4 niveaux et pour chaque niveau, classe les mots selon leur nombre d'occurrences,
+- représenter graphiquement les mots utilisés pour chaque niveau sous forme de `sunburst` (représentation radiale) et `treemap` (représentation rectangulaire)
+- pour chacun des 4 niveaux, calculer la matrice de co-occurrence des mots, c'est-à- dire un tableau à deux dimensions qui indique pour chaque couple de mot, par exemple `pollution` et `nickel`, le nombre de fois où ces mots apparaissent ensemble dans les cartes. La pondération est utilisée ici sur la distance d'apparition des mots. Par exemple, si `pollution` et `nickel` sont cités l'un juste après l'autre leur contribution sera plus importante que s'ils sont séparés par un ou plusieurs mots.
+- représenter les co-occurrences précédentes sous forme d'un graphe, sous la forme de `heatmap` (tableau 2D où les entrées sont colorée selon l'importance des co-occurences) et sous la forme de `edge bundles` (une représentation graphique qui permet de visualiser des données hiérarchiques sur un cercle munis d'arcs, voir ci-après).
+
+Ces outils ont pour but _de fournir des représentation graphiques intuitives, permettant à l'expert d'analyzer le contenu des cartes_ et en faire émerger _des relations difficiles à percevoir dans la masses brute des données_. Au dela de la volumétrie, la difficulté d'appréhension est introduite par le type même des données, des séquences de mots qui demandent de considérer l'ordre des énonciations, et l'incorporation du thésaurus qui introduit une notion d'échelle.
+
+Les co-occurences sont particulièrement difficiles à interpréter sans outillage, car elle produisent rapidement des tableaux comportant de nombreuses valeurs dont il faut extraire des indicateurs graphiques ou statistiques pour être intelligibles.
+En reprenant l'exemple précédent de 10 cartes cognitives, 60 mots ont été énoncés dont 42 mots différents. Il ya a donc déjà pour cet exemple $(42*41)/2 = 861$ co-occurences possibles. Bien que la majorité soit nulle car les mots ne sont pas cité ensemble, le tableau est déjà difficile à appréhender. A titre illustratif, on le donne ci dessous ouvert par un tableur :
+
+![matrice de co-occurrences](img/matrice.png)
+
+Le problème est indigeste si on traite la carte _mine_ qui comporte 687 mots différents et produit un tableau à deux dimensions de 235 641 cases.
+
+## Résultats préliminaires
+
+On illustre ici les résultats des méthodes précédentes avec quelques représentations du contenu des cartes. Ces visualisation sont publiquement accessibles à l'adresse <https://romulusfr.github.io/cnrt_cartes_cog/>. Une partie d'entre elles est interactive, l'utilisateur pouvant lui même régler certains paramètres et voir le résultat graphiquement en direct.
+
+### Occurences des mots par niveau
+
+Les deux représentations suivantes permettent d'apprécier les cartes selon les regroupements induits par le thésaurus.
+La première est radiale, c'est l'angle qui est proportionnel au nombre d'occurence de chaque mot. Les disques concentriques représentants les quatre niveaux du thésuaurus, du plus général au plus précis : mots _grands-mères_ (disque l'intérieur), _mères_, _concepts_ et _énoncés_ (disque le plus à l'extérieur)
+
+![représentation sunburst](img/sunburst.png)
+
+La représentation suivante suit la même idée mais c'est ici la surface de chaque rectangle qui suit le nombre d'occurences. On ne représente que le premier et le dernier niveau du thésaurus, l'imbrication des rectangles et la couleur représentent la relation de spécialisation du thésaurus.
+
+![représentation treemap](img/treemap.png)
+
+### Co-occurences
+
+Une première approche simple consiste à colorier la relation des co-occurrence selon une échelle de couleur, avec possiblement un seuillage (pour supprimer les lignes et colonnes dont toutes les valeurs sont en dessous d'un seuil) et changement d'échelle (logarithmique en l'espèce, vue la variété des ordres de grandeurs). On la présente ci-dessous, pour les cartes grand-mères. Les lignes et colonnes ont été réorganisées avec l'algorithme de clustering `KMeans++` pour mieu faire appraitre les blocs de mots qui sont cités ensembles (en couleurs chaudes) :
+
+![heatmap des co-occurrences](img/heatmap.png)
+
+Une représentation alternative consiste à considérer chaque mot comme un noeud et à positionner des arcs entre les paires de noeuds, la longueur de l'arc étant représentative du nombre de co-occcurences entre sa source et sa cible. On obtient par exemple le graphe suivant pour les cartes _mine_ où les mots sont remplacé par leurs mots mères, pour des poids exponentiels inverse, dont on ne garder que les arcs avec plus de 9.0 co-occurrences.
+
+![graphe de co-occurence](img/graphe.png)
+
+On peut faire varier le seuillage et changer le niveau du thésaurus pour générer ainsi une gallerie de graphe comme suit :
+
+![gallerie de graphes](img/gallerie.png)
+
+La dernière représentation des co-occurences proposée est celle _du diagramme chordal_ [Wikipedia](<https://en.wikipedia.org/wiki/Chord_diagram_(information_visualization)>), ici plus précisement celle du _hierarchical edge bundling_. Ici, les mots énoncés sont représentés sur un cercle et un arc relie les mots selon leur co-occurence. Les mots sont placés sur le cercle de sorte à minimiser les croisement d'arcs. De plus, les arcs sont courbés selon le plus proche niveau commun du thésuraus que les mots joints par les arcs partagent.
+
+![hierarchical edge bundling](img/edge_bundling.png)
+
+## Poursuite des travaux
+
+TBD
+
+## Annexe
+
+### Formalisation
 
 Soit $M$ l'ensemble infini des chaînes de caractères de longueurs finies appellée _mots_.
 Une _carte_ $c$ de longueur $l$ est une séquence finie de mots $c = [ m_{1}, m_{2}, \dots, m_{l} ]$. On abuse de la notation en écrivant $m \in c$ pour indiquer qu'un mot $m \in M$ apparait dans une carte $c$, en écrivant $|c| = l$ pour désigner la longueur et en écrivant $c(i) = m_i$ pour le ième mot quand il existe.
@@ -63,15 +169,6 @@ Ces définitions sont facilement implémentables en Python et permettent de calc
 On désigne par $\text{E}(C)$ l'ensemble des mots énoncés (sans répétition) d'une collection de cartes $C$, $\text{E}(C) = \{ m \in M \mid \exists c \in C \text{ t.q. } m \in c\}$. Sur le cas d'espèce, on a par exemple $|\text{E}(C_{\text{mine}})|=687$.
 On définit le graphe simple, non-orienté et pondéré des co-occurences de mots. Ce graphe $G$ est assimilable à une relation une fonction de poids $w : \text{E}(C) \times \text{E}(C) \to \mathbb{R}^+$ construite comme la somme des distances entre les mots $s$ et $d$ où $s$ et $d$ apparaissent dans une carte :
 
-$$ w(s,d) = \sum_{c \in C} \{ p(|i-j|) \mid \exists i, j. c(i) = s \wedge c(j) = d \} $$
+$$ w(s,d) = \sum\_{c \in C} \{ p(|i-j|) \mid \exists i, j. c(i) = s \wedge c(j) = d \} $$
 
 Pour les cartes énoncés, la diagonale de cette relation désigne le nombre de fois où un mot $m$ apparait en prenant en compte de la pondération $w(m, m) = \text{occ}(m)$. En revanche, si un même mot apparait plusieurs fois dans une cartes, ce qui est possible sur les cartes énoncés, cartes mères et cartes grands-mères, alors on a $w(m, m) \leq \text{occ}(m)$.
-
-## Résultats
-
-## Poursuite des travaux
-
-la poursuite de ses travaux pourais donné lieux à la réalisation d'une application web (statique ou dynamique) pour permettre une analyse des différents données.
-
-## Annexe
-
