@@ -2,11 +2,11 @@
 
 Contributeurs :
 
-- BOUDJEMA Valentine : doctorante géographie IRD, experte fonctionnelle
-- DUMAS Pascal : E/C géographie UNC, expert fonctionnel
-- _MARTEL Benoit_ : stagiaire anthropologue, IRD, expert fonctionnel
-- SABINOT Catherine : chercheuse ethnoécologie et anthropologie IRD, experte fonctionnelle
-- **THION Romuald** : E/C informatique UNC, contributeur principal
+- BOUDJEMA Valentine : doctorante en géographie IRD,
+- DUMAS Pascal : E/C en géographie UNC,
+- _MARTEL Benoit_ : stagiaire en anthropologie, IRD,
+- SABINOT Catherine : chercheuse en ethnoécologie et anthropologie IRD,
+- **THION Romuald** : E/C en informatique UNC, contributeur principal.
 
 ## Objectifs
 
