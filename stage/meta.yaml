@@ -1,0 +1,13 @@
+title: Sujet de projet tuteuré de M1 MIAGE UNC 2021-2022
+subtitle: Analyse de cartes cognitives sur la représentation sociale de la mine de nickel en Nouvelle-Calédonie
+author: 
+- Valentine BOUDJEMA (IRD)
+- Frédéric FLOUVAT (UNC/ISEA)
+- Catherine SABINOT (IRD)
+- Romuald THION (UNC/ISEA)
+lang: "fr-FR"
+babel-lang: "french"
+mainfont: "Palatino"
+colorlinks: true
+header-includes:
+  - \usepackage{fullpage}
