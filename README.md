@@ -1,6 +1,6 @@
 # Calculs et visualisation de cartes cognitives
 
-- pour l'outil de calcul voir [CARTES_COG.md](CARTES_COG.md)
+- pour l'outil de calcul voir [COG_MAPS.md](COG_MAPS.md)
 - pour la démo de la réunion du 2021-09-22, voir [le IPython Notebook](https://nbviewer.jupyter.org/github/romulusFR/cnrt_cartes_cog/blob/main/demo_calcul_seminaire.ipynb)
 
 ## Génération de tous les graphes
