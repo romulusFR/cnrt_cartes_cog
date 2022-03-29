@@ -77,7 +77,7 @@ def draw_graphviz(a_graph: nx.Graph, destination: Union[Path, str], /, **gv_args
     if isinstance(gv_args["fontsize"], int):
         node_fontsize = {n: gv_args["fontsize"] for n, v in node_gwidths.items()}
     elif gv_args["fontsize"] == "proportional":
-        node_fontsize = {n: v * 32 for n, v in node_gwidths.items()}
+        node_fontsize = {n: 12 + v * 16 for n, v in node_gwidths.items()}
 
     # graph.graph["fontsize"] = gv_args["fontsize"]
     # graph.graph["fontname"] = "Helvetica"

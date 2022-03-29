@@ -85,7 +85,7 @@ def generate_all_graphs(cog_maps_filenames, thesaurus, weights_map, *, threshold
         draw_graphviz,
         algorithm="sfdp",
         sep=0.01,
-        fontsize=8,  # "proportional",
+        fontsize="proportional",  # "proportional",
         node_color="weight",
         min_edge_penwidths=1,
         max_edge_penwidths=10,
@@ -163,10 +163,10 @@ DEMO = False
 if __name__ == "__main__":
     if DEMO:
         report = generate_all_graphs(
-            cog_maps_filenames=["input/cartes_cog_small_cooc.csv"],
+            cog_maps_filenames=DATASETS,  # ["input/cartes_cog_small_cooc.csv"],
             thesaurus=THE_THESAURUS,
-            weights_map=THE_WEIGHTS,
-            thresholds=[float(n) for n in range(1, 3)],
+            weights_map={"exponentielle": THE_WEIGHTS["exponentielle"]},
+            thresholds=[float(n) for n in range(9, 10)],
         )
     else:
         report = generate_all_graphs(
