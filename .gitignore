@@ -2,7 +2,7 @@ output*/
 tmp/
 drafts/
 sources/
-
+backups/
 
 __pycache__/
 .mypy_cache/
