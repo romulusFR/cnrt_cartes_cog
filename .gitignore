@@ -19,3 +19,5 @@ demos-viz/
 anonymization/
 
 thio/*.csv
+
+input/BDD_*.xlsx
