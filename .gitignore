@@ -21,3 +21,6 @@ anonymization/
 thio/*.csv
 
 input/BDD_*.xlsx
+
+vosk/data/
+transcriptions/
