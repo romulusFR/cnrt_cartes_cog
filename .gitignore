@@ -24,3 +24,5 @@ input/BDD_*.xlsx
 
 vosk/data/
 transcriptions/
+
+.venv/
